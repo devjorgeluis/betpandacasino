@@ -8,4 +8,6 @@ export const LayoutContext = createContext({
     handleChangePasswordClick: () => { },
     refreshBalance: () => { },
     setShowFullDivLoading: () => { },
+    isSidebarExpanded: true,
+    toggleSidebar: () => { },
 });

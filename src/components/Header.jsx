@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { LayoutContext } from "./LayoutContext";
 
 const Header = ({
     isLogin,
@@ -10,6 +11,7 @@ const Header = ({
     fragmentNavLinksTop,
     isSlotsOnly
 }) => {
+    const { isSidebarExpanded } = useContext(LayoutContext);
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
@@ -70,7 +72,7 @@ const Header = ({
     ];
 
     return (
-        <div className="menu-layout-navbar expanded">
+        <div className={`menu-layout-navbar ${isSidebarExpanded ? 'expanded' : ''}`}>
             <nav id="mainNav" className="main-menu-container header landing-page">
                 <div className="navbar-nav">
                     <div className="desktop-top-menu-nav"></div>

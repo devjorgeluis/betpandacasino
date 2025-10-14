@@ -26,10 +26,15 @@ const Layout = () => {
     const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
     const navigate = useNavigate();
 
     const location = useLocation();
     const isSportsPage = location.pathname === "/sports";
+
+    const toggleSidebar = () => {
+        setIsSidebarExpanded(!isSidebarExpanded);
+    };
 
     useEffect(() => {
         if (contextData.session != null) {
@@ -164,7 +169,9 @@ const Layout = () => {
         handleLoginClick,
         handleLogoutClick,
         handleChangePasswordClick,
-        refreshBalance
+        refreshBalance,
+        isSidebarExpanded,
+        toggleSidebar
     };
 
     return (

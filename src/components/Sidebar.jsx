@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { LayoutContext } from "./LayoutContext";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
+import ImgLogo from "/src/assets/svg/logo.svg";
 
 const Sidebar = () => {
-    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+    const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+    const [currentLanguage, setCurrentLanguage] = useState({ code: "es", name: "Spanish" });
     const [countdown, setCountdown] = useState({
         days: 1,
         hours: 5,
@@ -30,12 +33,6 @@ const Sidebar = () => {
         { code: "cs", name: "Czech" }
     ];
 
-    const currentLanguage = languages.find(lang => lang.code === "es") || languages[0];
-
-    const toggleSidebar = () => {
-        setIsSidebarExpanded(!isSidebarExpanded);
-    };
-
     const toggleMenu = (menuName) => {
         setExpandedMenus(prev => 
             prev.includes(menuName) 
@@ -50,6 +47,16 @@ const Sidebar = () => {
 
     const toggleLanguageDropdown = () => {
         setShowLanguageDropdown(!showLanguageDropdown);
+    };
+
+    const closeLanguageDropdown = () => {
+        setShowLanguageDropdown(false);
+    };
+
+    const handleLanguageSelect = (languageCode) => {
+        var language = languages.find(lang => lang.code === languageCode) || currentLanguage;
+        setCurrentLanguage(language);
+        closeLanguageDropdown();
     };
 
     useEffect(() => {
@@ -173,21 +180,12 @@ const Sidebar = () => {
         }
     ];
 
-    // Collapsed sidebar menu items
     const collapsedMenuItems = [
         { name: 'CASINO', icon: 'custom-icon-bp-casino', href: '/es/casino/page/0/' },
         { name: 'live-casino', icon: 'custom-icon-bp-live-casino', href: '/es/casino/page/2/live-casino' },
         { name: 'sports', icon: 'custom-icon-bp-sports', href: '/es/sportsbook' },
         { name: 'esports', icon: 'custom-icon-mush', href: '/es/sportsbook?bt-path=%2Fe_sport%2F300' },
         { name: 'promotions', icon: 'custom-icon-bp-promotions', href: '/es/promo/promotions' }
-    ];
-
-    // Timer items
-    const timerItems = [
-        { value: '1', label: 'DÍAS' },
-        { value: '5', label: 'H' },
-        { value: '8', label: 'MIN' },
-        { value: '25', label: 'SEG' }
     ];
 
     return (
@@ -235,8 +233,8 @@ const Sidebar = () => {
                         </span>
                     </div>
                     <div className="brand-logo">
-                        <a className="linkCss" href="/es/">
-                            <img alt="logo" className="logo light-logo" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Main_a728350f56.svg" /> 
+                        <a className="linkCss" href="/">
+                            <img alt="logo" className="logo light-logo" src={ImgLogo} /> 
                         </a>
                     </div>
                 </div>
