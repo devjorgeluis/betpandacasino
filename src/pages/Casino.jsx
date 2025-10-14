@@ -16,8 +16,7 @@ import SearchSelect from "../components/SearchSelect";
 import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
-import ImgBanner1 from "/src/assets/img/slots.avif";
-import ImgMobileBanner1 from "/src/assets/img/mobile-slots.avif";
+
 import ImgLobby from "/src/assets/img/lobby.avif";
 import ImgJoker from "/src/assets/img/jokers.avif";
 import ImgHot from "/src/assets/img/hot.avif";
@@ -59,8 +58,6 @@ const Casino = () => {
   const location = useLocation();
   const searchRef = useRef(null);
   const { isSlotsOnly } = useOutletContext();
-
-  let imageSlideshow = isMobile ? [ImgMobileBanner1] : [ImgBanner1];
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -474,8 +471,6 @@ const Casino = () => {
         />
       ) : (
         <>
-          <Slideshow images={imageSlideshow} />
-
           <div className="games-tags_gamesTags">
             <div className="games-tags_gamesTagsInner">
               {fragmentNavLinksBody}

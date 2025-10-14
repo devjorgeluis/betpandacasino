@@ -5225,6 +5225,7 @@ body.playing-casino-game.modal-open .modal-content .modal-body p {
     padding-right: 0;
     border-radius: 6px;
     overflow: hidden;
+    display: block;
 }
 
 .cta-green-deposit {
@@ -5822,7 +5823,7 @@ body.playing-casino-game.modal-open .modal-content .modal-body p {
 .hero-landing-banner .container-full-width {
     max-width: 1140px;
     margin: 0 auto;
-    padding: 0 15px !important;
+    padding: 0 !important;
     overflow: hidden;
 }
 
@@ -5946,7 +5947,7 @@ body.playing-casino-game.modal-open .modal-content .modal-body p {
     justify-content: center;
 }
 
-.hero-landing-banner .btn-green svg {
+.hero-landing-banner .btn-green img {
     margin-left: 8px;
 }
 

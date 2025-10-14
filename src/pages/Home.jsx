@@ -6,7 +6,7 @@ import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
-import Slideshow from "../components/Slideshow";
+import Slideshow from "../components/Home/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
@@ -16,22 +16,7 @@ import SearchSelect from "../components/SearchSelect";
 import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
-import ImgBanner1 from "/src/assets/img/slots.avif";
-import ImgBanner2 from "/src/assets/img/sport.avif";
-import ImgBanner3 from "/src/assets/img/live-casino.avif";
-import ImgMobileBanner1 from "/src/assets/img/mobile-slots.avif";
-import ImgMobileBanner2 from "/src/assets/img/mobile-sport.avif";
-import ImgMobileBanner3 from "/src/assets/img/mobile-live-casino.avif";
 
-import ImgLobby from "/src/assets/img/lobby.avif";
-import ImgJoker from "/src/assets/img/jokers.avif";
-import ImgHot from "/src/assets/img/hot.avif";
-import ImgCrash from "/src/assets/img/crash.avif";
-import ImgMegaways from "/src/assets/img/megaways.avif";
-import ImgRoulette from "/src/assets/img/roulette.webp";
-import ImgPromoCasino from "/src/assets/img/casino-promo.avif";
-import ImgPromoLiveCasino from "/src/assets/img/live-casino-promo.avif";
-import ImgPromoSport from "/src/assets/img/sport-promo.avif";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -69,14 +54,6 @@ const Home = () => {
   const searchRef = useRef(null);
   const { isSlotsOnly } = useOutletContext();
 
-  let imageSlideshow = isMobile ? [ImgMobileBanner1, ImgMobileBanner2, ImgMobileBanner3] : [ImgBanner1, ImgBanner2, ImgBanner3];
-
-  const promos = [
-    { name: "Casino", link: "/casino", image: ImgPromoCasino },
-    { name: "Mejor Casino en Vivo", link: "/live-casino", image: ImgPromoLiveCasino },
-    { name: "Deportes", link: "/sports", image: ImgPromoSport }
-  ]
-
   useEffect(() => {
     const checkIsMobile = () => {
       return window.innerWidth <= 767;
@@ -110,96 +87,8 @@ const Home = () => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  useEffect(() => {
-    updateNavLinks();
-  }, [isSlotsOnly]);
-
   const getStatus = () => {
     callApi(contextData, "GET", "/get-status", callbackGetStatus, null);
-  };
-
-  const updateNavLinks = () => {
-    if (isSlotsOnly === "false") {
-      setFragmentNavLinksBody(
-        <>
-          <NavLinkIcon
-            title="Lobby"
-            pageCode="home"
-            icon={ImgLobby}
-            active={selectedPage === "home" || selectedPage === "lobby"}
-            onClick={() => getPage("home")}
-          />
-          <NavLinkIcon
-            title="Jokers"
-            pageCode="joker"
-            icon={ImgJoker}
-            active={selectedPage === "joker"}
-            onClick={() => getSubPage("joker")}
-          />
-          <NavLinkIcon
-            title="Hot"
-            pageCode="hot"
-            icon={ImgHot}
-            active={selectedPage === "hot"}
-            onClick={() => getSubPage("hot")}
-          />
-          <NavLinkIcon
-            title="Juegos de crash"
-            pageCode="arcade"
-            icon={ImgCrash}
-            active={selectedPage === "arcade"}
-            onClick={() => getSubPage("arcade")}
-          />
-          <NavLinkIcon
-            title="Megaways"
-            pageCode="megaways"
-            icon={ImgMegaways}
-            active={selectedPage === "megaways"}
-            onClick={() => getSubPage("megaways")}
-          />
-          <NavLinkIcon
-            title="Ruletas"
-            pageCode="roulette"
-            icon={ImgRoulette}
-            active={selectedPage === "roulette"}
-            onClick={() => getSubPage("roulette")}
-          />
-        </>
-      );
-    } else {
-      setFragmentNavLinksBody(
-        <>
-          <NavLinkIcon
-            title="Lobby"
-            pageCode="home"
-            icon={ImgLobby}
-            active={selectedPage === "home" || selectedPage === "lobby"}
-            onClick={() => getPage("home")}
-          />
-          <NavLinkIcon
-            title="Jokers"
-            pageCode="joker"
-            icon={ImgJoker}
-            active={selectedPage === "joker"}
-            onClick={() => getSubPage("joker")}
-          />
-          <NavLinkIcon
-            title="Hot"
-            pageCode="hot"
-            icon={ImgHot}
-            active={selectedPage === "hot"}
-            onClick={() => getSubPage("hot")}
-          />
-          <NavLinkIcon
-            title="Megaways"
-            pageCode="megaways"
-            icon={ImgMegaways}
-            active={selectedPage === "megaways"}
-            onClick={() => getSubPage("megaways")}
-          />
-        </>
-      );
-    }
   };
 
   const callbackGetStatus = (result) => {
@@ -247,45 +136,6 @@ const Home = () => {
       pageCurrent = 0;
     }
     setIsLoadingGames(false);
-  };
-
-  const getSubPage = (page) => {
-    setIsLoadingGames(true);
-    setGames([]);
-    setSelectedPage(page);
-    callApi(contextData, "GET", "/get-page?page=" + page, callbackGetSubPage, null);
-  };
-
-  const callbackGetSubPage = (result) => {
-    if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
-    } else {
-      setPageData(result.data);
-      setSelectedProvider(null);
-      setActiveCategory({});
-
-      if (result.data.page_group_type === "categories") {
-        setCategories(result.data.categories)
-      }
-
-      if (result.data.page_group_type === "games") {
-        if (mainCategories && mainCategories.length > 0) {
-          setCategories(mainCategories);
-        } else {
-          callApi(contextData, "GET", "/get-page?page=home", (homeResult) => {
-            if (homeResult.data && homeResult.data.categories) {
-              setMainCategories(homeResult.data.categories);
-              setCategories(homeResult.data.categories);
-            }
-          }, null);
-        }
-      }
-
-      if (result.data.categories && result.data.categories.length > 0) {
-        let item = result.data.categories[0];
-        fetchContent(item, item.id, item.table_name, 0, true, result.data.page_group_code);
-      }
-    }
   };
 
   const loadMoreContent = () => {
@@ -397,79 +247,6 @@ const Home = () => {
     setMessageCustomAlert(["", ""]);
   };
 
-  const handleProviderSelect = (provider, index = 0) => {
-    setSelectedProvider(provider);
-    setIsProviderDropdownOpen(false);
-    setTxtSearch("");
-    if (categories.length > 0 && provider) {
-      setActiveCategory(provider);
-      fetchContent(provider, provider.id, provider.table_name, index, true);
-    } else if (!provider && categories.length > 0) {
-      const firstCategory = categories[0];
-      setActiveCategory(firstCategory);
-      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
-    }
-  };
-
-  const search = (e) => {
-    let keyword = e.target.value;
-    setTxtSearch(keyword);
-
-    if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
-      let keyword = e.target.value;
-      do_search(keyword);
-    } else {
-      if (
-        (e.keyCode >= 48 && e.keyCode <= 57) ||
-        (e.keyCode >= 65 && e.keyCode <= 90) ||
-        e.keyCode == 8 ||
-        e.keyCode == 46
-      ) {
-        do_search(keyword);
-      }
-    }
-
-    if (e.key === "Enter" || e.keyCode === 13 || e.key === "Escape" || e.keyCode === 27) {
-      searchRef.current?.blur();
-    }
-  };
-
-  const do_search = (keyword) => {
-    clearTimeout(searchDelayTimer);
-
-    if (keyword == "") {
-      return;
-    }
-
-    setGames([]);
-    setIsLoadingGames(true);
-
-    let pageSize = 20;
-
-    let searchDelayTimerTmp = setTimeout(function () {
-      callApi(
-        contextData,
-        "GET",
-        "/search-content?keyword=" + txtSearch + "&page_group_code=" + pageData.page_group_code + "&length=" + pageSize,
-        callbackSearch,
-        null
-      );
-    }, 1000);
-
-    setSearchDelayTimer(searchDelayTimerTmp);
-  };
-
-  const callbackSearch = (result) => {
-    if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
-    } else {
-      configureImageSrc(result, true);
-      setGames(result.content);
-      pageCurrent = 0;
-    }
-    setIsLoadingGames(false);
-  };
-
   return (
     <>
       <CustomAlert message={messageCustomAlert} onClose={handleAlertClose} />
@@ -492,7 +269,165 @@ const Home = () => {
         />
       ) : (
         <>
-          
+          <div className="landingPage">
+            <div className="root-container" id="pageContainer">
+              <div className="root-wrapper">
+                <div className="page">
+                  <Slideshow />
+                </div>
+              </div>
+              <footer className="footer-container">
+                <div className="linkContainer">
+                  <div className="appIconWrap">
+                    <div className="footer-row">
+                      <div className="app-buttons-container">
+                        <div className="download-text-area">Download App</div>
+                        <button name="windows app download button" aria-label="windows app download button" className="app-button windows">
+                          <i className="device-icon">
+                            <img
+                              src="data:image/svg+xml,%3csvg%20width='2490'%20height='2500'%20viewBox='0%200%20256%20257'%20xmlns='http://www.w3.org/2000/svg'%20preserveAspectRatio='xMidYMid'%3e%3cpath%20d='M0%2036.357L104.62%2022.11l.045%20100.914-104.57.595L0%2036.358zm104.57%2098.293l.08%20101.002L.081%20221.275l-.006-87.302%20104.494.677zm12.682-114.405L255.968%200v121.74l-138.716%201.1V20.246zM256%20135.6l-.033%20121.191-138.716-19.578-.194-101.84L256%20135.6z'%20fill='%23fff'/%3e%3c/svg%3e"
+                            />
+                          </i>
+                          <div className="hoverBubble bubblePosition windows">
+                            <p></p>
+                            <p></p>
+                            <p>Haz clic para instalar la aplicación</p>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="linkWrap">
+                    <div className="footer-row"></div>
+                    <div className="footer-row"></div>
+                  </div>
+                </div>
+                <div className="footer-dynamic-content">
+                  <div className="footer-dynamic footer-main">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-md-6 taglines"></div>
+                        <div className="col-md-6"></div>
+                        <div className="col-md-12 taglines-group">
+                          <div className="group footer-operated foot-column">
+                            <div className="tagline">
+                              <div className="tagline text company-info-footer">
+                                <a href="/" className="logo-footer">
+                                  <img src="https://d39l5twljzzea1.cloudfront.net/betpanda3/Group_121417651_87c3fa6120.svg" />
+                                </a>
+                                <div className="tagline text">
+                                  <span className="text-heading">Star Bright Media S.R.L</span>
+                                  <span>San Pedro, Barrio Dent, Del Centro Cultural Costarricense Norteamericano, Doscientos Metros al Norte y Concuenta al este, Edificio Ofident, Officins Numero Tres Costa Rica</span>
+                                  <span className="text-heading">Número de Identificación Corporativa:</span>
+                                  <span>3-102-880000</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="group footer-games foot-column top-line">
+                            <div className="tagline title"><span>Juegos</span></div>
+                            <a className="tagline link" href="/es/casino"><span>Casino</span></a><a className="tagline link" href="/es/casino/page/2/live-dealer"><span>Casino en vivo</span></a>
+                            <a href="https://betpanda.io/en/sportsbook" className="tagline link"><span>Deportes</span></a><a className="tagline link" href="/es/casino/play/4188/aviator/"><span>Aviador</span></a>
+                            <a className="tagline link" href="/es/originals"><span>Originales Betpanda</span></a><a className="tagline link" href="/es/casino/page/2/live-casino/11/game-shows"><span>Concursos</span></a>
+                            <a className="tagline link" href="/es/casino/23/table-games"><span>Juegos de mesa</span></a>
+                          </div>
+                          <div className="group footer-info foot-column top-line">
+                            <div className="tagline title"><span>Plataforma</span></div>
+                            <a className="tagline link" href="/es/promo/promotions"><span>Promociones</span></a><a className="tagline link" href="/es/promo/priority-vip"><span>Club VIP</span></a>
+                            <a href="mailto:affiliates@betpanda.io" className="tagline link"><span>Afiliados</span></a><a href="https://betpanda.kb.help/" className="tagline link"><span>Preguntas frecuentes</span></a>
+                            <a className="tagline link" href="/es/info/terms"><span>Términos de servicio</span></a><a className="tagline link" href="/es/info/AML-Statement"><span>Declaración PBC/FT</span></a>
+                            <a className="tagline link" href="/es/info/sportsbook-terms"><span>Reglas de apuestas deportivas</span></a><a className="tagline link" href="/es/info/terms"><span>Política de privacidad</span></a>
+                            <a href="https://betpandacasino.io/lp/" className="tagline link"><span>Blog</span></a><a className="tagline link" href="/es/info/vpn"><span>Instrucciones de&nbsp;VPN</span></a>
+                          </div>
+                          <div className="group footer-info foot-column top-line footer-info-socials">
+                            <div className="tagline title"><span>Comunidad</span></div>
+                            <a href="https://x.com/betpanda_casino" className="tagline link link-social-footer">
+                              <span><img alt="X.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/X_8fbebe4f44.svg" /> X (Twitter)</span>
+                            </a>
+                            <a href="https://discord.gg/25ncaUDuft" className="tagline link link-social-footer">
+                              <span><img alt="Discord new.png" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Discord_new_14fc1a7afc.png" /> Discord</span>
+                            </a>
+                            <a href="https://www.instagram.com/betpandaofficial/" className="tagline link link-social-footer">
+                              <span><img alt="Instagram.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Instagram_8114f44513.svg" /> Instagram</span>
+                            </a>
+                            <a href="https://t.me/betpandaofficial" className="tagline link link-social-footer">
+                              <span><img alt="Telegram.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Telegram_9c8c349dab.svg" /> Telegrama</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="footer-dynamic">
+                    <div className="container">
+                      <div className="row">
+                        <div className="col-md-6 taglines"></div>
+                        <div className="col-md-6"></div>
+                        <div className="col-md-12 taglines-group">
+                          <div className="group footer-supported-section">
+                            <div className="tagline footer-supported-text">
+                              <div className="tagline text">
+                                <span className="text-parent-head">Monedas compatibles</span><span>¿No encuentras tu moneda favorita? <a href="mailto:support@betpanda.io">Solicítala aquí</a></span>
+                              </div>
+                            </div>
+                            <div className="tagline coins-images">
+                              <span>
+                                <img alt="Group 121417667.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417667_7e9394aed9.svg" />
+                                <img alt="Group 121417662.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417662_b8f17e79bf.svg" />
+                                <img alt="Group 121417665.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417665_d1be404b15.svg" />
+                                <img alt="Group 121417664.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417664_6746d82893.svg" />
+                                <img alt="Group 121417663.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417663_5173497c93.svg" />
+                                <img alt="Group 121417666.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417666_080ee79452.svg" />
+                                <img alt="Group 121417669.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417669_2adbd7a729.svg" />
+                                <img alt="Group 121417660.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417660_86f17b8ac8.svg" />
+                                <img alt="Group 121417659.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417659_c5fe0a8db8.svg" />
+                                <img alt="Group 121417658.svg" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_121417658_ff619134d0.svg" />
+                              </span>
+                            </div>
+                            <div className="tagline"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="styled-text-list partner-row">
+                    <div className="container">
+                      <div className="row">
+                        <div className="tagline partner-logo-wrapper">
+                          <div className="tagline partner-logo"><img title="" alt="info" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Trustpilot_Logo_2022_1_020c6ddfc7.svg" /><span></span></div>
+                          <div className="tagline partner-logo"><img title="" alt="info" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/CT_logo_Black_Yellow_tag_1ac22bfeda.svg" /><span></span></div>
+                          <div className="tagline partner-logo"><img title="" alt="info" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_470_b6bf1ffb7e.svg" /><span></span></div>
+                          <div className="tagline partner-logo"><img title="" alt="info" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Group_469_cee9805075.svg" /><span></span></div>
+                          <div className="tagline partner-logo"><img title="" alt="info" src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Layer_2_411995b0e2.svg" /><span></span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="styled-text-list copyright-wrapper">
+                    <div className="container">
+                      <div className="row">
+                        <div className="tagline copyright"><span>©&nbsp;Todos los derechos reservados. 2025&nbsp;Betpanda.io</span></div>
+                        <div className="tagline copyright-navigation">
+                          <div className="copyright-nav-item">
+                            <span>Support</span>
+                            <a className="copyright-nav-link" href="mailto:support@betpanda.io">support@betpanda.io</a>
+                          </div>
+                          <div className="copyright-nav-item">
+                            <span>Partners</span>
+                            <a className="copyright-nav-link" href="mailto:partners@betpanda.io">partners@betpanda.io</a>
+                          </div>
+                          <div className="copyright-nav-item">
+                            <span>Press</span>
+                            <a className="copyright-nav-link" href="mailto:press@betpanda.io">press@betpanda.io</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </div>
+          </div>
         </>
       )}
     </>

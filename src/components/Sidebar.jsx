@@ -100,92 +100,87 @@ const Sidebar = () => {
             id: 'casino',
             name: 'Casino',
             icon: 'custom-icon-bp-casino',
-            href: '/es/sportsbook',
+            href: '/casino',
             subItems: [
-                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/es/casino' },
-                { name: 'Jugado recientemente', icon: 'custom-icon-bp-recently-played', href: '/es/casino#recently_played' },
-                { name: 'Tus favoritos', icon: 'custom-icon-bp-your-favourites', href: '/es/casino#your_favorites' },
-                { name: 'Betpanda Originals', icon: 'custom-icon-bp-betpanda', href: '/es/originals' },
-                { name: 'Mantener y ganar', icon: 'custom-icon-bp-hold-win', href: '/es/casino/25/hold-&-win' },
-                { name: 'Nuevos juegos', icon: 'custom-icon-boy', href: '/es/casino/13/new' },
-                { name: 'Ranuras de rejilla', icon: 'custom-icon-bp-grid-slots', href: '/es/casino/27/grid' },
-                { name: 'Comprar función', icon: 'custom-icon-bp-buy-feature', href: '/es/casino/5/buy-feature' },
-                { name: 'Juegos de mesa', icon: 'custom-icon-bp-table-games', href: '/es/casino/23/table-games' },
-                { name: 'Demostrablemente', icon: 'custom-icon-scale', href: '/es/casino/16/provably-fair' },
-                { name: 'Megaways', icon: 'custom-icon-bp-megaways', href: '/es/casino/12/megaways' }
+                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino#home' },
+                { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
+                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#jokers' },
+                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#crash' },
+                { name: 'Megaways', icon: 'custom-icon-bp-megaways', href: '/casino#megaways' },
+                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#ruletas' },
             ]
         },
         {
             id: 'live-casino',
             name: 'Casino en Vivo',
             icon: 'custom-icon-bp-live-casino',
-            href: '/es/sportsbook',
+            href: '/sportsbook',
             subItems: [
-                { name: 'Vestíbulo', icon: 'custom-icon-trof2', href: '/es/casino/page/2/live-casino' },
-                { name: 'Jugado recientemente', icon: 'custom-icon-bp-recently-played', href: '/es/casino/page/2/live-casino/2/live-casino-lobby' },
-                { name: 'Tus favoritos', icon: 'custom-icon-bp-your-favourites', href: '/es/casino/page/2/live-casino/2/live-casino-lobby#yourfavorites' },
-                { name: 'Ruleta en vivo', icon: 'custom-icon-bingo', href: '/es/casino/page/2/live-casino/7/live-roulette' },
-                { name: 'Blackjack en vivo', icon: 'custom-icon-spades', href: '/es/casino/page/2/live-casino/8/live-blackjack' },
-                { name: 'Bacará en vivo', icon: 'custom-icon-sixdices', href: '/es/casino/page/2/live-casino/9/live-baccarat' },
-                { name: 'Programas de juegos', icon: 'custom-icon-dealer2', href: '/es/casino/page/2/live-casino/11/game-shows' },
-                { name: 'Dados Sic Bo', icon: 'custom-icon-diamon', href: '/es/casino/page/2/live-casino/14/sic-bo' },
-                { name: 'Veintiuno VIP', icon: 'custom-icon-kings', href: '/es/casino/page/2/live-casino/26/vip-blackjack' }
+                { name: 'Vestíbulo', icon: 'custom-icon-trof2', href: '/casino/page/2/live-casino' },
+                { name: 'Jugado recientemente', icon: 'custom-icon-bp-recently-played', href: '/casino/page/2/live-casino/2/live-casino-lobby' },
+                { name: 'Tus favoritos', icon: 'custom-icon-bp-your-favourites', href: '/casino/page/2/live-casino/2/live-casino-lobby#yourfavorites' },
+                { name: 'Ruleta en vivo', icon: 'custom-icon-bingo', href: '/casino/page/2/live-casino/7/live-roulette' },
+                { name: 'Blackjack en vivo', icon: 'custom-icon-spades', href: '/casino/page/2/live-casino/8/live-blackjack' },
+                { name: 'Bacará en vivo', icon: 'custom-icon-sixdices', href: '/casino/page/2/live-casino/9/live-baccarat' },
+                { name: 'Programas de juegos', icon: 'custom-icon-dealer2', href: '/casino/page/2/live-casino/11/game-shows' },
+                { name: 'Dados Sic Bo', icon: 'custom-icon-diamon', href: '/casino/page/2/live-casino/14/sic-bo' },
+                { name: 'Veintiuno VIP', icon: 'custom-icon-kings', href: '/casino/page/2/live-casino/26/vip-blackjack' }
             ]
         },
         {
             id: 'sports',
             name: 'Deportes',
             icon: 'custom-icon-bp-sports',
-            href: '/es/sportsbook',
+            href: '/sportsbook',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/es/sportsbook' },
-                { name: 'My bets', icon: 'custom-icon-dollarsign', href: '/es/sportsbook?bt-path=%2Fbets' },
-                { name: 'Live', icon: 'custom-icon-bp-live', href: '/es/sportsbook?bt-path=%2Flive' },
-                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/es/sportsbook?bt-path=%2Fevent-builder' },
-                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/es/sportsbook?bt-path=%2Ffavorites' },
-                { name: 'Soccer', icon: 'custom-icon-bp-sport-soccer', href: '/es/sportsbook?bt-path=%2Fsoccer-1' },
-                { name: 'Basketball', icon: 'custom-icon-bp-sport-basketball', href: '/es/sportsbook?bt-path=%2Fbasketball-2' },
-                { name: 'Ice Hockey', icon: 'custom-icon-bp-sport-icehockey', href: '/es/sportsbook?bt-path=%2Fice-hockey-4' },
-                { name: 'Tennis', icon: 'custom-icon-bp-sport-tennis', href: '/es/sportsbook?bt-path=%2Ftennis-5' },
-                { name: 'Fifa', icon: 'custom-icon-bp-fifa', href: '/es/sportsbook?bt-path=%2Ffifa-300' }
+                { name: 'Home', icon: 'custom-icon-bp-home', href: '/sportsbook' },
+                { name: 'My bets', icon: 'custom-icon-dollarsign', href: '/sportsbook?bt-path=%2Fbets' },
+                { name: 'Live', icon: 'custom-icon-bp-live', href: '/sportsbook?bt-path=%2Flive' },
+                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/sportsbook?bt-path=%2Fevent-builder' },
+                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/sportsbook?bt-path=%2Ffavorites' },
+                { name: 'Soccer', icon: 'custom-icon-bp-sport-soccer', href: '/sportsbook?bt-path=%2Fsoccer-1' },
+                { name: 'Basketball', icon: 'custom-icon-bp-sport-basketball', href: '/sportsbook?bt-path=%2Fbasketball-2' },
+                { name: 'Ice Hockey', icon: 'custom-icon-bp-sport-icehockey', href: '/sportsbook?bt-path=%2Fice-hockey-4' },
+                { name: 'Tennis', icon: 'custom-icon-bp-sport-tennis', href: '/sportsbook?bt-path=%2Ftennis-5' },
+                { name: 'Fifa', icon: 'custom-icon-bp-fifa', href: '/sportsbook?bt-path=%2Ffifa-300' }
             ]
         },
         {
             id: 'esports',
             name: 'Deportes electrónicos',
             icon: 'custom-icon-mush',
-            href: '/es/sportsbook',
+            href: '/sportsbook',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/es/sportsbook?bt-path=%2Fe_sport%2F300' },
-                { name: 'My Bets', icon: 'custom-icon-dollarsign', href: '/es/sportsbook?bt-path=%2Fbets' },
-                { name: 'Live', icon: 'custom-icon-bp-live', href: '/es/sportsbook?bt-path=%2Flive' },
-                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/es/sportsbook?bt-path=%2Fe_sport%2F300' },
-                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/es/sportsbook?bt-path=%2Ffavorites' },
-                { name: 'Counter-Strike', icon: 'custom-icon-banan', href: '/es/sportsbook?bt-path=%2Fcounter-strike-109' },
-                { name: 'League of Legends', icon: 'custom-icon-bp-league', href: '/es/sportsbook?bt-path=%2Fleague-of-legends-110' },
-                { name: 'Dota 2', icon: 'custom-icon-bp-dota', href: '/es/sportsbook?bt-path=%2Fdota-2-111' },
-                { name: 'Fifa', icon: 'custom-icon-melon', href: '/es/sportsbook?bt-path=%2Ffifa-300' },
-                { name: 'NBA2K', icon: 'custom-icon-bp-nba-2k', href: '/es/sportsbook?bt-path=%2Fnba-2k-302' }
+                { name: 'Home', icon: 'custom-icon-bp-home', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
+                { name: 'My Bets', icon: 'custom-icon-dollarsign', href: '/sportsbook?bt-path=%2Fbets' },
+                { name: 'Live', icon: 'custom-icon-bp-live', href: '/sportsbook?bt-path=%2Flive' },
+                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
+                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/sportsbook?bt-path=%2Ffavorites' },
+                { name: 'Counter-Strike', icon: 'custom-icon-banan', href: '/sportsbook?bt-path=%2Fcounter-strike-109' },
+                { name: 'League of Legends', icon: 'custom-icon-bp-league', href: '/sportsbook?bt-path=%2Fleague-of-legends-110' },
+                { name: 'Dota 2', icon: 'custom-icon-bp-dota', href: '/sportsbook?bt-path=%2Fdota-2-111' },
+                { name: 'Fifa', icon: 'custom-icon-melon', href: '/sportsbook?bt-path=%2Ffifa-300' },
+                { name: 'NBA2K', icon: 'custom-icon-bp-nba-2k', href: '/sportsbook?bt-path=%2Fnba-2k-302' }
             ]
         },
         {
             id: 'promotions',
             name: 'Promociones',
             icon: 'custom-icon-bp-promotions',
-            href: '/es/sportsbook',
+            href: '/sportsbook',
             subItems: [
-                { name: 'Campaigns', icon: 'custom-icon-powers', href: '/es/promo/promotions' },
-                { name: 'Welcome Offers', icon: 'custom-icon-bp-welcome-offers', href: '/es/promo/promotions' }
+                { name: 'Campaigns', icon: 'custom-icon-powers', href: '/promo/promotions' },
+                { name: 'Welcome Offers', icon: 'custom-icon-bp-welcome-offers', href: '/promo/promotions' }
             ]
         }
     ];
 
     const collapsedMenuItems = [
-        { name: 'CASINO', icon: 'custom-icon-bp-casino', href: '/es/casino/page/0/' },
-        { name: 'live-casino', icon: 'custom-icon-bp-live-casino', href: '/es/casino/page/2/live-casino' },
-        { name: 'sports', icon: 'custom-icon-bp-sports', href: '/es/sportsbook' },
-        { name: 'esports', icon: 'custom-icon-mush', href: '/es/sportsbook?bt-path=%2Fe_sport%2F300' },
-        { name: 'promotions', icon: 'custom-icon-bp-promotions', href: '/es/promo/promotions' }
+        { name: 'CASINO', icon: 'custom-icon-bp-casino', href: '/casino/page/0/' },
+        { name: 'live-casino', icon: 'custom-icon-bp-live-casino', href: '/casino/page/2/live-casino' },
+        { name: 'sports', icon: 'custom-icon-bp-sports', href: '/sportsbook' },
+        { name: 'esports', icon: 'custom-icon-mush', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
+        { name: 'promotions', icon: 'custom-icon-bp-promotions', href: '/promo/promotions' }
     ];
 
     return (
@@ -238,7 +233,7 @@ const Sidebar = () => {
                         </a>
                     </div>
                 </div>
-                <div className="content">
+                <div className="content d-none">
                     <div className="cashback-component">
                         <div className="cashback-header-container">
                             <h4>Cashback semanal en</h4>
@@ -314,7 +309,7 @@ const Sidebar = () => {
                                             </div>
                                         </div>
                                     </a>
-                                    <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'show' : ''}`}>
+                                    <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'expanded-sub-menu show' : ''}`}>
                                         {menu.subItems.map((subItem, subIndex) => (
                                             <a 
                                                 key={subIndex}

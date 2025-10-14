@@ -195,8 +195,8 @@ const Layout = () => {
                             handleLogoutClick={handleLogoutClick}
                         />
                         <Sidebar />
-                        <main>
-                            {/* <Outlet context={{ isSlotsOnly }} /> */}
+                        <main className="menu-layout-content expanded">
+                            <Outlet context={{ isSlotsOnly }} />
                         </main>
                     </div>
                 </>

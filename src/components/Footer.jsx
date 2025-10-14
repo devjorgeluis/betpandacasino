@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import ImgLogo from "/src/assets/img/logo.png";
+import ImgLogo from "/src/assets/svg/logo.svg";
 import IconFacebook from "/src/assets/svg/facebook.svg";
 import IconInstagram from "/src/assets/svg/instagram.svg";
 import IconTelegram from "/src/assets/svg/telegram.svg";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import ImgLogo from "/src/assets/img/logo.png";
+import ImgLogo from "/src/assets/svg/logo.svg";
 
 const FullDivLoading = (props) => {
   useEffect(() => {
