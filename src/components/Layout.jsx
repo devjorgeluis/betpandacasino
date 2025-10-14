@@ -143,24 +143,18 @@ const Layout = () => {
     };
 
     const handleLogoutClick = () => {
-        setShowLogoutModal(true);
-    };
-
-    const handleChangePasswordClick = () => {
-        setShowChangePasswordModal(true);
-    };
-
-    const handleLogoutConfirm = () => {
         callApi(contextData, "POST", "/logout", (result) => {
             if (result.status === "success") {
                 setTimeout(() => {
                     localStorage.removeItem("session");
                     window.location.href = "/";
                 }, 200);
-            } else {
-                setShowLogoutModal(false);
             }
         }, null);
+    };
+
+    const handleChangePasswordClick = () => {
+        setShowChangePasswordModal(true);
     };
 
     const layoutContextValue = {
@@ -188,12 +182,6 @@ const Layout = () => {
                             onLoginSuccess={handleLoginSuccess}
                         />
                     )}
-                    {showLogoutModal && (
-                        <LogoutConfirmModal 
-                            onConfirm={handleLogoutConfirm}
-                            onClose={() => setShowLogoutModal(false)}
-                        />
-                    )}
                     {showChangePasswordModal && (
                         <ChangePasswordModal 
                             onClose={() => setShowChangePasswordModal(false)}
@@ -205,9 +193,6 @@ const Layout = () => {
                             userBalance={userBalance}
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}
-                            handleChangePasswordClick={handleChangePasswordClick}
-                            fragmentNavLinksTop={fragmentNavLinksTop}
-                            isSlotsOnly={isSlotsOnly}
                         />
                         <Sidebar />
                         <main>
