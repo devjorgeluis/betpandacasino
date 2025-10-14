@@ -7,6 +7,7 @@ import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
 import Slideshow from "../components/Home/Slideshow";
+import GameProvider from "../components/Home/GameProvider";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
@@ -274,6 +275,7 @@ const Home = () => {
               <div className="root-wrapper">
                 <div className="page">
                   <Slideshow />
+                  <GameProvider />
                 </div>
               </div>
               <footer className="footer-container">
