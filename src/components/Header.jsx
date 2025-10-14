@@ -136,7 +136,7 @@ const Header = ({
                                     )}
                                 </div>
                             </div>
-                            <button className="btn btn-secondary desktop-login small fixed-menu-btn topmenu">
+                            <button className="btn btn-secondary desktop-login small fixed-menu-btn topmenu" onClick={() => handleLoginClick()}>
                                 Acceso
                             </button>
                             <button className="btn btn-cta register-link small fixed-menu-btn topmenu">

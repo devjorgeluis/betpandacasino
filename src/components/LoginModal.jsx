@@ -1,18 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../AppContext";
 import { callApi } from "../utils/Utils";
-import CustomAlert from "../components/CustomAlert";
-import ImgLogo from "/src/assets/img/logo.png";
+import DivLoading from "./DivLoading";
 import IconClose from "/src/assets/svg/close.svg";
-import IconEye from "/src/assets/svg/eye.svg";
-import IconEyeSlash from "/src/assets/svg/eye-slash.svg";
 
 const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     const { contextData, updateSession } = useContext(AppContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [messageCustomAlert, setMessageCustomAlert] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = (event) => {
@@ -49,7 +46,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
                 onClose();
             }, 1000);
         } else {
-            setMessageCustomAlert(["error", "Nombre de usuario o contraseña no válidos"]);
+            setErrorMsg("Correo electrónico o contraseña no válidos");
         }
     };
 
@@ -64,97 +61,90 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
 
     return (
         <>
-            <div className="modal-wrapper_modalWrapper modal-wrapper_shown">
-                <div className="modal-wrapper_modalContentWrapper modal-wrapper_hasTitle login-modal">
-                    <div className="modal-wrapper-title_modalWrapperTitle">
-                        <span>Acceder</span>
-                        <button onClick={onClose}>
-                            <img src={IconClose} />
-                        </button>
-                    </div>
-
-                    <div className="login-modal_loginModalInner">
-                        <div className="login-modal_logoCentered">
-                            <img alt="" loading="lazy" width="118" height="48" className="logo_logo" src={ImgLogo} />
+            <div className="fade modal show" style={{ display: "block" }}>
+                <div className="modal-dialog user-modal login-modal desktop  modal-lg modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-wrapper login active">
+                            <button className="modal-close-btn" onClick={onClose}>
+                                <img src={IconClose} />
+                            </button>
                         </div>
-                        <div className="login-modal_modalDescription">
-                            <p className="login-modal_modalDescriptionInner">Introduce tu nombre de usuario y contraseña para empezar a jugar</p>
-                        </div>
-                        <div>
-                            <form className="login-form_loginFormForm" method="POST" onSubmit={handleSubmit}>
-                                <div className="input-wrapper_inputWrapper input-wrapper_default">
-                                    <div>
-                                        <label htmlFor="username" className="input-wrapper_inputWrapperLabel">
-                                            <span className="input-wrapper_inputWrapperInput">
-                                                <input
-                                                    className="input_input login-form_loginFormInput"
-                                                    type="text"
-                                                    name="username"
-                                                    placeholder="Nombre de usuario"
-                                                    autoComplete="false"
-                                                    value={username}
-                                                    onChange={(e) => setUsername(e.target.value)}
-                                                    required
-                                                />
-                                            </span>
-                                        </label>
-                                    </div>
-                                    <fieldset className="input-wrapper_inputWrapperFieldset"></fieldset>
+                        <div className="modal-container">
+                            <div className="modal-header">
+                                <div className="header title-content">
+                                    <div className="titleContainer"><span className="title">Te damos la bienvenida de nuevo</span></div>
                                 </div>
-                                
-                                <div className="input-wrapper_inputWrapper input-wrapper_default">
+                            </div>
+                            <div className="modal-body">
+                                <form className="form login" method="POST" onSubmit={handleSubmit}>
+                                    {
+                                        errorMsg !== "" && <div className="alert alert-danger">
+                                            {errorMsg}
+                                        </div>
+                                    }
                                     <div>
-                                        <label htmlFor="password" className="input-wrapper_inputWrapperLabel">
-                                            <span className="input-wrapper_inputWrapperInput">
+                                        <div className="form-group">
+                                            <input
+                                                className="form-control"
+                                                type="text"
+                                                name="username"
+                                                placeholder="Nombre de usuario"
+                                                autoComplete="username"
+                                                value={username}
+                                                onChange={(e) => setUsername(e.target.value)}
+                                                required
+                                            />
+                                        </div>
+                                        <div className="form-group password">
+                                            <div className="input-password-wrapper">
                                                 <input
                                                     id="password"
-                                                    className="input_input login-form_loginFormInput"
+                                                    className="form-control"
                                                     type={showPassword ? "text" : "password"}
                                                     name="password"
                                                     placeholder="Contraseña"
-                                                    autoComplete="false"
+                                                    autoComplete="password"
                                                     value={password}
                                                     onChange={(e) => setPassword(e.target.value)}
                                                     required
                                                 />
-                                            </span>
-                                            {showPassword === false ? (
-                                                <span
-                                                    className="input-wrapper-suffix_inputWrapperSuffix"
-                                                    onClick={() => setShowPassword(true)}
-                                                >
-                                                    <button type="button" className="input-button_inputButton">
-                                                        <img src={IconEyeSlash} />
-                                                    </button>
+                                            </div>
+                                            {
+                                                showPassword === false ? (
+                                                <span className="eye-password" id="eyePassword" onClick={() => setShowPassword(true)}>
+                                                    <span className="material-icons">visibility_off</span>
                                                 </span>
-                                            ) : (
-                                                <span
-                                                    className="input-wrapper-suffix_inputWrapperSuffix"
-                                                    onClick={() => setShowPassword(false)}
-                                                >
-                                                    <button type="button" className="input-button_inputButton">
-                                                        <img src={IconEye} />
-                                                    </button>
+                                                ) : (
+                                                <span className="eye-password" id="eyePassword" onClick={() => setShowPassword(false)}>
+                                                    <span className="material-icons">visibility</span>
                                                 </span>
                                             )}
-                                        </label>
+                                        </div>
                                     </div>
-                                    <fieldset className="input-wrapper_inputWrapperFieldset"></fieldset>
+                                    <button type="submit" className="btn btn-cta full-width">
+                                        {
+                                            isLoading ? <>
+                                                <span style={{visibility: "hidden"}}>Acceso</span>
+                                                <DivLoading />
+                                            </> : "Acceso"
+                                        }
+                                    </button>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                {/* <div className="generic-text-button-container register-link">
+                                    <span className="before-generic-text">¿No tienes una cuenta?</span>
+                                    <span className="text px-2">regístrate</span>
                                 </div>
-                                <button className="button_button button_zeusPrimary button_sm login-form_loginFormButton" type="submit">Acceder
-                                    {
-                                        isLoading && 
-                                        <span className="button_buttonLoader">
-                                            <svg width="1em" height="1em" fill="currentColor" aria-hidden="true" data-icon="loading" viewBox="0 0 1024 1024"><path d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.5 440.5 0 0 0-94.3-139.9 437.7 437.7 0 0 0-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150s83.9 101.8 109.7 162.7c26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36"></path></svg>
-                                        </span>
-                                    }
-                                </button>
-                            </form>
+                                <div className="generic-text-button-container false">
+                                    <span className="before-generic-text">¿Te olvidaste la contraseña?</span>
+                                    <span className="text px-2">restablécela aquí.</span>
+                                </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <CustomAlert message={messageCustomAlert} />
         </>
     );
 };

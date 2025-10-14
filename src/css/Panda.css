@@ -60,20 +60,6 @@
     src: url("https://nano-public.s3.eu-west-1.amazonaws.com/operators/betpanda/GTWalsheimPro-Regular.ttf");
 }
 
-@font-face {
-    font-family: "nano-icons";
-    src: url("nano-icons.eot?t=1714928329280");
-    /* IE9 */
-    src: url("nano-icons.eot?t=1714928329280#iefix") format("embedded-opentype"),
-        /* IE6-IE8 */
-        url("nano-icons.woff2?t=1714928329280") format("woff2"),
-        url("nano-icons.woff?t=1714928329280") format("woff"),
-        url("nano-icons.ttf?t=1714928329280") format("truetype"),
-        /* Chrome, Firefox, Opera, Safari */
-        url("nano-icons.svg?t=1714928329280#nano-icons") format("svg");
-    /* iOS */
-}
-
 :root {
     --studio-icon-fill: #1fe88a;
     --studio-icon-fill-active: #fff;
@@ -6642,6 +6628,10 @@ body.playing-casino-game.modal-open .modal-content .modal-body p {
     display: flex;
     padding: 12px;
     top: 0;
+}
+
+.user-modal .modal-close-btn img {
+    filter: invert(1);
 }
 
 .user-modal .modal-header {
