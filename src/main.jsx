@@ -1,18 +1,18 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import AppContextProvider from './AppContext.jsx'
 
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/css/bootstrap-grid.css";
+// import "bootstrap/dist/css/bootstrap.css";
+// import "bootstrap/dist/css/bootstrap-grid.css";
+import './css/Load.css'
+import './css/Icon.css'
+import './css/Panda.css'
 import './css/Home.css'
-import './css/Poseidon.css'
+import './css/Maintenance.css'
+import './css/CasinoSearch.css'
+import './css/ColorPromotionText.css'
+import './css/LandingPage.css'
 import './css/Calendar.css'
 
-// import './css/D.css'
-// import './css/M.css'
-// import './css/Ganamos.css'
-// import './css/LiveCasino.css'
-// import './css/Slot.css'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(

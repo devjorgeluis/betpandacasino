@@ -1,0 +1,282 @@
+@font-face {
+    font-family: 'nano-icons';
+    src:  url("../assets/fonts/nano-icons.eot");
+    src:  url("../assets/fonts/nano-icons.eot") format('embedded-opentype'),
+        url("../assets/fonts/nano-icons.ttf") format('truetype'),
+        url("../assets/fonts/nano-icons.woff") format('woff'),
+        url("../assets/fonts/nano-icons.svg") format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+[class^="custom-icon-"],
+[class*=" custom-icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'nano-icons' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.custom-icon-bp-sport-basketball:before {
+    content: "\e90c";
+    color: #96acc1;
+}
+
+.custom-icon-bp-sport-icehockey:before {
+    content: "\e90d";
+    color: #96acc1;
+}
+
+.custom-icon-bp-sport-soccer:before {
+    content: "\e90e";
+    color: #96acc1;
+}
+
+.custom-icon-bp-sport-tennis:before {
+    content: "\e90f";
+    color: #96acc1;
+}
+
+.custom-icon-bp-betpanda:before {
+    content: "\e90b";
+    color: #96acc1;
+}
+
+.custom-icon-bp-dota:before {
+    content: "\e909";
+    color: #96acc1;
+}
+
+.custom-icon-bp-e-fighting:before {
+    content: "\e902";
+    color: #96acc1;
+}
+
+.custom-icon-bp-e-racing:before {
+    content: "\e905";
+    color: #96acc1;
+}
+
+.custom-icon-bp-starcraft:before {
+    content: "\e906";
+    color: #96acc1;
+}
+
+.custom-icon-powers:before {
+    content: "\e900";
+    color: #96acc1;
+}
+
+.custom-icon-bp-buy-feature:before {
+    content: "\e92a";
+    color: #96acc1;
+}
+
+.custom-icon-bp-grid-slots:before {
+    content: "\e94a";
+    color: #96acc1;
+}
+
+.custom-icon-bp-hold-win:before {
+    content: "\e94b";
+    color: #96acc1;
+}
+
+.custom-icon-bp-nba-2k:before {
+    content: "\e94c";
+    color: #96acc1;
+}
+
+.custom-icon-bp-home:before {
+    content: "\e94d";
+    color: #96acc1;
+}
+
+.custom-icon-sixdices:before {
+    content: "\e901";
+    color: #96acc1;
+}
+
+.custom-icon-basketball:before {
+    content: "\e903";
+    color: #96acc1;
+}
+
+.custom-icon-spades:before {
+    content: "\e904";
+    color: #96acc1;
+}
+
+.custom-icon-bp-events:before {
+    content: "\e907";
+    color: #96acc1;
+}
+
+.custom-icon-bp-casino:before {
+    content: "\e908";
+    color: #96acc1;
+}
+
+.custom-icon-banan:before {
+    content: "\e90a";
+    color: #96acc1;
+}
+
+.custom-icon-scale:before {
+    content: "\e912";
+    color: #96acc1;
+}
+
+.custom-icon-bp-fifa:before {
+    content: "\e913";
+    color: #96acc1;
+}
+
+.custom-icon-Fighting:before {
+    content: "\e914";
+    color: #96acc1;
+}
+
+.custom-icon-dealer2:before {
+    content: "\e915";
+    color: #96acc1;
+}
+
+.custom-icon-mush:before {
+    content: "\e916";
+    color: #96acc1;
+}
+
+.custom-icon-trof2:before {
+    content: "\e917";
+    color: #96acc1;
+}
+
+.custom-icon-hockey:before {
+    content: "\e919";
+    color: #96acc1;
+}
+
+.custom-icon-bp-league:before {
+    content: "\e91c";
+    color: #96acc1;
+}
+
+.custom-icon-bp-your-favourites:before {
+    content: "\e91d";
+    color: #96acc1;
+}
+
+.custom-icon-bp-live-casino:before {
+    content: "\e91e";
+    color: #96acc1;
+}
+
+.custom-icon-bp-live:before {
+    content: "\e91f";
+    color: #96acc1;
+}
+
+.custom-icon-bp-megaways:before {
+    content: "\e922";
+    color: #96acc1;
+}
+
+.custom-icon-boy:before {
+    content: "\e929";
+    color: #96acc1;
+}
+
+.custom-icon-bp-promotions:before {
+    content: "\e92d";
+    color: #96acc1;
+}
+
+.custom-icon-kings:before {
+    content: "\e92e";
+    color: #96acc1;
+}
+
+.custom-icon-dollarsign:before {
+    content: "\e92f";
+    color: #96acc1;
+}
+
+.custom-icon-bingo:before {
+    content: "\e932";
+    color: #96acc1;
+}
+
+.custom-icon-melon:before {
+    content: "\e933";
+    color: #919dad;
+}
+
+.custom-icon-diamon:before {
+    content: "\e935";
+    color: #96acc1;
+}
+
+.custom-icon-bp-soccer:before {
+    content: "\e937";
+    color: #96acc1;
+}
+
+.custom-icon-bp-welcome-offers:before {
+    content: "\e938";
+    color: #96acc1;
+}
+
+.custom-icon-bp-sports:before {
+    content: "\e939";
+    color: #96acc1;
+}
+
+.custom-icon-bp-table-games:before {
+    content: "\e93c";
+    color: #96acc1;
+}
+
+.custom-icon-bp-table-tennis:before {
+    content: "\e93d";
+    color: #96acc1;
+}
+
+.custom-icon-bp-tennis:before {
+    content: "\e93f";
+    color: #96acc1;
+}
+
+.custom-icon-bp-recently-played:before {
+    content: "\e940";
+    color: #96acc1;
+}
+
+.custom-icon-bp-fire:before {
+    content: "\e941";
+    color: #96acc1;
+}
+
+.custom-icon-trophy:before {
+    content: "\e943";
+    color: #96acc1;
+}
+
+.custom-icon-bp-favourites:before {
+    content: "\e945";
+    color: #96acc1;
+}
+
+.custom-icon-volley-ball:before {
+    content: "\e947";
+    color: #96acc1;
+}

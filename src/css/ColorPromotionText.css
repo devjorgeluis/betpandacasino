@@ -1,0 +1,132 @@
+.bundle-lg-container:first-child {
+    margin-left: 16px
+}
+
+.bundle-lg-container:last-child {
+    margin-right: 16px
+}
+
+.bundle-lg-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-radius: 8px;
+    background-color: var(--panel-background);
+    margin-left: 8px;
+    margin-right: 8px
+}
+
+.bundle-lg-container .top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 115px
+}
+
+.bundle-lg-container .top .two {
+    width: 163px;
+    height: 94px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 16px
+}
+
+.bundle-lg-container .top .two .containerTop {
+    margin-top: 16px
+}
+
+.bundle-lg-container .top .two .containerTop .currencyAwardFunds1 {
+    font-size: 16px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--text)
+}
+
+.bundle-lg-container .top .two .containerTop .awardFunds1 {
+    font-size: 32px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--text)
+}
+
+.bundle-lg-container .top .two .containerBottom {
+    display: flex;
+    flex-direction: column
+}
+
+.bundle-lg-container .top .two .containerBottom .text {
+    font-size: 16px;
+    font-weight: 700;
+    font-style: normal;
+    font-stretch: condensed;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--cta)
+}
+
+.bundle-lg-container .top .two .containerBottom .text2 {
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: condensed;
+    line-height: normal;
+    letter-spacing: normal;
+    color: var(--text)
+}
+
+.bundle-lg-container .top .three {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 94px;
+    margin: 8px
+}
+
+.bundle-lg-container .top .three .avatarOrTicket {
+    font-size: 10px;
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: condensed;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    color: var(--cta)
+}
+
+.bundle-lg-container .top .three .maskAndImage {
+    margin-top: 8px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: solid 2px var(--cta);
+    background-color: #171717
+}
+
+.bundle-lg-container .middle {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center
+}
+
+.bundle-lg-container .middle .image {
+    width: 235px;
+    height: 235px
+}
+
+.bundle-lg-container .bottom {
+    width: 100%;
+    height: 82px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding-bottom: 8px
+}

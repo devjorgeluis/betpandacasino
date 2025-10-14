@@ -5,6 +5,7 @@ import { AppContext } from "../AppContext";
 import { LayoutContext } from "./LayoutContext";
 import { callApi } from "../utils/Utils";
 import Header from "./Header";
+import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
@@ -191,7 +192,7 @@ const Layout = () => {
                             onClose={() => setShowChangePasswordModal(false)}
                         />
                     )}
-                    <>
+                    <div className="menu-layout fixed">
                         <Header
                             isLogin={isLogin}
                             userBalance={userBalance}
@@ -201,14 +202,11 @@ const Layout = () => {
                             fragmentNavLinksTop={fragmentNavLinksTop}
                             isSlotsOnly={isSlotsOnly}
                         />
-                        <main className="app__main">
-                            <Outlet context={{ isSlotsOnly }} />
+                        <Sidebar />
+                        <main>
+                            {/* <Outlet context={{ isSlotsOnly }} /> */}
                         </main>
-                        {
-                            isMobile && !isSportsPage ? <Footer isSlotsOnly={isSlotsOnly} isSportsPage={isSportsPage} /> :
-                                !isMobile ? <Footer isSlotsOnly={isSlotsOnly} isSportsPage={isSportsPage} /> : <></>
-                        }
-                    </>
+                    </div>
                 </>
             </NavigationContext.Provider>
         </LayoutContext.Provider>

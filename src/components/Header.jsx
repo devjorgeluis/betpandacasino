@@ -1,73 +1,150 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserMenu from "../components/UserMenu";
-import ImgLogo from "/src/assets/img/logo.png";
-import IconProfile from "/src/assets/svg/profile.svg";
-import IconHamburger from "/src/assets/svg/hamburger.svg";
 
-const Header = ({ isLogin, userBalance, handleLoginClick, handleLogoutClick, handleChangePasswordClick, fragmentNavLinksTop, isSlotsOnly }) => {
+const Header = ({
+    isLogin,
+    userBalance,
+    handleLoginClick,
+    handleLogoutClick,
+    handleChangePasswordClick,
+    fragmentNavLinksTop,
+    isSlotsOnly
+}) => {
     const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false);
-    const openMenu = () => {
+    const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+
+    const toggleUserMenu = () => {
         setShowUserMenu(!showUserMenu);
     };
-    const onClose = () => {
+
+    const closeUserMenu = () => {
         setShowUserMenu(false);
-    }
+    };
+
+    const toggleLanguageMenu = () => {
+        setShowLanguageMenu(!showLanguageMenu);
+    };
+
+    const closeLanguageMenu = () => {
+        setShowLanguageMenu(false);
+    };
+
+    const handleLanguageSelect = (languageCode) => {
+        console.log("Selected language:", languageCode);
+        // Add your language change logic here
+        closeLanguageMenu();
+    };
+
+    // Close dropdowns when clicking outside
+    const handleClickOutside = (event) => {
+        if (!event.target.closest('.dropdown') && !event.target.closest('.user-menu-container')) {
+            closeLanguageMenu();
+            closeUserMenu();
+        }
+    };
+
+    // Add event listener for outside clicks
+    useState(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+    const languages = [
+        { code: "EN", name: "English" },
+        { code: "DE", name: "Deutsch" },
+        { code: "JA", name: "日本語" },
+        { code: "FR", name: "Français" },
+        { code: "NL", name: "Nederlands" },
+        { code: "PT", name: "Português" },
+        { code: "TR", name: "Türkçe" },
+        { code: "ES", name: "Español" },
+        { code: "KO", name: "한국어" },
+        { code: "IT", name: "Italiano" },
+        { code: "EL", name: "Ελληνικά" },
+        { code: "AR", name: "العربية" },
+        { code: "ZH", name: "中文" },
+        { code: "CS", name: "Čeština" }
+    ];
 
     return (
-        <>
-            <header className="header_header">
-                <div className="header_headerInner">
-                    <div className="header_headerLeftContent">
-                        <a onClick={() => navigate("/")}>
+        <div className="menu-layout-navbar expanded">
+            <nav id="mainNav" className="main-menu-container header landing-page">
+                <div className="navbar-nav">
+                    <div className="desktop-top-menu-nav"></div>
+                    <div className="desktop-logo-container">
+                        <a
+                            className="linkCss active"
+                            href="/es/"
+                            aria-current="page"
+                        >
                             <img
-                                title="Casino"
-                                alt="Casino"
-                                src={ImgLogo}
-                                className="logo-domain"
+                                alt="Company logo"
+                                className="logo light-logo"
+                                src="https://d3ec3n7kizfkuy.cloudfront.net/betpanda2/Main_a728350f56.svg"
                             />
                         </a>
                     </div>
-                    <div className="header_headerLinks">
-                        {
-                            fragmentNavLinksTop
-                        }
-                    </div>
-                    <div className="header-right_headerRight">
-                        {isLogin ? (
-                            <>
-                                <div className="header-right_headerBalance">{userBalance ? parseFloat(userBalance).toFixed(2) + " $" : ""}</div>
-                                <div className="header-right_headerRightUser" onClick={() => openMenu()}>
-                                    <img src={IconProfile} width={20} height={20} />
-                                    {/* <span className="header-right_unreadNotificationCounter">
-                                        <div className="notifications-counter_notificationsCounter header-right_unreadCounter notifications-counter_sm">
-                                            <span className="notifications-counter_notificationCounter">1</span>
+                    <div className="desktop-user-panel">
+                        <div className="lngAndButtonWrap">
+                            <div className="hide-in-context language-menu-container">
+                                <div className="dropdown">
+                                    <div 
+                                        className="dropbtn" 
+                                        onClick={toggleLanguageMenu}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        <div className="dropdownItem active">
+                                            <div className="item active">
+                                                <div className="flag-button-container">
+                                                    <span className="flagIcon">
+                                                        <i className="material-icons">language</i>
+                                                    </span>
+                                                    <span className="arrow-icon">
+                                                        <span className="material-icons">
+                                                            {showLanguageMenu ? 'arrow_drop_up' : 'arrow_drop_down'}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </span> */}
-                                </div>
-                            </>
-                        ) : (
-                            <div className="header-right_headerRight">
-                                <div className="header-right_headerBalance"></div>
-                                <div className="header-right_guestRightMenu">
-                                    <button className="button_button button_zeusPrimary button_xs" onClick={() => handleLoginClick()}>Acceso</button>
-                                    <button className="button_button button_ghost button_md header-right_burgerButton hidden md:flex" onClick={() => openMenu()}>
-                                        <img src={IconHamburger} />
-                                    </button>
+                                    </div>
+                                    {showLanguageMenu && (
+                                        <div className="dropdown-content">
+                                            {languages.map((language) => (
+                                                <div 
+                                                    key={language.code} 
+                                                    className="dropdownItem"
+                                                    onClick={() => handleLanguageSelect(language.code)}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    <div className="item">
+                                                        <span style={{ paddingLeft: "10px" }}>
+                                                            <span style={{ width: "29px", display: "inline-block" }}>
+                                                                {language.code}
+                                                            </span>{" "}
+                                                            {language.name}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
-                        )}
+                            <button className="btn btn-secondary desktop-login small fixed-menu-btn topmenu">
+                                Acceso
+                            </button>
+                            <button className="btn btn-cta register-link small fixed-menu-btn topmenu">
+                                Regístrate
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </header>
-            {showUserMenu && <UserMenu 
-                handleChangePasswordClick={() => {handleChangePasswordClick(); onClose();}} 
-                handleLogoutClick={() => {handleLogoutClick(); onClose();}} 
-                onClose={onClose}
-                isSlotsOnly={isSlotsOnly}
-            />}
-        </>
+            </nav>
+        </div>
     );
 };
 

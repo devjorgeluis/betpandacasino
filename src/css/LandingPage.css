@@ -1,0 +1,472 @@
+.onLandingPage {
+    display: flex;
+    flex: 1;
+    width: 100%;
+    justify-content: space-between
+}
+
+@media (max-width: 992px) {
+    .onLandingPage {
+        flex-direction:column;
+        align-items: center;
+        justify-content: center
+    }
+}
+
+.onLandingPageContainer {
+    width: 100%;
+    max-width: 1140px
+}
+
+.bundlesTitle {
+    margin-top: 124px;
+    margin-bottom: 16px
+}
+
+.bottomSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    min-height: 300px;
+    width: 100%;
+    padding: 1.5rem
+}
+
+.bottomSection .section1 .text {
+    text-shadow: 0 0 16px rgba(0,0,0,.5);
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1.17;
+    display: block;
+    text-align: center;
+    color: var(--text)
+}
+
+@media (max-width: 992px) {
+    .bottomSection .section1 .text {
+        font-size:3rem
+    }
+}
+
+.bottomSection .section2 {
+    width: 100%
+}
+
+.bottomSection .section2 .buttonWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto
+}
+
+.contentWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--text-font);
+    margin-top: 1rem;
+    margin-bottom: 1rem
+}
+
+.contentWrap .content {
+    color: var(--text);
+    margin-left: 16px;
+    margin-right: 16px
+}
+
+.contentWrap .content.content1 {
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 60px
+}
+
+.contentWrap .content.content1 .colorText {
+    color: var(--cta)
+}
+
+.contentWrap .content.content2 {
+    font-size: 1.5rem;
+    margin-top: 1rem
+}
+
+.contentWrap .content.content2 .colorText {
+    color: var(--cta)
+}
+
+.contentWrap .ButtonContainer {
+    width: 100%;
+    margin-top: 2rem
+}
+
+.contentWrap .buttonWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 350px
+}
+
+.contentWrap .buttonWrap.buttonLeft {
+    margin-left: .5em;
+    align-items: start;
+    justify-content: left
+}
+
+@media (max-width: 992px) {
+    .contentWrap .buttonWrap.buttonLeft {
+        margin-left:auto;
+        align-items: center;
+        justify-content: center
+    }
+}
+
+.twoColumns {
+    align-items: flex-start;
+    width: 50%
+}
+
+@media (max-width: 992px) {
+    .twoColumns {
+        align-items:center;
+        width: 100%;
+        text-align: center
+    }
+}
+
+.left {
+    order: 1;
+    margin-right: 2rem
+}
+
+.right {
+    order: 2
+}
+
+.content-hide {
+    display: none!important
+}
+
+.content-show {
+    display: flex!important
+}
+
+.textAlignLeft {
+    text-align: left
+}
+
+.fullWidth {
+    width: 100%;
+    text-align: center
+}
+
+.signupForm {
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+    background: #111010b3;
+    padding: 25px
+}
+
+@media (max-width: 992px) {
+    .signupForm {
+        display:none
+    }
+}
+
+@media (max-width: 768px) {
+    .pokerPage {
+        margin-top:.8rem
+    }
+}
+
+.continue {
+    text-decoration: none;
+    margin-top: 1rem;
+    white-space: nowrap;
+    display: block
+}
+
+@media (max-width: 768px) {
+    .continue {
+        margin-top:.8rem
+    }
+}
+
+.paymentLogoContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    width: 15rem;
+    height: 2rem
+}
+
+.paymentLogoContainer .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+    font-size: .875rem;
+    letter-spacing: var(--text-letter-spacing);
+    flex-direction: column;
+    font-weight: 500;
+    line-height: .875rem;
+    text-align: right
+}
+
+.paymentLogoContainer .logo {
+    width: 45%;
+    height: 100%;
+    background: #000
+}
+
+.landingPageContainer {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden
+}
+
+@media (max-width: 620px) {
+    .landingPageContainer {
+        height:500px
+    }
+}
+
+.landingPageContainer .imageInnerContainer {
+    max-width: 1140px;
+    margin: 0 auto;
+    position: absolute;
+    inset: 0
+}
+
+.landingPageContainer .imageInnerContainer img.imageInner {
+    height: 100%;
+    object-fit: contain
+}
+
+@media (max-width: 576px) {
+    .landingPageContainer .imageInnerContainer img.imageInner {
+        object-fit:cover
+    }
+}
+
+.landingPageContainer img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover
+}
+
+@media (max-width: 620px) {
+    .landingPageContainer img {
+        height:500px
+    }
+}
+
+.landingPageContainer .landingPageContent {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0
+}
+
+.landingPageContainer .landingPageContent .ContentWrapper {
+    max-width: 1140px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    padding-top: var(--head-bigscreen-height);
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+@media (max-width: 1200px) {
+    .landingPageContainer .landingPageContent .ContentWrapper {
+        padding-top:var(--head-smallscreen-height)
+    }
+}
+
+.landingPageContainer .landingPageContent .ContentWrapper.twoColumns {
+    justify-content: space-between;
+    width: 100%
+}
+
+.landingPageContainer .landingPageContent .ContentWrapper.contentRight {
+    justify-content: flex-end
+}
+
+.landingPageContainer .landingPageContent .ContentWrapper.contentLeft {
+    justify-content: flex-start
+}
+
+.promotionAreaContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 32px
+}
+
+.promotionAreaContainer .promotionAreaTitle {
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: normal;
+    text-align: center
+}
+
+.promotionAreaContainer .promotionArea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1140px;
+    margin: 0 auto
+}
+
+@media (max-width: 1200px) {
+    .promotionAreaContainer .promotionArea {
+        max-width:720px
+    }
+}
+
+.promotionAreaContainer .promotionArea.slider {
+    flex-wrap: nowrap;
+    align-items: unset;
+    justify-content: unset;
+    overflow: hidden
+}
+
+.promotionAreaContainer .promotionArea.slider .imageContainer {
+    margin: 0;
+    min-width: 285px;
+    width: auto;
+    height: auto;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    transition: all .2s ease-out
+}
+
+@media (max-width: 1200px) {
+    .promotionAreaContainer .promotionArea.slider .imageContainer {
+        min-width:33%
+    }
+}
+
+@media (max-width: 576px) {
+    .promotionAreaContainer .promotionArea.slider .imageContainer {
+        min-width:50%
+    }
+}
+
+.promotionAreaContainer .promotionArea.slider .imageContainer img {
+    width: 100%;
+    padding: 10px
+}
+
+.promotionAreaContainer .promotionArea.slider .imageContainer .textLabel {
+    left: 16px
+}
+
+.promotionAreaContainer .promotionAreaSmall {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 1140px
+}
+
+@media (max-width: 1200px) {
+    .promotionAreaContainer .promotionAreaSmall {
+        max-width:720px
+    }
+}
+
+.promotionAreaContainer .promotionAreaSmall.slider {
+    flex-wrap: nowrap;
+    align-items: unset;
+    justify-content: unset;
+    overflow: hidden
+}
+
+.promotionAreaContainer .promotionAreaSmall.slider .imageContainer {
+    margin: 0;
+    min-width: 25%;
+    width: auto;
+    height: auto;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -o-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    transition: all .2s ease-out
+}
+
+@media (max-width: 1200px) {
+    .promotionAreaContainer .promotionAreaSmall.slider .imageContainer {
+        min-width:33%
+    }
+}
+
+@media (max-width: 576px) {
+    .promotionAreaContainer .promotionAreaSmall.slider .imageContainer {
+        min-width:50%
+    }
+}
+
+.promotionAreaContainer .promotionAreaSmall.slider .imageContainer img {
+    width: 100%;
+    padding: 10px
+}
+
+.promotionAreaContainer .promotionAreaSmall.slider .imageContainer .textLabel {
+    left: 16px
+}
+
+.promotionAreaContainer .imageContainer {
+    position: relative;
+    text-align: center
+}
+
+@media (max-width: 576px) {
+    .promotionAreaContainer .imageContainer {
+        width:48%
+    }
+}
+
+.promotionAreaContainer .imageContainer img {
+    width: 100%;
+    height: inherit;
+    padding: 10px
+}
+
+.promotionAreaContainer .imageContainer .textLabel {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 400;
+    font-style: italic;
+    font-stretch: condensed;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: right;
+    text-transform: uppercase
+}
+
+.promotionAreaContainer .imageContainer .imageTitle {
+    position: absolute;
+    width: 200px;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 16px;
+    font-weight: 400
+}

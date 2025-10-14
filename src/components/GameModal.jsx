@@ -1,7 +1,4 @@
 import { useContext, useState, useEffect } from "react";
-import { ImCross } from "react-icons/im";
-import { ImRedo } from "react-icons/im";
-import { ImNewTab } from "react-icons/im";
 import IconEnlarge from "/src/assets/svg/enlarge.svg";
 import IconShrink from "/src/assets/svg/shrink.svg";
 import DivLoading from "./DivLoading";
@@ -182,12 +179,12 @@ const GameModal = (props) => {
           <div className="game-window-header">
             <div className="game-window-header-item align-center close-window">
               <span className="close-button" onClick={closeModal} title="Close">
-                <ImCross />
+
               </span>
             </div>
             <div className="game-window-header-item align-center reload-window">
               <span className="icon-reload" onClick={reload} title="Reload">
-                <ImRedo />
+
               </span>
             </div>
             <div className="game-window-header-item align-center full-window">
@@ -215,7 +212,7 @@ const GameModal = (props) => {
                 onClick={launchInNewTab}
                 title="Open In New Window"
               >
-                <ImNewTab />
+
               </span>
             </div>
           </div>

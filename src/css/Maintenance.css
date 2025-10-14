@@ -1,0 +1,54 @@
+.maintenance-page {
+    margin: 10vh auto;
+    width: 400px;
+    color: #fff;
+    text-align: center;
+    font-family: sans-serif;
+    padding: 20px;
+    border-radius: 20px
+}
+
+.maintenance-page h1 {
+    font-size: 24px
+}
+
+.maintenance-page p.team {
+    font-weight: 600
+}
+
+.bottom-notification {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: var(--maintenance-background);
+    color: #fff;
+    z-index: 100
+}
+
+.bottom-notification.hide {
+    display: none
+}
+
+.bottom-notification .content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%
+}
+
+.bottom-notification .content .text {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    padding: 0 40px;
+    font-size: 14px
+}
+
+.bottom-notification .close-container {
+    position: absolute;
+    right: 10px;
+    top: 35%;
+    cursor: pointer
+}
