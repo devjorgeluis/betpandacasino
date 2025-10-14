@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
 
@@ -6,6 +6,12 @@ const Sidebar = () => {
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+    const [countdown, setCountdown] = useState({
+        days: 1,
+        hours: 5,
+        minutes: 8,
+        seconds: 25
+    });
 
     const languages = [
         { code: "en", name: "English" },
@@ -45,6 +51,42 @@ const Sidebar = () => {
     const toggleLanguageDropdown = () => {
         setShowLanguageDropdown(!showLanguageDropdown);
     };
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCountdown(prevCountdown => {
+                let { days, hours, minutes, seconds } = prevCountdown;
+                
+                if (seconds > 0) {
+                    seconds--;
+                } else {
+                    seconds = 59;
+                    if (minutes > 0) {
+                        minutes--;
+                    } else {
+                        minutes = 59;
+                        if (hours > 0) {
+                            hours--;
+                        } else {
+                            hours = 23;
+                            if (days > 0) {
+                                days--;
+                            } else {
+                                days = 1;
+                                hours = 5;
+                                minutes = 8;
+                                seconds = 25;
+                            }
+                        }
+                    }
+                }
+                
+                return { days, hours, minutes, seconds };
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     const menuItems = [
         {
@@ -204,23 +246,47 @@ const Sidebar = () => {
                             <h4>Cashback semanal en</h4>
                         </div>
                         <div className="cashback-timer-container">
-                            {timerItems.map((item, index) => (
-                                <>
-                                    <div className="cashback-timer-item" key={index}>
-                                        <div className="cachback-timer-item-count nav-link">
-                                            <h3>{item.value}</h3>
-                                        </div>
-                                        <div className="cachback-timer-item-text">
-                                            <span>{item.label}</span>
-                                        </div>
-                                    </div>
-                                    {index < timerItems.length - 1 && (
-                                        <span className="timer-dots">
-                                            <img src={IconDots} alt="dots" />
-                                        </span>
-                                    )}
-                                </>
-                            ))}
+                            <div className="cashback-timer-item">
+                                <div className="cachback-timer-item-count nav-link">
+                                    <h3>{countdown.days}</h3>
+                                </div>
+                                <div className="cachback-timer-item-text">
+                                    <span>DÍAS</span>
+                                </div>
+                            </div>
+                            <span className="timer-dots">
+                                <img src={IconDots} alt="dots" />
+                            </span>
+                            <div className="cashback-timer-item">
+                                <div className="cachback-timer-item-count nav-link">
+                                    <h3>{countdown.hours.toString().padStart(2, '0')}</h3>
+                                </div>
+                                <div className="cachback-timer-item-text">
+                                    <span>H</span>
+                                </div>
+                            </div>
+                            <span className="timer-dots">
+                                <img src={IconDots} alt="dots" />
+                            </span>
+                            <div className="cashback-timer-item">
+                                <div className="cachback-timer-item-count nav-link">
+                                    <h3>{countdown.minutes.toString().padStart(2, '0')}</h3>
+                                </div>
+                                <div className="cachback-timer-item-text">
+                                    <span>MIN</span>
+                                </div>
+                            </div>
+                            <span className="timer-dots">
+                                <img src={IconDots} alt="dots" />
+                            </span>
+                            <div className="cashback-timer-item">
+                                <div className="cachback-timer-item-count nav-link">
+                                    <h3>{countdown.seconds.toString().padStart(2, '0')}</h3>
+                                </div>
+                                <div className="cachback-timer-item-text">
+                                    <span>SEG</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
