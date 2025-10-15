@@ -4,8 +4,8 @@ import IconAskgamblers from "/src/assets/svg/askgamblers.svg";
 import IconC2ryptonews from "/src/assets/svg/cryptonews.svg";
 import IconBitcoin from "/src/assets/svg/bitcoin.svg";
 
-const GameProvider = () => {
-    const gameProviders = [
+const GameLogos = () => {
+    const gameLogos = [
         {
             id: 1,
             name: "cointelegraph",
@@ -52,7 +52,7 @@ const GameProvider = () => {
                     </div>
                     <div className="inner-section desktop">
                         <div className="container-inner column-size-5">
-                            {gameProviders.map((provider) => (
+                            {gameLogos.map((provider) => (
                                 <a key={provider.id} className="card-wrapper" href={provider.href}>
                                     <div className="card-game-list">
                                         <img src={provider.icon} className="bg" alt={provider.alt} />
@@ -71,4 +71,4 @@ const GameProvider = () => {
     )
 }
 
-export default GameProvider
+export default GameLogos

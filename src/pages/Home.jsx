@@ -7,8 +7,11 @@ import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
 import Slideshow from "../components/Home/Slideshow";
-import GameProvider from "../components/Home/GameProvider";
+import GameLogos from "../components/Home/GameLogos";
 import GameSlideshow from "../components/Home/GameSlideshow";
+import Welcome from "../components/Home/Welcome";
+import GameProviders from "../components/Home/GameProviders";
+import Discover from "../components/Home/Discover";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
@@ -277,9 +280,12 @@ const Home = () => {
               <div className="root-wrapper">
                 <div className="page">
                   <Slideshow />
-                  <GameProvider />
+                  <GameLogos />
                   { topLiveCasino.length > 0 && <GameSlideshow games={topLiveCasino} name="liveCasino" title="Juegos en vivo principales" icon={IconLive} link="/live-casino" /> }
                   { topGames.length > 0 && <GameSlideshow games={topGames} name="casino" title="Juegos más populares" icon={IconHot} link="/casino" /> }
+                  <Welcome />
+                  { mainCategories.length > 0 && <GameProviders categories={mainCategories} /> }
+                  <Discover />
                 </div>
               </div>
               <footer className="footer-container">
