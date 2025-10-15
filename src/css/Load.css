@@ -16592,8 +16592,9 @@ button:focus {
 }
 
 .banner-carousel-container .carousel-indicators {
-    bottom: auto;
-    top: 95%
+    bottom: auto !important;
+    top: 98% !important;
+    width: auto !important;
 }
 
 .banner-carousel-container .carousel-indicators li {
@@ -17895,6 +17896,11 @@ button:focus {
 .landingPage .swiper-pagination-bullet-active {
     opacity: 1;
     background: #fff
+}
+
+.casino-container .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: var(--cta) !important;
 }
 
 .gameSlider {

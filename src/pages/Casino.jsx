@@ -5,6 +5,7 @@ import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
+import Slideshow from "../components/Casino/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
@@ -14,13 +15,6 @@ import SearchSelect from "../components/SearchSelect";
 import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
-
-import ImgLobby from "/src/assets/img/lobby.avif";
-import ImgJoker from "/src/assets/img/jokers.avif";
-import ImgHot from "/src/assets/img/hot.avif";
-import ImgCrash from "/src/assets/img/crash.avif";
-import ImgMegaways from "/src/assets/img/megaways.avif";
-import ImgRoulette from "/src/assets/img/roulette.webp";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -390,6 +384,16 @@ const Casino = () => {
         />
       ) : (
         <>
+          <div className="root-container" id="pageContainer">
+            <div className="root-wrapper">
+              <div className="page">
+                <div className="casino-container">
+                  <Slideshow />
+                </div>
+              </div>
+            </div>
+          </div>
+          
           {
             categories.length > 0 ? <CategorySlideshow
               categories={categories}
