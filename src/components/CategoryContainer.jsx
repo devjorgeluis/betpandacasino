@@ -1,36 +1,27 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import CategoryButton from "../components/CategoryButton";
+import CategoryButton from "./CategoryButton";
 
-const CategorySlideshow = (props) => {
+const CategoryContainer = (props) => {
   const { contextData } = useContext(AppContext);
-  const navigate = useNavigate();
 
   if (!props.categories || props.categories.length === 0) {
     return null;
   }
 
-
   const handleCategoryClick = (category, index) => {
-    if (props.pageType === 'home') {
-      // Navigate to casino with provider parameter
-      navigate(`/casino?provider=${encodeURIComponent(category.name)}&providerId=${category.id}`);
-    } else {
-      // Default casino behavior
-      if (props.onCategoryClick) {
-        props.onCategoryClick(category, category.id, category.table_name, index, true);
-      }
-      if (props.onCategorySelect) {
-        props.onCategorySelect(category);
-      }
+    if (props.onCategoryClick) {
+      props.onCategoryClick(category, category.id, category.table_name, index, true);
+    }
+    if (props.onCategorySelect) {
+      props.onCategorySelect(category);
     }
   };
 
   return (
     <div className="container">
-      <div className="container categories-container">
-        <ul className="navbar-nav flex-row casino-lobby-categories row">
+      <div className={`container categories-container ${props.isMobile ? 'mobile' : ''}`}>
+        <ul className={`navbar-nav flex-row casino-lobby-categories row ${props.isMobile ? 'mobile' : ''}` }>
           {props.categories.map((category, index) => (
             <CategoryButton
               key={index}
@@ -46,4 +37,4 @@ const CategorySlideshow = (props) => {
   )
 }
 
-export default CategorySlideshow
+export default CategoryContainer

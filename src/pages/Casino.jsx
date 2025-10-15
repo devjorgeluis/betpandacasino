@@ -6,11 +6,10 @@ import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/Casino/Slideshow";
-import CategorySlideshow from "../components/CategorySlideshow";
+import CategoryContainer from "../components/CategoryContainer";
 import GameModal from "../components/GameModal";
 import About from "../components/Home/About";
 import Footer from "../components/Footer";
-import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
 import SearchInput from "../components/SearchInput";
 import SearchSelect from "../components/SearchSelect";
@@ -30,11 +29,9 @@ const Casino = () => {
   const { contextData } = useContext(AppContext);
   const { isLogin } = useContext(LayoutContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
-  const [selectedPage, setSelectedPage] = useState("lobby");
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [mainCategories, setMainCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState({});
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [isProviderDropdownOpen, setIsProviderDropdownOpen] = useState(false);
@@ -42,33 +39,15 @@ const Casino = () => {
   const [gameUrl, setGameUrl] = useState("");
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+  const [mobileShowMore, setMobileShowMore] = useState(false);
   const refGameModal = useRef();
   const location = useLocation();
   const searchRef = useRef(null);
-  const { isSlotsOnly } = useOutletContext();
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      return window.innerWidth <= 767;
-    };
-
-    setIsMobile(checkIsMobile());
-
-    const handleResize = () => {
-      setIsMobile(checkIsMobile());
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const { isSlotsOnly, isMobile } = useOutletContext();
 
   useEffect(() => {
     selectedGameId = null;
@@ -78,7 +57,6 @@ const Casino = () => {
     setGameUrl("");
     setShouldShowGameModal(false);
 
-    setSelectedPage("casino");
     getPage("casino");
 
     window.scrollTo(0, 0);
@@ -99,7 +77,6 @@ const Casino = () => {
     setIsLoadingGames(true);
     setCategories([]);
     setGames([]);
-    setSelectedPage(page);
     callApi(contextData, "GET", "/get-page?page=" + page, callbackGetPage, null);
   };
 
@@ -110,10 +87,6 @@ const Casino = () => {
       setCategories(result.data.categories);
       setSelectedProvider(null);
       setPageData(result.data);
-
-      if (result.data.menu === "home") {
-        setMainCategories(result.data.categories);
-      }
 
       if (result.data.page_group_type === "categories" && result.data.categories.length > 0) {
         const firstCategory = result.data.categories[0];
@@ -133,6 +106,9 @@ const Casino = () => {
     let item = categories[selectedCategoryIndex];
     if (item) {
       fetchContent(item, item.id, item.table_name, selectedCategoryIndex, false);
+      if (isMobile) {
+        setMobileShowMore(true);
+      }
     }
   };
 
@@ -248,7 +224,7 @@ const Casino = () => {
 
   const handleCategorySelect = (category) => {
     setActiveCategory(category);
-    setSelectedProvider(category);
+    setSelectedProvider(null);
     setTxtSearch("");
   }
 
@@ -355,10 +331,11 @@ const Casino = () => {
           launchInNewTab={() => launchGame(null, null, "tab")}
           ref={refGameModal}
           onClose={closeGameModal}
+          isMobile={isMobile}
         />
       ) : (
         <>
-          <div className="root-container" id="pageContainer">
+          <div className={`root-container ${isMobile ? 'mobile' : ''}`} id="pageContainer">
             <div className="root-wrapper">
               <div className="page">
                 <div className="casino-container">
@@ -369,7 +346,6 @@ const Casino = () => {
                         <div className="col-md-9 filter-column">
                           <div className="container">
                             <div className="casino-filters-container" id="casinoFiltersContainer">
-                              <div className="casino-filter filter-games-label"></div>
                               <div
                                 className="casino-filter"
                                 onClick={() => setIsProviderDropdownOpen(!isProviderDropdownOpen)}
@@ -400,22 +376,34 @@ const Casino = () => {
                           />
                         </div>
                       </div>
+                      {
+                        isMobile && <div className="mobile-search">
+                          <SearchInput
+                            txtSearch={txtSearch}
+                            setTxtSearch={setTxtSearch}
+                            searchRef={searchRef}
+                            search={search}
+                            clearSearch={clearSearch}
+                          />
+                        </div>
+                      }
                     </div>
                   </div>
                   {
-                    categories.length > 0 && txtSearch === "" && selectedProvider === null && <CategorySlideshow
+                    categories.length > 0 && txtSearch === "" && selectedProvider === null && <CategoryContainer
                       categories={categories}
                       selectedCategoryIndex={selectedCategoryIndex}
                       onCategoryClick={fetchContent}
                       onCategorySelect={handleCategorySelect}
+                      isMobile={isMobile}
                       pageType="casino"
                     />
                   }
                   {
                     (txtSearch !== "" || selectedProvider) && <>
                       <div className="container">
-                        <div className="container categories-container">
-                          <ul className="navbar-nav flex-row casino-lobby-categories row">
+                        <div className={`container categories-container ${isMobile ? 'mobile' : ''}`}>
+                          <ul className={`navbar-nav flex-row casino-lobby-categories row ${isMobile ? 'mobile' : ''}` }>
                             <li className="nav-item" onClick={clearSearch}>
                               <a className="nav-link">
                                 <i className="material-icons">chevron_left</i>
@@ -460,7 +448,7 @@ const Casino = () => {
                               </h2>
                             </div> : <div className="row games-list popular"><h2></h2></div>
                           }
-                          <div className="row games-list limited-games-list popular">
+                          <div className={`row games-list popular ${mobileShowMore ? '' : 'limited-games-list'}`}>
                             {games &&
                               games.map((item, index) => {
                                 let imageDataSrc = item.image_url;
@@ -474,6 +462,7 @@ const Casino = () => {
                                     provider={activeCategory.name}
                                     title={item.name}
                                     imageSrc={imageDataSrc}
+                                    mobileShowMore={mobileShowMore}
                                     onClick={() =>
                                       isLogin
                                         ? launchGame(item, "slot", "tab")

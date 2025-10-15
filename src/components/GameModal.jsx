@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import IconEnlarge from "/src/assets/svg/enlarge.svg";
 import IconShrink from "/src/assets/svg/shrink.svg";
 import DivLoading from "./DivLoading";
@@ -7,29 +7,10 @@ const GameModal = (props) => {
   const [url, setUrl] = useState(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      return window.innerWidth <= 767;
-    };
-
-    setIsMobile(checkIsMobile());
-
-    const handleResize = () => {
-      setIsMobile(checkIsMobile());
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     if (props.gameUrl !== null && props.gameUrl !== "") {
-      if (isMobile) {
+      if (props.isMobile) {
         window.location.href = props.gameUrl;
       } else {
         document
@@ -38,7 +19,7 @@ const GameModal = (props) => {
         setUrl(props.gameUrl);
       }
     }
-  }, [props.gameUrl, isMobile]);
+  }, [props.gameUrl, props.isMobile]);
 
   const closeModal = () => {
     resetModal();
@@ -161,7 +142,7 @@ const GameModal = (props) => {
     }
   }, []);
 
-  if (isMobile) {
+  if (props.isMobile) {
     return null;
   }
 

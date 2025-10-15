@@ -477,7 +477,6 @@
     flex-wrap: nowrap;
     scroll-behavior: smooth;
     min-width: 100%;
-    margin: 0 -15px
 }
 
 .mobile .games-list.limited-games-list .casino-game.mobile {

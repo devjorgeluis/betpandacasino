@@ -168,7 +168,7 @@ const Layout = () => {
                         />
                         <Sidebar isSlotsOnly={isSlotsOnly} isMobile={isMobile} />
                         <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
-                            <Outlet context={{ isSlotsOnly }} />
+                            <Outlet context={{ isSlotsOnly, isMobile }} />
                         </main>
                     </div>
                 </>

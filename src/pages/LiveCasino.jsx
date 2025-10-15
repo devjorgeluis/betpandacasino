@@ -5,7 +5,7 @@ import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
-import CategorySlideshow from "../components/CategorySlideshow";
+import CategoryContainer from "../components/CategoryContainer";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
@@ -37,7 +37,6 @@ const LiveCasino = () => {
   const [gameUrl, setGameUrl] = useState("");
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
@@ -45,24 +44,7 @@ const LiveCasino = () => {
   const refGameModal = useRef();
   const location = useLocation();
   const searchRef = useRef(null);
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      return window.innerWidth <= 767;
-    };
-
-    setIsMobile(checkIsMobile());
-
-    const handleResize = () => {
-      setIsMobile(checkIsMobile());
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const { isMobile } = useOutletContext();
 
   useEffect(() => {
     selectedGameId = null;
@@ -349,7 +331,7 @@ const LiveCasino = () => {
       ) : (
         <>
           {
-            categories.length > 0 ? <CategorySlideshow
+            categories.length > 0 ? <CategoryContainer
               categories={categories}
               selectedCategoryIndex={selectedCategoryIndex}
               onCategoryClick={fetchContent}

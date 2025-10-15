@@ -13,6 +13,14 @@ const GamesLoading = () => {
                                         <div className=""></div>
                                     </div>
                                 </div>
+                                <div className="favourite-container">
+                                    <a className="favourite"><i className="material-icons favourite-icon">favorite_border</i></a>
+                                </div>
+                            </div>
+                            <div className="game-play-button">
+                                <span className="click-to-play">
+                                <i className="material-icons">play_circle_filled</i>
+                                </span>
                             </div>
                         </div>
                     </div>
