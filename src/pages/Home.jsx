@@ -13,6 +13,7 @@ import Welcome from "../components/Home/Welcome";
 import GameProviders from "../components/Home/GameProviders";
 import Discover from "../components/Home/Discover";
 import Promotions from "../components/Home/Promotions";
+import About from "../components/Home/About";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
@@ -288,6 +289,7 @@ const Home = () => {
                   { mainCategories.length > 0 && <GameProviders categories={mainCategories} /> }
                   <Discover />
                   <Promotions />
+                  <About />
                 </div>
               </div>
               <footer className="footer-container">
@@ -423,15 +425,15 @@ const Home = () => {
                         <div className="tagline copyright"><span>©&nbsp;Todos los derechos reservados. 2025&nbsp;Betpanda.io</span></div>
                         <div className="tagline copyright-navigation">
                           <div className="copyright-nav-item">
-                            <span>Support</span>
+                            <span>Support </span>
                             <a className="copyright-nav-link" href="mailto:support@betpanda.io">support@betpanda.io</a>
                           </div>
                           <div className="copyright-nav-item">
-                            <span>Partners</span>
+                            <span>Partners </span>
                             <a className="copyright-nav-link" href="mailto:partners@betpanda.io">partners@betpanda.io</a>
                           </div>
                           <div className="copyright-nav-item">
-                            <span>Press</span>
+                            <span>Press </span>
                             <a className="copyright-nav-link" href="mailto:press@betpanda.io">press@betpanda.io</a>
                           </div>
                         </div>
