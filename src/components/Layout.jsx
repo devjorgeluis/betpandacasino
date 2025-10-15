@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "./LayoutContext";
@@ -9,6 +9,7 @@ import Sidebar from "./Sidebar";
 import LoginModal from "./LoginModal";
 import { NavigationContext } from "./NavigationContext";
 import FullDivLoading from "./FullDivLoading";
+import ChatButton from "./ChatButton";
 
 const Layout = () => {
     const { contextData } = useContext(AppContext);
@@ -23,6 +24,8 @@ const Layout = () => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const navigate = useNavigate();
 
+    const location = useLocation();
+    const isSportsPage = location.pathname === "/sports" || location.pathname === "/live-sports";
 
     const toggleSidebar = () => {
         setIsSidebarExpanded(!isSidebarExpanded);
@@ -53,7 +56,7 @@ const Layout = () => {
 
         setIsMobile(checkIsMobile());
         setIsSmallScreen(checkIsSmallScreen());
-        
+
         if (checkShouldCollapseSidebar()) {
             setIsSidebarExpanded(false);
         }
@@ -61,7 +64,7 @@ const Layout = () => {
         const handleResize = () => {
             setIsMobile(checkIsMobile());
             setIsSmallScreen(checkIsSmallScreen());
-            
+
             if (checkShouldCollapseSidebar()) {
                 setIsSidebarExpanded(false);
             }
@@ -107,7 +110,6 @@ const Layout = () => {
 
         if (result && result.user === null) {
             localStorage.removeItem("session");
-            window.location.href = "/";
         }
     };
 
@@ -147,6 +149,7 @@ const Layout = () => {
             >
                 <>
                     <FullDivLoading show={showFullDivLoading} />
+                    {!isSportsPage && <ChatButton />}
                     {showLoginModal && (
                         <LoginModal
                             isMobile={isMobile}

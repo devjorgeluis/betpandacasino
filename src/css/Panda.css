@@ -11088,6 +11088,111 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     height: auto;
 }
 
+.chat-button {
+    display: flex;
+    width: 60px;
+    height: 60px;
+    box-shadow: rgba(0, 0, 0, 0.125) 0px 0.362176px 0.941657px -1px, rgba(0, 0, 0, 0.18) 0px 3px 7.8px -2px;
+    border-radius: 50%;
+    justify-content: center;
+    overflow: visible;
+    margin-left: auto;
+    color: #FFFFFF;
+    background-color: #1FE88A;
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+    z-index: 10000;
+}
+
+.chat-button button {
+    border: 0;
+    border-radius: 6px;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #FFFFFF;
+    background: none;
+}
+
+.chat-button button .main-svg {
+    width: 32px;
+    height: 32px;
+}
+
+.chat-button button:hover .main-svg .second-path {
+    display: none;
+}
+
+.dots {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 26px;
+    background: #1FE88A;
+    border-radius: 50%;
+}
+
+.chat-button button:hover .dots {
+    display: inline-block;
+}
+
+.dots .circle {
+    position: absolute;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-timing-function: cubic-bezier(0, 0, 1, 1);
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    width: 4px;
+    height: 4px;
+    background: #1FE88A;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.dots .circle1 {
+    left: 23px;
+    animation-name: animation-1;
+    animation-duration: 1s;
+    animation-delay: 0ms;
+}
+
+.dots .circle2 {
+    left: 29px;
+    animation-name: animation-2;
+    animation-duration: 1s;
+    animation-delay: 0.2s;
+}
+
+.dots .circle3 {
+    left: 35px;
+    animation-name: animation-3;
+    animation-duration: 1s;
+    animation-delay: 0.6s;
+}
+
+@keyframes animation-1 {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(0) translateY(6px); }
+    100% { transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes animation-2 {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(0) translateY(6px); }
+    100% { transform: translateY(-50%) translateX(0); }
+}
+
+@keyframes animation-3 {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-50%) translateX(0) translateY(6px); }
+    100% { transform: translateY(-50%) translateX(0); }
+}
+
 @media (max-width: 768px) {
     .navbar-nav {
         display: none;
@@ -11095,6 +11200,10 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
 
     .menu-items-container {
         margin-top: 50px;
+    }
+
+    .chat-button {
+        bottom: 70px;
     }
 }
 

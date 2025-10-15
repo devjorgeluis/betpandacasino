@@ -44,7 +44,6 @@ const Home = () => {
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const [isLoadingGames, setIsLoadingGames] = useState(false);
@@ -52,24 +51,6 @@ const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isSlotsOnly } = useOutletContext();
-
-  useEffect(() => {
-    const checkIsMobile = () => {
-      return window.innerWidth <= 767;
-    };
-
-    setIsMobile(checkIsMobile());
-
-    const handleResize = () => {
-      setIsMobile(checkIsMobile());
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   useEffect(() => {
     selectedGameId = null;
@@ -266,13 +247,21 @@ const Home = () => {
             <div className="root-container" id="pageContainer">
               <div className="root-wrapper">
                 <div className="page">
-                  <Slideshow />
-                  <GameLogos />
+                  {
+                    !isLogin && <>
+                      <Slideshow />
+                      <GameLogos /> 
+                    </>
+                  }
                   { topLiveCasino.length > 0 && <GameSlideshow games={topLiveCasino} name="liveCasino" title="Juegos en vivo principales" icon={IconLive} link="/live-casino" /> }
                   { topGames.length > 0 && <GameSlideshow games={topGames} name="casino" title="Juegos más populares" icon={IconHot} link="/casino" /> }
-                  <Welcome />
-                  { mainCategories.length > 0 && <GameProviders categories={mainCategories} /> }
-                  <Discover />
+                  {
+                    !isLogin && <>
+                      <Welcome />
+                      { mainCategories.length > 0 && <GameProviders categories={mainCategories} /> }
+                      <Discover />
+                    </>
+                  }
                   <Promotions />
                   <About />
                 </div>

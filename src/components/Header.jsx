@@ -36,10 +36,6 @@ const Header = ({
         setShowMenuContainer(false);
     };
 
-    const closeMobileMenuContainer = () => {
-        setShowMobileMenuContainer(false);
-    };
-
     const toggleLanguageMenu = () => {
         setShowLanguageMenu(!showLanguageMenu);
     };
