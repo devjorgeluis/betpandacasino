@@ -11093,10 +11093,15 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     .navbar-nav {
         display: none;
     }
+
+    .menu-items-container {
+        margin-top: 50px;
+    }
 }
 
 @media (min-width: 768px) {
-    .headerWrapper {
+    .headerWrapper,
+    .bottom-menu {
         display: none;
     }
 }

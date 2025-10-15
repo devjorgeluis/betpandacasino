@@ -4,7 +4,7 @@ import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
 import ImgLogo from "/src/assets/svg/logo.svg";
 
-const Sidebar = ({ isSlotsOnly }) => {
+const Sidebar = ({ isSlotsOnly, isMobile }) => {
     const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -165,206 +165,229 @@ const Sidebar = ({ isSlotsOnly }) => {
     ];
 
     return (
-        <div className={`menu-layout-sidebar ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
-            {/* Collapsed Sidebar */}
-            <div className={`sidemenu-container sidemenu-container-collapsed ${!isSidebarExpanded ? 'active' : ''}`}>
-                <div className="sidemenu-header collapsed">
-                    <div className="close-button collapsed fixed">
-                        <span 
-                            className="hamburger-bars sidemenu-toggle"
-                            onClick={toggleSidebar}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <span className="material-icons">menu</span>
-                        </span>
+        <>
+            <div className={`menu-layout-sidebar ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
+                <div className={`sidemenu-container sidemenu-container-collapsed ${!isSidebarExpanded ? 'active' : ''}`}>
+                    <div className="sidemenu-header collapsed">
+                        <div className="close-button collapsed fixed">
+                            <span 
+                                className="hamburger-bars sidemenu-toggle"
+                                onClick={toggleSidebar}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <span className="material-icons">menu</span>
+                            </span>
+                        </div>
                     </div>
+                    <div className="content collapsed"></div>
+                    <div className="menu-items menu-items-collapsed">
+                        {collapsedMenuItems.map((item, index) => (
+                            <a 
+                                key={index}
+                                className={`nav-link fixed-nav-link ${item.name} ${item.name === 'sports' ? 'active-collapsed' : ''}`}
+                                href={item.href}
+                                aria-current={item.name === 'sports' ? 'page' : undefined}
+                            >
+                                <i className={item.icon}></i>
+                            </a>
+                        ))}
+                    </div>
+                    <div className="menu-divider"></div>
+                    <div className="footer-items footer-items-collapsed"></div>
                 </div>
-                <div className="content collapsed"></div>
-                <div className="menu-items menu-items-collapsed">
-                    {collapsedMenuItems.map((item, index) => (
-                        <a 
-                            key={index}
-                            className={`nav-link fixed-nav-link ${item.name} ${item.name === 'sports' ? 'active-collapsed' : ''}`}
-                            href={item.href}
-                            aria-current={item.name === 'sports' ? 'page' : undefined}
-                        >
-                            <i className={item.icon}></i>
-                        </a>
-                    ))}
-                </div>
-                <div className="menu-divider"></div>
-                <div className="footer-items footer-items-collapsed"></div>
-            </div>
 
-            {/* Expanded Sidebar */}
-            <div className={`sidemenu-container sidemenu-container-expanded ${isSidebarExpanded ? 'active' : ''}`}>
-                <div className="sidemenu-header expanded">
-                    <div className="close-button expanded logo fixed">
-                        <span 
-                            className="hamburger-bars sidemenu-toggle"
-                            onClick={toggleSidebar}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <span className="material-icons">menu</span>
-                        </span>
-                    </div>
-                    <div className="brand-logo">
-                        <a className="linkCss" href="/">
-                            <img alt="logo" className="logo light-logo" src={ImgLogo} /> 
-                        </a>
-                    </div>
-                </div>
-                <div className="content d-none">
-                    <div className="cashback-component">
-                        <div className="cashback-header-container">
-                            <h4>Cashback semanal en</h4>
+                <div className={`sidemenu-container sidemenu-container-expanded ${isSidebarExpanded ? 'active' : ''}`}>
+                    <div className="sidemenu-header expanded">
+                        <div className="close-button expanded logo fixed">
+                            <span 
+                                className="hamburger-bars sidemenu-toggle"
+                                onClick={toggleSidebar}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <span className="material-icons">{isMobile ? "close" : "menu"}</span>
+                            </span>
                         </div>
-                        <div className="cashback-timer-container">
-                            <div className="cashback-timer-item">
-                                <div className="cachback-timer-item-count nav-link">
-                                    <h3>{countdown.days}</h3>
-                                </div>
-                                <div className="cachback-timer-item-text">
-                                    <span>DÍAS</span>
-                                </div>
-                            </div>
-                            <span className="timer-dots">
-                                <img src={IconDots} alt="dots" />
-                            </span>
-                            <div className="cashback-timer-item">
-                                <div className="cachback-timer-item-count nav-link">
-                                    <h3>{countdown.hours.toString().padStart(2, '0')}</h3>
-                                </div>
-                                <div className="cachback-timer-item-text">
-                                    <span>H</span>
-                                </div>
-                            </div>
-                            <span className="timer-dots">
-                                <img src={IconDots} alt="dots" />
-                            </span>
-                            <div className="cashback-timer-item">
-                                <div className="cachback-timer-item-count nav-link">
-                                    <h3>{countdown.minutes.toString().padStart(2, '0')}</h3>
-                                </div>
-                                <div className="cachback-timer-item-text">
-                                    <span>MIN</span>
-                                </div>
-                            </div>
-                            <span className="timer-dots">
-                                <img src={IconDots} alt="dots" />
-                            </span>
-                            <div className="cashback-timer-item">
-                                <div className="cachback-timer-item-count nav-link">
-                                    <h3>{countdown.seconds.toString().padStart(2, '0')}</h3>
-                                </div>
-                                <div className="cachback-timer-item-text">
-                                    <span>SEG</span>
-                                </div>
-                            </div>
+                        <div className="brand-logo">
+                            <a className="linkCss" href="/">
+                                <img alt="logo" className="logo light-logo" src={ImgLogo} /> 
+                            </a>
                         </div>
                     </div>
-                </div>
-                <div className="menu-items-container">
-                    <div className="menu-items menu-items-fixed">
-                        {menuItems.map((menu) => (
-                            <div key={menu.id} className="side-submenu-container">
-                                <div className={`submenu-container ${isMenuExpanded(menu.id) ? 'expanded-submenu-container' : ''}`}>
-                                    <a 
-                                        className={`nav-link submenu-link expandable CUSTOM ${menu.id}`}
-                                        href={menu.href}
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            toggleMenu(menu.id);
-                                        }}
-                                        style={{ cursor: 'pointer' }}
-                                    >
-                                        <div className="nav-link-logo">
-                                            <i className={menu.icon}></i>
-                                            {menu.name}
-                                        </div>
-                                        <div>
-                                            <div className="submenu-chevron">
-                                                <i className="material-icons">
-                                                    {isMenuExpanded(menu.id) ? 'expand_more' : 'chevron_right'}
-                                                </i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'expanded-sub-menu show' : ''}`}>
-                                        {menu.subItems.map((subItem, subIndex) => (
-                                            <a 
-                                                key={subIndex}
-                                                className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                                href={subItem.href}
-                                            >
-                                                <i className={subItem.icon}></i>
-                                                {subItem.name}
-                                            </a>
-                                        ))}
+                    <div className="content d-none">
+                        <div className="cashback-component">
+                            <div className="cashback-header-container">
+                                <h4>Cashback semanal en</h4>
+                            </div>
+                            <div className="cashback-timer-container">
+                                <div className="cashback-timer-item">
+                                    <div className="cachback-timer-item-count nav-link">
+                                        <h3>{countdown.days}</h3>
+                                    </div>
+                                    <div className="cachback-timer-item-text">
+                                        <span>DÍAS</span>
+                                    </div>
+                                </div>
+                                <span className="timer-dots">
+                                    <img src={IconDots} alt="dots" />
+                                </span>
+                                <div className="cashback-timer-item">
+                                    <div className="cachback-timer-item-count nav-link">
+                                        <h3>{countdown.hours.toString().padStart(2, '0')}</h3>
+                                    </div>
+                                    <div className="cachback-timer-item-text">
+                                        <span>H</span>
+                                    </div>
+                                </div>
+                                <span className="timer-dots">
+                                    <img src={IconDots} alt="dots" />
+                                </span>
+                                <div className="cashback-timer-item">
+                                    <div className="cachback-timer-item-count nav-link">
+                                        <h3>{countdown.minutes.toString().padStart(2, '0')}</h3>
+                                    </div>
+                                    <div className="cachback-timer-item-text">
+                                        <span>MIN</span>
+                                    </div>
+                                </div>
+                                <span className="timer-dots">
+                                    <img src={IconDots} alt="dots" />
+                                </span>
+                                <div className="cashback-timer-item">
+                                    <div className="cachback-timer-item-count nav-link">
+                                        <h3>{countdown.seconds.toString().padStart(2, '0')}</h3>
+                                    </div>
+                                    <div className="cachback-timer-item-text">
+                                        <span>SEG</span>
                                     </div>
                                 </div>
                             </div>
-                        ))}
+                        </div>
                     </div>
-                </div>
-                <div className="menu-divider"></div>
-                <div className="footer-items footer-items-fixed"></div>
-                <div className="language-wrapper-container d-none">
-                    <div className="dropdown-btn small dropdown">
-                        <button 
-                            aria-haspopup="true" 
-                            aria-expanded={showLanguageDropdown}
-                            id="dropdown-btn" 
-                            type="button" 
-                            className="dropdown-toggle btn btn-secondary"
-                            onClick={toggleLanguageDropdown}
-                            style={{ cursor: 'pointer' }}
-                        >
-                            <i className="material-icons">language</i>
-                            {currentLanguage.name} ({currentLanguage.code})
-                        </button>
-                        {showLanguageDropdown && (
-                            <div
-                                aria-labelledby="dropdown-btn"
-                                className="dropdown-menu show"
-                            >
-                                {languages.map((language) => (
-                                    <a 
-                                        key={language.code}
-                                        href="#" 
-                                        className={`dropdown-item ${language.code === currentLanguage.code ? 'active' : ''}`}
-                                        role="button"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            handleLanguageSelect(language.code);
-                                        }}
-                                    >
-                                        {language.name} ({language.code})
-                                    </a>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <div className="footer-content footer-content-fixed d-none">
-                    <div className="app-install-container">
-                        <div className="app-buttons-container">
-                            <div className="download-text-area">Download App</div>
-                            <button name="windows app download button" aria-label="windows app download button" className="app-button windows">
-                                <i className="device-icon">
-                                    <img src={IconDownload} alt="Windows app" />
-                                </i>
-                                <div className="hoverBubble bubblePosition windows">
-                                    <p></p>
-                                    <p></p>
-                                    <p>Haz clic para instalar la aplicación</p>
+                    <div className="menu-items-container">
+                        <div className="menu-items menu-items-fixed">
+                            {menuItems.map((menu) => (
+                                <div key={menu.id} className="side-submenu-container">
+                                    <div className={`submenu-container ${isMenuExpanded(menu.id) ? 'expanded-submenu-container' : ''}`}>
+                                        <a 
+                                            className={`nav-link submenu-link expandable CUSTOM ${menu.id}`}
+                                            href={menu.href}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                toggleMenu(menu.id);
+                                            }}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <div className="nav-link-logo">
+                                                <i className={menu.icon}></i>
+                                                {menu.name}
+                                            </div>
+                                            <div>
+                                                <div className="submenu-chevron">
+                                                    <i className="material-icons">
+                                                        {isMenuExpanded(menu.id) ? 'expand_more' : 'chevron_right'}
+                                                    </i>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'expanded-sub-menu show' : ''}`}>
+                                            {menu.subItems.map((subItem, subIndex) => (
+                                                <a 
+                                                    key={subIndex}
+                                                    className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                                    href={subItem.href}
+                                                >
+                                                    <i className={subItem.icon}></i>
+                                                    {subItem.name}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="menu-divider"></div>
+                    <div className="footer-items footer-items-fixed"></div>
+                    <div className="language-wrapper-container d-none">
+                        <div className="dropdown-btn small dropdown">
+                            <button 
+                                aria-haspopup="true" 
+                                aria-expanded={showLanguageDropdown}
+                                id="dropdown-btn" 
+                                type="button" 
+                                className="dropdown-toggle btn btn-secondary"
+                                onClick={toggleLanguageDropdown}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <i className="material-icons">language</i>
+                                {currentLanguage.name} ({currentLanguage.code})
                             </button>
+                            {showLanguageDropdown && (
+                                <div
+                                    aria-labelledby="dropdown-btn"
+                                    className="dropdown-menu show"
+                                >
+                                    {languages.map((language) => (
+                                        <a 
+                                            key={language.code}
+                                            href="#" 
+                                            className={`dropdown-item ${language.code === currentLanguage.code ? 'active' : ''}`}
+                                            role="button"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                handleLanguageSelect(language.code);
+                                            }}
+                                        >
+                                            {language.name} ({language.code})
+                                        </a>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="footer-content footer-content-fixed d-none">
+                        <div className="app-install-container">
+                            <div className="app-buttons-container">
+                                <div className="download-text-area">Download App</div>
+                                <button name="windows app download button" aria-label="windows app download button" className="app-button windows">
+                                    <i className="device-icon">
+                                        <img src={IconDownload} alt="Windows app" />
+                                    </i>
+                                    <div className="hoverBubble bubblePosition windows">
+                                        <p></p>
+                                        <p></p>
+                                        <p>Haz clic para instalar la aplicación</p>
+                                    </div>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <nav className="bottom-menu">
+                <a className="mobile-menu-item" href="/casino">
+                    <div className="icon"><i className="custom-icon-bp-casino"></i></div>
+                    <div className="menu-text">Casino</div>
+                </a>
+                {
+                    !isSlotsOnlyMode && <>
+                        <a className="mobile-menu-item" href="/live-casino">
+                            <div className="icon"><i className="custom-icon-bp-live-casino"></i></div>
+                            <div className="menu-text">Casino en Vivo</div>
+                        </a>
+                        <a className="mobile-menu-item" href="/sports">
+                            <div className="icon"><i className="custom-icon-bp-sports"></i></div>
+                            <div className="menu-text">Deportes</div>
+                        </a>
+                    </>
+                }
+                <button className="mobile-menu-item" onClick={toggleSidebar}>
+                    <div className="icon"><span className="material-icons">menu</span></div>
+                    <div className="menu-text">Menú</div>
+                </button>
+            </nav>
+        </>
     );
 };
 

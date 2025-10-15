@@ -163,7 +163,7 @@ const Layout = () => {
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}
                         />
-                        <Sidebar isSlotsOnly={{ isSlotsOnly }} />
+                        <Sidebar isSlotsOnly={isSlotsOnly} isMobile={isMobile} />
                         <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
                             <Outlet context={{ isSlotsOnly }} />
                         </main>
