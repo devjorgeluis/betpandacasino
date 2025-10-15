@@ -5,7 +5,6 @@ import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
-import NavLinkIcon from "../components/NavLinkIcon";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
@@ -45,7 +44,6 @@ const Casino = () => {
   const [isProviderDropdownOpen, setIsProviderDropdownOpen] = useState(false);
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
-  const [fragmentNavLinksBody, setFragmentNavLinksBody] = useState(<></>);
   const [isLoadingGames, setIsLoadingGames] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -97,85 +95,7 @@ const Casino = () => {
 
   const updateNavLinks = () => {
     if (isSlotsOnly === "false") {
-      setFragmentNavLinksBody(
-        <>
-          <NavLinkIcon
-            title="Lobby"
-            pageCode="home"
-            icon={ImgLobby}
-            active={selectedPage === "home" || selectedPage === "lobby"}
-            onClick={() => getPage("home")}
-          />
-          <NavLinkIcon
-            title="Jokers"
-            pageCode="joker"
-            icon={ImgJoker}
-            active={selectedPage === "joker"}
-            onClick={() => getSubPage("joker")}
-          />
-          <NavLinkIcon
-            title="Hot"
-            pageCode="hot"
-            icon={ImgHot}
-            active={selectedPage === "hot"}
-            onClick={() => getSubPage("hot")}
-          />
-          <NavLinkIcon
-            title="Juegos de crash"
-            pageCode="arcade"
-            icon={ImgCrash}
-            active={selectedPage === "arcade"}
-            onClick={() => getSubPage("arcade")}
-          />
-          <NavLinkIcon
-            title="Megaways"
-            pageCode="megaways"
-            icon={ImgMegaways}
-            active={selectedPage === "megaways"}
-            onClick={() => getSubPage("megaways")}
-          />
-          <NavLinkIcon
-            title="Ruletas"
-            pageCode="roulette"
-            icon={ImgRoulette}
-            active={selectedPage === "roulette"}
-            onClick={() => getSubPage("roulette")}
-          />
-        </>
-      );
     } else {
-      setFragmentNavLinksBody(
-        <>
-          <NavLinkIcon
-            title="Lobby"
-            pageCode="home"
-            icon={ImgLobby}
-            active={selectedPage === "home" || selectedPage === "lobby"}
-            onClick={() => getPage("home")}
-          />
-          <NavLinkIcon
-            title="Jokers"
-            pageCode="joker"
-            icon={ImgJoker}
-            active={selectedPage === "joker"}
-            onClick={() => getSubPage("joker")}
-          />
-          <NavLinkIcon
-            title="Hot"
-            pageCode="hot"
-            icon={ImgHot}
-            active={selectedPage === "hot"}
-            onClick={() => getSubPage("hot")}
-          />
-          <NavLinkIcon
-            title="Megaways"
-            pageCode="megaways"
-            icon={ImgMegaways}
-            active={selectedPage === "megaways"}
-            onClick={() => getSubPage("megaways")}
-          />
-        </>
-      );
     }
   };
 
@@ -470,12 +390,6 @@ const Casino = () => {
         />
       ) : (
         <>
-          <div className="games-tags_gamesTags">
-            <div className="games-tags_gamesTagsInner">
-              {fragmentNavLinksBody}
-            </div>
-          </div>
-
           {
             categories.length > 0 ? <CategorySlideshow
               categories={categories}

@@ -1,125 +1,134 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import IconDownload from "/src/assets/svg/download.svg";
 import ImgLogo from "/src/assets/svg/logo.svg";
-import IconFacebook from "/src/assets/svg/facebook.svg";
+import IconTwitter from "/src/assets/svg/twitter.svg";
+import IconDiscord from "/src/assets/img/discord.png";
 import IconInstagram from "/src/assets/svg/instagram.svg";
 import IconTelegram from "/src/assets/svg/telegram.svg";
-import Icon18 from "/src/assets/svg/18.svg";
-import IconGt from "/src/assets/svg/gt-logo-ganaencasa.svg";
-import IconChat from "/src/assets/svg/chat.svg";
-import TermsModal from "./TermsModal";
-import PrivacyModal from "./PrivacyModal";
-import ResponsibleGamingModal from "./ResponsibleGamingModal";
+import IconTrustpilot from "/src/assets/svg/trustpilot.svg";
+import IconCointelegraph from "/src/assets/svg/cointelegraph.svg";
+import IconAskgamblers from "/src/assets/svg/askgamblers.svg";
+import IconC2ryptonews from "/src/assets/svg/cryptonews.svg";
+import IconBitcoin from "/src/assets/svg/bitcoin.svg";
 
 const Footer = ({ isSlotsOnly }) => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const [isTermsModalOpen, setIsTermsModalOpen] = useState(false);
-    const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false);
-    const [isResponsibleGamingModalOpen, setIsResponsibleGamingModalOpen] = useState(false);
 
     return (
         <>
-            <footer className="footer_footer">
-                <section>
-                    <div className="footer_headerLinksWrapper">
-                        <div className="footer_headerLinks">
-                            <div className="footer_headerLinksInfo">
-                                <a onClick={() => navigate("/")}>
-                                    <img alt="" loading="lazy" width="118" height="48" decoding="async"  className="logo_logo" src={ImgLogo} />
-                                </a>
-                                <p>2025 Todos los derechos reservados. Sitio Operado bajo Licencia de Curazao - Antillas Holandesas.</p>
+            <footer className="footer-container">
+                <div className="linkContainer">
+                    <div className="appIconWrap">
+                        <div className="footer-row">
+                            <div className="app-buttons-container">
+                                <div className="download-text-area">Download App</div>
+                                <button name="windows app download button" aria-label="windows app download button" className="app-button windows">
+                                    <i className="device-icon">
+                                        <img src={IconDownload} />
+                                    </i>
+                                    <div className="hoverBubble bubblePosition windows">
+                                        <p></p>
+                                        <p></p>
+                                        <p>Haz clic para instalar la aplicación</p>
+                                    </div>
+                                </button>
                             </div>
-                            <div className="footer_headerLinksBlock">
-                                <div className="footer_linksItem">
-                                    <span className="footer_linksItemTitle">SECCIONES</span>
-                                    <a onClick={() => navigate("/")}>
-                                        <span className={`footer-link_footerLink ${location.pathname === '/' ? 'footer-link_active' : ''}`}>Inicio</span>
-                                    </a>
-                                    <a onClick={() => navigate("/casino")}>
-                                        <span className={`footer-link_footerLink ${location.pathname === '/casino' ? 'footer-link_active' : ''}`}>Casino</span>
-                                    </a>
-                                    {
-                                        isSlotsOnly === "false" && <>
-                                            <a onClick={() => navigate("/live-casino")}>
-                                                <span className={`footer-link_footerLink ${location.pathname === '/live-casino' ? 'footer-link_active' : ''}`}>Casino en Vivo</span>
-                                            </a>
-                                            <a onClick={() => navigate("/sports")}>
-                                                <span className={`footer-link_footerLink ${location.pathname === '/sports' ? 'footer-link_active' : ''}`}>Deportes</span>
-                                            </a>
-                                        </>
-                                    }
-                                    <a href="/docs/betting-rules.pdf" target="_blank" rel="noopener noreferrer">
-                                        <span className="footer-link_footerLink">Reglamento de apuestas</span>
-                                    </a>
-                                </div>
-                                <div className="footer_linksItem">
-                                    <span className="footer_linksItemTitle">NOSOTROS</span>
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsTermsModalOpen(true); }}>
-                                        <span className="footer-link_footerLink">Terminos y Condiciones</span>
-                                    </a>
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsPrivacyModalOpen(true); }}>
-                                        <span className="footer-link_footerLink">Politica de Privacidad</span>
-                                    </a>
-                                    <a href="#" onClick={(e) => { e.preventDefault(); setIsResponsibleGamingModalOpen(true); }}>
-                                        <span className="footer-link_footerLink">Juego responsable</span>
-                                    </a>
-                                </div>
-                            </div>
-                            <div className="footer_linksItem">
-                                <span className="footer_linksItemTitle">Síguenos en nuestras redes sociales</span>
-                                <div className="footer_socialLinks">
-                                    <a className="footer-social-link_footerSocialLink" onClick={() => navigate("/")}>
-                                        <img src={IconFacebook} />
-                                    </a>
-                                    <a className="footer-social-link_footerSocialLink" onClick={() => navigate("/")}>
-                                        <img src={IconInstagram} />
-                                    </a>
-                                    <a className="footer-social-link_footerSocialLink" onClick={() => navigate("/")}>
-                                        <img src={IconTelegram} />
-                                    </a>
+                        </div>
+                    </div>
+                    <div className="linkWrap">
+                        <div className="footer-row"></div>
+                        <div className="footer-row"></div>
+                    </div>
+                </div>
+                <div className="footer-dynamic-content">
+                    <div className="footer-dynamic footer-main">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-md-6 taglines"></div>
+                                <div className="col-md-6"></div>
+                                <div className="col-md-12 taglines-group">
+                                    <div className="group footer-operated foot-column">
+                                        <div className="tagline">
+                                            <div className="tagline text company-info-footer">
+                                                <a onClick={() => navigate("/")} className="logo-footer">
+                                                    <img src={ImgLogo} />
+                                                </a>
+                                                <div className="tagline text">
+                                                    <span className="text-heading">Star Bright Media S.R.L</span>
+                                                    <span>San Pedro, Barrio Dent, Del Centro Cultural Costarricense Norteamericano, Doscientos Metros al Norte y Concuenta al este, Edificio Ofident, Officins Numero Tres Costa Rica</span>
+                                                    <span className="text-heading">Número de Identificación Corporativa:</span>
+                                                    <span>3-102-880000</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="group footer-games foot-column top-line">
+                                        <div className="tagline title"><span>Juegos</span></div>
+                                        <a className="tagline link" href="/casino"><span>Casino</span></a>
+                                        {
+                                            isSlotsOnly === "false" && <>
+                                                <a className="tagline link" href="/live-casino"><span>Casino en vivo</span></a>
+                                                <a className="tagline link" href="/sports"><span>Deportes</span></a>
+                                                <a className="tagline link" href="/live-sports"><span>Deportes en vivo</span></a>
+                                            </>
+                                        }
+                                    </div>
+                                    <div className="group footer-info foot-column top-line footer-info-socials">
+                                        <div className="tagline title"><span>Comunidad</span></div>
+                                        <a href="https://x.com/betpanda_casino" className="tagline link link-social-footer">
+                                            <span><img alt="X.svg" src={IconTwitter} /> X (Twitter)</span>
+                                        </a>
+                                        <a href="https://discord.gg/25ncaUDuft" className="tagline link link-social-footer">
+                                            <span><img alt="Discord new.png" src={IconDiscord} /> Discord</span>
+                                        </a>
+                                        <a href="https://www.instagram.com/betpandaofficial/" className="tagline link link-social-footer">
+                                            <span><img alt="Instagram.svg" src={IconInstagram} /> Instagram</span>
+                                        </a>
+                                        <a href="https://t.me/betpandaofficial" className="tagline link link-social-footer">
+                                            <span><img alt="Telegram.svg" src={IconTelegram} /> Telegrama</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="footer_warningWrapper">
-                        <div className="footer_warning">
-                            <div className="footer_warningItem">
-                                <div className="footer_forbiddenAgeBlock">
-                                    <img src={Icon18} />
+                    <div className="styled-text-list partner-row">
+                        <div className="container">
+                            <div className="row">
+                                <div className="tagline partner-logo-wrapper">
+                                    <div className="tagline partner-logo"><img title="" alt="info" src={IconTrustpilot} /><span></span></div>
+                                    <div className="tagline partner-logo"><img title="" alt="info" src={IconCointelegraph} /><span></span></div>
+                                    <div className="tagline partner-logo"><img title="" alt="info" src={IconAskgamblers} /><span></span></div>
+                                    <div className="tagline partner-logo"><img title="" alt="info" src={IconC2ryptonews} /><span></span></div>
+                                    <div className="tagline partner-logo"><img title="" alt="info" src={IconBitcoin} /><span></span></div>
                                 </div>
-                                <p className="footer_warningInfo">Sitio exclusivo para mayores de +18</p>
-                            </div>
-                            <div className="footer_warningItem">
-                                <div className="footer_warningIcon">
-                                    <img alt="gt logo" loading="lazy" width="50" height="50" decoding="async" data-nimg="1" src={IconGt} />
-                                </div>
-                                <p className="footer_warningInfo">Por favor, juega responsablemente. Para más información visite: GamblingTherapy.org</p>
                             </div>
                         </div>
                     </div>
-                    <div className="chat-with-us app-mode-chat">
-                        <div className="tawk-min-container">
-                            <button type="button" aria-label="Widget de Chat" title="Widget de Chat" className="tawk-custom-color tawk-custom-border-color tawk-outline tawk-button tawk-button-circle tawk-button-large">
-                                <img className="tawk-min-chat-icon" src={IconChat} />
-                            </button>
+                    <div className="styled-text-list copyright-wrapper">
+                        <div className="container">
+                            <div className="row">
+                                <div className="tagline copyright"><span>©&nbsp;Todos los derechos reservados. 2025&nbsp;Betpanda.io</span></div>
+                                <div className="tagline copyright-navigation">
+                                    <div className="copyright-nav-item">
+                                        <span>Support </span>
+                                        <a className="copyright-nav-link" href="mailto:support@betpanda.io">support@betpanda.io</a>
+                                    </div>
+                                    <div className="copyright-nav-item">
+                                        <span>Partners </span>
+                                        <a className="copyright-nav-link" href="mailto:partners@betpanda.io">partners@betpanda.io</a>
+                                    </div>
+                                    <div className="copyright-nav-item">
+                                        <span>Press </span>
+                                        <a className="copyright-nav-link" href="mailto:press@betpanda.io">press@betpanda.io</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </section>
+                </div>
             </footer>
-
-            <TermsModal
-                isOpen={isTermsModalOpen}
-                onClose={() => setIsTermsModalOpen(false)}
-            />
-            <PrivacyModal
-                isOpen={isPrivacyModalOpen}
-                onClose={() => setIsPrivacyModalOpen(false)}
-            />
-            <ResponsibleGamingModal
-                isOpen={isResponsibleGamingModalOpen}
-                onClose={() => setIsResponsibleGamingModalOpen(false)}
-            />
         </>
     );
 };

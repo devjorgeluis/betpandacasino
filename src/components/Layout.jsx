@@ -1,15 +1,12 @@
 import { useContext, useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "./LayoutContext";
 import { callApi } from "../utils/Utils";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
-import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
-import ChangePasswordModal from "./ChangePasswordModal";
 import { NavigationContext } from "./NavigationContext";
 import FullDivLoading from "./FullDivLoading";
 
@@ -20,8 +17,6 @@ const Layout = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [userBalance, setUserBalance] = useState("");
     const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-    const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
@@ -106,46 +101,8 @@ const Layout = () => {
     const callbackGetStatus = (result) => {
         if ((result && result.slots_only == null) || (result && result.slots_only == false)) {
             setIsSlotsOnly("false");
-            setFragmentNavLinksTop(
-                <>
-                    <NavLinkHeader
-                        title="Inicio"
-                        pageCode="home"
-                        icon=""
-                    />
-                    <NavLinkHeader
-                        title="Casino"
-                        pageCode="casino"
-                        icon=""
-                    />
-                    <NavLinkHeader
-                        title="Casino en Vivo"
-                        pageCode="live-casino"
-                        icon=""
-                    />
-                    <NavLinkHeader
-                        title="Deportes"
-                        pageCode="sports"
-                        icon=""
-                    />
-                </>
-            );
         } else {
             setIsSlotsOnly("true");
-            setFragmentNavLinksTop(
-                <>
-                    <NavLinkHeader
-                        title="Inicio"
-                        pageCode="home"
-                        icon=""
-                    />
-                    <NavLinkHeader
-                        title="Casino"
-                        pageCode="casino"
-                        icon=""
-                    />
-                </>
-            );
         }
     };
 
@@ -168,16 +125,11 @@ const Layout = () => {
         }, null);
     };
 
-    const handleChangePasswordClick = () => {
-        setShowChangePasswordModal(true);
-    };
-
     const layoutContextValue = {
         isLogin,
         userBalance,
         handleLoginClick,
         handleLogoutClick,
-        handleChangePasswordClick,
         refreshBalance,
         isSidebarExpanded,
         toggleSidebar
@@ -186,7 +138,7 @@ const Layout = () => {
     return (
         <LayoutContext.Provider value={layoutContextValue}>
             <NavigationContext.Provider
-                value={{ fragmentNavLinksTop, selectedPage, setSelectedPage, getPage, showFullDivLoading, setShowFullDivLoading }}
+                value={{ selectedPage, setSelectedPage, getPage, showFullDivLoading, setShowFullDivLoading }}
             >
                 <>
                     <FullDivLoading show={showFullDivLoading} />
@@ -197,11 +149,6 @@ const Layout = () => {
                             onLoginSuccess={handleLoginSuccess}
                         />
                     )}
-                    {showChangePasswordModal && (
-                        <ChangePasswordModal 
-                            onClose={() => setShowChangePasswordModal(false)}
-                        />
-                    )}
                     <div className={`menu-layout ${isSmallScreen ? 'absolute' : 'fixed'}`}>
                         <Header
                             isLogin={isLogin}
@@ -209,7 +156,7 @@ const Layout = () => {
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}
                         />
-                        <Sidebar />
+                        <Sidebar isSlotsOnly={{ isSlotsOnly }} />
                         <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
                             <Outlet context={{ isSlotsOnly }} />
                         </main>

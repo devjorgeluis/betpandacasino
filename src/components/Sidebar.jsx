@@ -4,7 +4,7 @@ import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
 import ImgLogo from "/src/assets/svg/logo.svg";
 
-const Sidebar = () => {
+const Sidebar = ({ isSlotsOnly }) => {
     const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
@@ -95,7 +95,9 @@ const Sidebar = () => {
         return () => clearInterval(timer);
     }, []);
 
-    const menuItems = [
+    const isSlotsOnlyMode = isSlotsOnly === "true" || isSlotsOnly === true;
+    
+    const menuItems = !isSlotsOnlyMode ? [
         {
             id: 'casino',
             name: 'Casino',
@@ -114,7 +116,7 @@ const Sidebar = () => {
             id: 'live-casino',
             name: 'Casino en Vivo',
             icon: 'custom-icon-bp-live-casino',
-            href: '/sportsbook',
+            href: '/live-casino',
             subItems: [
                 { name: 'Vestíbulo', icon: 'custom-icon-trof2', href: '/casino/page/2/live-casino' },
                 { name: 'Jugado recientemente', icon: 'custom-icon-bp-recently-played', href: '/casino/page/2/live-casino/2/live-casino-lobby' },
@@ -131,56 +133,35 @@ const Sidebar = () => {
             id: 'sports',
             name: 'Deportes',
             icon: 'custom-icon-bp-sports',
-            href: '/sportsbook',
+            href: '/sports',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/sportsbook' },
-                { name: 'My bets', icon: 'custom-icon-dollarsign', href: '/sportsbook?bt-path=%2Fbets' },
-                { name: 'Live', icon: 'custom-icon-bp-live', href: '/sportsbook?bt-path=%2Flive' },
-                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/sportsbook?bt-path=%2Fevent-builder' },
-                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/sportsbook?bt-path=%2Ffavorites' },
-                { name: 'Soccer', icon: 'custom-icon-bp-sport-soccer', href: '/sportsbook?bt-path=%2Fsoccer-1' },
-                { name: 'Basketball', icon: 'custom-icon-bp-sport-basketball', href: '/sportsbook?bt-path=%2Fbasketball-2' },
-                { name: 'Ice Hockey', icon: 'custom-icon-bp-sport-icehockey', href: '/sportsbook?bt-path=%2Fice-hockey-4' },
-                { name: 'Tennis', icon: 'custom-icon-bp-sport-tennis', href: '/sportsbook?bt-path=%2Ftennis-5' },
-                { name: 'Fifa', icon: 'custom-icon-bp-fifa', href: '/sportsbook?bt-path=%2Ffifa-300' }
+                { name: 'Home', icon: 'custom-icon-bp-home', href: '/sports' },
+                { name: 'Live', icon: 'custom-icon-bp-live', href: '/live-sports' }
             ]
-        },
+        }
+    ] : [
         {
-            id: 'esports',
-            name: 'Deportes electrónicos',
-            icon: 'custom-icon-mush',
-            href: '/sportsbook',
+            id: 'casino',
+            name: 'Casino',
+            icon: 'custom-icon-bp-casino',
+            href: '/casino',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
-                { name: 'My Bets', icon: 'custom-icon-dollarsign', href: '/sportsbook?bt-path=%2Fbets' },
-                { name: 'Live', icon: 'custom-icon-bp-live', href: '/sportsbook?bt-path=%2Flive' },
-                { name: 'Upcoming Events', icon: 'custom-icon-bp-events', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
-                { name: 'Favourites', icon: 'custom-icon-bp-favourites', href: '/sportsbook?bt-path=%2Ffavorites' },
-                { name: 'Counter-Strike', icon: 'custom-icon-banan', href: '/sportsbook?bt-path=%2Fcounter-strike-109' },
-                { name: 'League of Legends', icon: 'custom-icon-bp-league', href: '/sportsbook?bt-path=%2Fleague-of-legends-110' },
-                { name: 'Dota 2', icon: 'custom-icon-bp-dota', href: '/sportsbook?bt-path=%2Fdota-2-111' },
-                { name: 'Fifa', icon: 'custom-icon-melon', href: '/sportsbook?bt-path=%2Ffifa-300' },
-                { name: 'NBA2K', icon: 'custom-icon-bp-nba-2k', href: '/sportsbook?bt-path=%2Fnba-2k-302' }
-            ]
-        },
-        {
-            id: 'promotions',
-            name: 'Promociones',
-            icon: 'custom-icon-bp-promotions',
-            href: '/sportsbook',
-            subItems: [
-                { name: 'Campaigns', icon: 'custom-icon-powers', href: '/promo/promotions' },
-                { name: 'Welcome Offers', icon: 'custom-icon-bp-welcome-offers', href: '/promo/promotions' }
+                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino#home' },
+                { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
+                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#jokers' },
+                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#crash' },
+                { name: 'Megaways', icon: 'custom-icon-bp-megaways', href: '/casino#megaways' },
+                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#ruletas' },
             ]
         }
     ];
 
-    const collapsedMenuItems = [
-        { name: 'CASINO', icon: 'custom-icon-bp-casino', href: '/casino/page/0/' },
-        { name: 'live-casino', icon: 'custom-icon-bp-live-casino', href: '/casino/page/2/live-casino' },
-        { name: 'sports', icon: 'custom-icon-bp-sports', href: '/sportsbook' },
-        { name: 'esports', icon: 'custom-icon-mush', href: '/sportsbook?bt-path=%2Fe_sport%2F300' },
-        { name: 'promotions', icon: 'custom-icon-bp-promotions', href: '/promo/promotions' }
+    const collapsedMenuItems = !isSlotsOnlyMode ? [
+        { name: 'casino', icon: 'custom-icon-bp-casino', href: '/casino' },
+        { name: 'live-casino', icon: 'custom-icon-bp-live-casino', href: '/live-casino' },
+        { name: 'sports', icon: 'custom-icon-bp-sports', href: '/sports' }
+    ] : [
+        { name: 'casino', icon: 'custom-icon-bp-casino', href: '/casino' }
     ];
 
     return (
@@ -328,7 +309,7 @@ const Sidebar = () => {
                 </div>
                 <div className="menu-divider"></div>
                 <div className="footer-items footer-items-fixed"></div>
-                <div className="language-wrapper-container">
+                <div className="language-wrapper-container d-none">
                     <div className="dropdown-btn small dropdown">
                         <button 
                             aria-haspopup="true" 
@@ -365,7 +346,7 @@ const Sidebar = () => {
                         )}
                     </div>
                 </div>
-                <div className="footer-content footer-content-fixed">
+                <div className="footer-content footer-content-fixed d-none">
                     <div className="app-install-container">
                         <div className="app-buttons-container">
                             <div className="download-text-area">Download App</div>
