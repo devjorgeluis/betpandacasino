@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
@@ -6,6 +7,7 @@ import ImgLogo from "/src/assets/svg/logo.svg";
 
 const Sidebar = ({ isSlotsOnly, isMobile }) => {
     const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
+    const navigate = useNavigate();
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState({ code: "es", name: "Spanish" });
@@ -208,7 +210,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                             </span>
                         </div>
                         <div className="brand-logo">
-                            <a className="linkCss" href="/">
+                            <a className="linkCss" onClick={() => navigate("/")}>
                                 <img alt="logo" className="logo light-logo" src={ImgLogo} /> 
                             </a>
                         </div>

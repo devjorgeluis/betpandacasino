@@ -1,22 +1,20 @@
 import { useEffect } from "react";
-import ImgLogo from "/src/assets/svg/logo.svg";
+import ImgLoader from "/src/assets/img/loader.png";
 
 const FullDivLoading = (props) => {
   useEffect(() => {
     if (props.show == true) {
       document
-        .getElementById("full-div-loading").classList.remove("d-none");
+        .getElementById("jsLoader").classList.remove("d-none");
     } else {
       document
-        .getElementById("full-div-loading").classList.add("d-none");
+        .getElementById("jsLoader").classList.add("d-none");
     }
   }, [props.show]);
 
   return (
-    <div id="full-div-loading" className="d-none">
-      <div className="d-flex justify-content-center align-items-center h-100">
-        <img src={ImgLogo} alt="logo" />
-      </div>
+    <div id="jsLoader" className="js-loader d-none">
+      <img id="site-loader" src={ImgLoader} width={64} />
     </div>
   );
 };

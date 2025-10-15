@@ -25018,6 +25018,10 @@ figure {
     justify-content: space-between
 }
 
+.linkCss {
+    cursor: pointer;
+}
+
 .main-menu-container .headerLeft .linkCss {
     margin-right: .8rem
 }
