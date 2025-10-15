@@ -50,8 +50,8 @@ const Slideshow = () => {
           spaceBetween={0}
           slidesPerView={1}
           navigation={{
-            nextEl: '.navigate-next',
-            prevEl: '.navigate-prev',
+            nextEl: '.slideshow-navigate-next',
+            prevEl: '.slideshow-navigate-prev',
           }}
           pagination={{
             el: '.swiper-pagination',
@@ -132,7 +132,7 @@ const Slideshow = () => {
         </Swiper>
       </div>
       <div className="navigate-wrapper navigate-bottom">
-        <button type="button" className="navigate-prev">
+        <button type="button" className="navigate-prev slideshow-navigate-prev">
           <svg className="icon icon-arrowLeft" viewBox="0 0 24 24" width="24px" height="24px">
             <title>Arrow Left</title>
             <path d="M0 0h24v24H0z" fill="none"></path>
@@ -140,7 +140,7 @@ const Slideshow = () => {
           </svg>
         </button>
         <div className="swiper-pagination"></div>
-        <button type="button" className="navigate-next">
+        <button type="button" className="navigate-prev slideshow-navigate-next">
           <svg className="icon icon-arrowRight" viewBox="0 0 24 24" width="24px" height="24px">
             <title>Arrow Right</title>
             <path d="M0 0h24v24H0z" fill="none"></path>

@@ -8,7 +8,7 @@ import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
 import Slideshow from "../components/Home/Slideshow";
 import GameProvider from "../components/Home/GameProvider";
-import CategorySlideshow from "../components/CategorySlideshow";
+import GameSlideshow from "../components/Home/GameSlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
@@ -18,6 +18,8 @@ import LoginModal from "../components/LoginModal";
 import CustomAlert from "../components/CustomAlert";
 import "animate.css";
 
+import IconLive from "/src/assets/svg/live.svg";
+import IconHot from "/src/assets/svg/hot.svg";
 
 let selectedGameId = null;
 let selectedGameType = null;
@@ -97,7 +99,7 @@ const Home = () => {
       setMessageCustomAlert(["error", result.message]);
     } else {
       setIsLoadingGames(false);
-      setTopGames(result.top_slot);
+      setTopGames(result.top_hot);
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
     }
@@ -276,6 +278,8 @@ const Home = () => {
                 <div className="page">
                   <Slideshow />
                   <GameProvider />
+                  { topLiveCasino.length > 0 && <GameSlideshow games={topLiveCasino} name="liveCasino" title="Juegos en vivo principales" icon={IconLive} link="/live-casino" /> }
+                  { topGames.length > 0 && <GameSlideshow games={topGames} name="casino" title="Juegos más populares" icon={IconHot} link="/casino" /> }
                 </div>
               </div>
               <footer className="footer-container">

@@ -6,7 +6,6 @@ import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import NavLinkIcon from "../components/NavLinkIcon";
-import Slideshow from "../components/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";

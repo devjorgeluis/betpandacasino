@@ -9,7 +9,6 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer";
 import NavLinkHeader from "../components/NavLinkHeader";
 import LoginModal from "./LoginModal";
-import LogoutConfirmModal from "./LogoutConfirmModal";
 import ChangePasswordModal from "./ChangePasswordModal";
 import { NavigationContext } from "./NavigationContext";
 import FullDivLoading from "./FullDivLoading";
@@ -21,16 +20,14 @@ const Layout = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [userBalance, setUserBalance] = useState("");
     const [showLoginModal, setShowLoginModal] = useState(false);
-    const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
     const [fragmentNavLinksTop, setFragmentNavLinksTop] = useState(<></>);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
     const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
     const navigate = useNavigate();
 
-    const location = useLocation();
-    const isSportsPage = location.pathname === "/sports";
 
     const toggleSidebar = () => {
         setIsSidebarExpanded(!isSidebarExpanded);
@@ -51,10 +48,28 @@ const Layout = () => {
             return window.innerWidth <= 767;
         };
 
+        const checkShouldCollapseSidebar = () => {
+            return window.innerWidth < 1024;
+        };
+
+        const checkIsSmallScreen = () => {
+            return window.innerWidth < 1024;
+        };
+
         setIsMobile(checkIsMobile());
+        setIsSmallScreen(checkIsSmallScreen());
+        
+        if (checkShouldCollapseSidebar()) {
+            setIsSidebarExpanded(false);
+        }
 
         const handleResize = () => {
             setIsMobile(checkIsMobile());
+            setIsSmallScreen(checkIsSmallScreen());
+            
+            if (checkShouldCollapseSidebar()) {
+                setIsSidebarExpanded(false);
+            }
         };
 
         window.addEventListener('resize', handleResize);
@@ -187,7 +202,7 @@ const Layout = () => {
                             onClose={() => setShowChangePasswordModal(false)}
                         />
                     )}
-                    <div className="menu-layout fixed">
+                    <div className={`menu-layout ${isSmallScreen ? 'absolute' : 'fixed'}`}>
                         <Header
                             isLogin={isLogin}
                             userBalance={userBalance}
@@ -195,7 +210,7 @@ const Layout = () => {
                             handleLogoutClick={handleLogoutClick}
                         />
                         <Sidebar />
-                        <main className="menu-layout-content expanded">
+                        <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
                             <Outlet context={{ isSlotsOnly }} />
                         </main>
                     </div>

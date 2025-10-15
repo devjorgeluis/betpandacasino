@@ -5,7 +5,6 @@ import { LayoutContext } from "../components/LayoutContext";
 import { NavigationContext } from "../components/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
-import Slideshow from "../components/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
@@ -349,8 +348,6 @@ const LiveCasino = () => {
         />
       ) : (
         <>
-          <Slideshow images={imageSlideshow} />
-
           {
             categories.length > 0 ? <CategorySlideshow
               categories={categories}

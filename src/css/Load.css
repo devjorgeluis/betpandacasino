@@ -18195,6 +18195,23 @@ button:focus {
     box-shadow: 3px 3px 3px #0006
 }
 
+.gameSlider .section-outer .inner-section .card-wrapper .card-game-list .bg.game-img {
+    height: 229px;
+    object-fit: cover;
+}
+
+@media (max-width: 1200px) {
+    .gameSlider .section-outer .inner-section .card-wrapper .card-game-list .bg.game-img {
+        height: 187px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gameSlider .section-outer .inner-section .card-wrapper .card-game-list .bg.game-img {
+        height: 130px;
+    }
+}
+
 .gameSlider .section-outer .inner-section .card-wrapper .card-game-list .error-bg {
     display: flex;
     justify-content: center;
@@ -18497,8 +18514,8 @@ button:focus {
 
 @media (max-width: 992px) {
     .panel-section.full-width {
-        padding-left: 0;
-        padding-right: 0
+        padding-left: 15px;
+        padding-right: 15px
     }
 }
 
