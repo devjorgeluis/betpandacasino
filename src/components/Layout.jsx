@@ -10,6 +10,7 @@ import LoginModal from "./LoginModal";
 import { NavigationContext } from "./NavigationContext";
 import FullDivLoading from "./FullDivLoading";
 import ChatButton from "./ChatButton";
+import MobileSearch from "./MobileSearch";
 
 const Layout = () => {
     const { contextData } = useContext(AppContext);
@@ -20,9 +21,10 @@ const Layout = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
-    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const navigate = useNavigate();
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const navigate = useNavigate();
 
     const location = useLocation();
     const isSportsPage = location.pathname === "/sports" || location.pathname === "/live-sports";
@@ -132,15 +134,17 @@ const Layout = () => {
         }, null);
     };
 
-    const layoutContextValue = {
-        isLogin,
-        userBalance,
-        handleLoginClick,
-        handleLogoutClick,
-        refreshBalance,
-        isSidebarExpanded,
-        toggleSidebar
-    };
+  const layoutContextValue = {
+    isLogin,
+    userBalance,
+    handleLoginClick,
+    handleLogoutClick,
+    refreshBalance,
+    isSidebarExpanded,
+    toggleSidebar,
+    showMobileSearch,
+    setShowMobileSearch
+  };
 
     return (
         <LayoutContext.Provider value={layoutContextValue}>
@@ -170,6 +174,13 @@ const Layout = () => {
                         <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
                             <Outlet context={{ isSlotsOnly, isMobile }} />
                         </main>
+                        {showMobileSearch && isMobile && (
+                            <MobileSearch
+                                isLogin={isLogin}
+                                isMobile={isMobile}
+                                onClose={() => setShowMobileSearch(false)}
+                            />
+                        )}
                     </div>
                 </>
             </NavigationContext.Provider>

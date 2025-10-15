@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Calendar from 'react-calendar';
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
-import DivLoading from "../../components/DivLoading";
+import LoadApi from "../../components/LoadApi";
 import IconChevronLeft from "/src/assets/svg/chevron-left.svg";
 import IconChevronRight from "/src/assets/svg/chevron-right.svg";
 import IconDoubleLeft from "/src/assets/svg/double-arrow-left.svg";
@@ -404,7 +404,7 @@ const ProfileHistory = () => {
                             }
                         </div>
                         {loading ? (
-                            <DivLoading />
+                            <LoadApi />
                         ) : transactions.length > 0 ? (
                             activeTab === "operations" ?
                                 <div className="table_tableWrapper">

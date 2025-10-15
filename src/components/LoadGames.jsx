@@ -1,4 +1,4 @@
-const GamesLoading = () => {
+const LoadGames = () => {
     const GameSkeleton = () => (
         <div className="casino-game">
             <div className="game-box">
@@ -40,4 +40,4 @@ const GamesLoading = () => {
     );
 };
 
-export default GamesLoading;
+export default LoadGames;

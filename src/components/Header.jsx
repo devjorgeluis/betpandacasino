@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
-import DivLoading from "./DivLoading";
+import LoadApi from "./LoadApi";
 import ImgLogo from "/src/assets/svg/logo.svg";
 import IconClose from "/src/assets/svg/close.svg";
 
@@ -167,7 +167,7 @@ const Header = ({
                                                                 {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i> }
                                                             </span>
                                                             <span className="title">
-                                                                {item.link === "" && isLogoutLoading ? <DivLoading /> : item.title}
+                                                                {item.link === "" && isLogoutLoading ? <LoadApi /> : item.title}
                                                             </span>
                                                         </a>
                                                     ))}
@@ -294,7 +294,7 @@ const Header = ({
                                                                     {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i> }
                                                                 </span>
                                                                 <span className="title">
-                                                                    {item.link === "" && isLogoutLoading ? <DivLoading /> : item.title}
+                                                                    {item.link === "" && isLogoutLoading ? <LoadApi /> : item.title}
                                                                 </span>
                                                             </a>
                                                         ))}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import IconEnlarge from "/src/assets/svg/enlarge.svg";
 import IconShrink from "/src/assets/svg/shrink.svg";
-import DivLoading from "./DivLoading";
+import LoadApi from "./LoadApi";
 
 const GameModal = (props) => {
   const [url, setUrl] = useState(null);
@@ -205,7 +205,7 @@ const GameModal = (props) => {
               id="game-window-loading"
               className="game-window-iframe-wrapper"
             >
-              <DivLoading />
+              <LoadApi />
             </div>
           )}
 

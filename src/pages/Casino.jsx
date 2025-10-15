@@ -10,11 +10,10 @@ import CategoryContainer from "../components/CategoryContainer";
 import GameModal from "../components/GameModal";
 import About from "../components/Home/About";
 import Footer from "../components/Footer";
-import GamesLoading from "../components/GamesLoading";
+import LoadGames from "../components/LoadGames";
 import SearchInput from "../components/SearchInput";
 import SearchSelect from "../components/SearchSelect";
 import LoginModal from "../components/LoginModal";
-import CustomAlert from "../components/CustomAlert";
 import "animate.css";
 
 let selectedGameId = null;
@@ -41,7 +40,6 @@ const Casino = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
-  const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
   const [mobileShowMore, setMobileShowMore] = useState(false);
   const refGameModal = useRef();
@@ -82,7 +80,7 @@ const Casino = () => {
 
   const callbackGetPage = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+    
     } else {
       setCategories(result.data.categories);
       setSelectedProvider(null);
@@ -153,7 +151,7 @@ const Casino = () => {
 
   const callbackFetchContent = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+      
     } else {
       if (pageCurrent == 0) {
         configureImageSrc(result);
@@ -196,8 +194,6 @@ const Casino = () => {
           setGameUrl(result.url);
           break;
       }
-    } else if (result.status == "500" || result.status == "422") {
-      setMessageCustomAlert(["error", result.message]);
     }
   };
 
@@ -216,10 +212,6 @@ const Casino = () => {
 
   const handleLoginConfirm = () => {
     setShowLoginModal(false);
-  };
-
-  const handleAlertClose = () => {
-    setMessageCustomAlert(["", ""]);
   };
 
   const handleCategorySelect = (category) => {
@@ -292,7 +284,7 @@ const Casino = () => {
 
   const callbackSearch = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+      
     } else {
       configureImageSrc(result, true);
       setGames(result.content);
@@ -314,7 +306,6 @@ const Casino = () => {
 
   return (
     <>
-      <CustomAlert message={messageCustomAlert} onClose={handleAlertClose} />
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}
@@ -373,20 +364,10 @@ const Casino = () => {
                             searchRef={searchRef}
                             search={search}
                             clearSearch={clearSearch}
+                            isMobile={isMobile}
                           />
                         </div>
                       </div>
-                      {
-                        isMobile && <div className="mobile-search">
-                          <SearchInput
-                            txtSearch={txtSearch}
-                            setTxtSearch={setTxtSearch}
-                            searchRef={searchRef}
-                            search={search}
-                            clearSearch={clearSearch}
-                          />
-                        </div>
-                      }
                     </div>
                   </div>
                   {
@@ -403,7 +384,7 @@ const Casino = () => {
                     (txtSearch !== "" || selectedProvider) && <>
                       <div className="container">
                         <div className={`container categories-container ${isMobile ? 'mobile' : ''}`}>
-                          <ul className={`navbar-nav flex-row casino-lobby-categories row ${isMobile ? 'mobile' : ''}` }>
+                          <ul className={`navbar-nav flex-row casino-lobby-categories row ${isMobile ? 'mobile' : ''}`}>
                             <li className="nav-item" onClick={clearSearch}>
                               <a className="nav-link">
                                 <i className="material-icons">chevron_left</i>
@@ -474,7 +455,7 @@ const Casino = () => {
                             }
                           </div>
                         </div>
-                        {isLoadingGames && <GamesLoading />}
+                        {isLoadingGames && <LoadGames />}
                       </div>
                     </div>
                   </div>

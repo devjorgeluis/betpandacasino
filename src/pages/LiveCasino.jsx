@@ -7,8 +7,8 @@ import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import CategoryContainer from "../components/CategoryContainer";
 import GameModal from "../components/GameModal";
-import DivLoading from "../components/DivLoading";
-import GamesLoading from "../components/GamesLoading";
+import LoadApi from "../components/LoadApi";
+import LoadGames from "../components/LoadGames";
 import SearchInput from "../components/SearchInput";
 import SearchSelect from "../components/SearchSelect";
 import LoginModal from "../components/LoginModal";
@@ -337,7 +337,7 @@ const LiveCasino = () => {
               onCategoryClick={fetchContent}
               onCategorySelect={handleCategorySelect}
               pageType="casino"
-            /> : <DivLoading />
+            /> : <LoadApi />
           }
 
           <div className="slots-filters_gamesFilters">
@@ -403,7 +403,7 @@ const LiveCasino = () => {
           </div>
 
 
-          {isLoadingGames && <GamesLoading />}
+          {isLoadingGames && <LoadGames />}
           {!isLoadingGames && games.length >= 20 && (
             <div className="games-cards-suspensed_seeMoreWrapper">
               <a onClick={loadMoreContent}>

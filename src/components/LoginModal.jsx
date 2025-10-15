@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../AppContext";
 import { callApi } from "../utils/Utils";
-import DivLoading from "./DivLoading";
+import LoadApi from "./LoadApi";
 import IconClose from "/src/assets/svg/close.svg";
 
 const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {
@@ -125,7 +125,7 @@ const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {
                                         {
                                             isLoading ? <>
                                                 <span style={{visibility: "hidden"}}>Acceso</span>
-                                                <DivLoading />
+                                                <LoadApi />
                                             </> : "Acceso"
                                         }
                                     </button>

@@ -1,10 +1,16 @@
+import { useContext } from "react";
+import { LayoutContext } from "./LayoutContext";
+
 const SearchInput = ({
     txtSearch,
     setTxtSearch,
     searchRef,
     search,
-    clearSearch
+    clearSearch,
+    isMobile
 }) => {
+    const { setShowMobileSearch } = useContext(LayoutContext);
+
     const handleClearClick = () => {
         if (txtSearch !== "") {
             if (clearSearch) {
@@ -15,13 +21,19 @@ const SearchInput = ({
         }
     };
 
+    const handleFocus = () => {
+        if (isMobile) {
+            setShowMobileSearch(true);
+        }
+    };
+
     return (
         <div className="search-container">
             <div className="input-group">
-                <input 
+                <input
                     ref={searchRef}
-                    className="form-control" 
-                    placeholder="Buscar" 
+                    className={`form-control ${isMobile ? 'mobile-form-control' : 'desktop-form-control'}`}
+                    placeholder="Buscar"
                     value={txtSearch}
                     onChange={(event) => {
                         setTxtSearch(event.target.value);
@@ -29,10 +41,11 @@ const SearchInput = ({
                     onKeyUp={(event) => {
                         search(event);
                     }}
+                    onFocus={handleFocus}
                 />
                 <span className="input-group-append">
-                    <button 
-                        type="button" 
+                    <button
+                        type="button"
                         onClick={handleClearClick}
                     >
                         <i className="material-icons">{txtSearch === "" ? "search" : "delete"}</i>

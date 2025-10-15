@@ -510,7 +510,7 @@
 @media (max-width: 992px) {
     .search-container {
         margin-top: 0;
-        margin-right: auto
+        margin-right: 10px
     }
 }
 

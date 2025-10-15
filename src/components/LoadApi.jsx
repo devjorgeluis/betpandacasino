@@ -1,4 +1,4 @@
-const DivLoading = (props) => {
+const LoadApi = () => {
   return (
     <div className="sk-fading-circle">
       <div className="sk-circle1 sk-circle"></div>
@@ -17,4 +17,4 @@ const DivLoading = (props) => {
   );
 };
 
-export default DivLoading;
+export default LoadApi;

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { callApi } from "../utils/Utils";
 import CustomAlert from "../components/CustomAlert";
-import DivLoading from "../components/DivLoading";
+import LoadApi from "../components/LoadApi";
 import "animate.css";
 
 const Sports = () => {
@@ -42,7 +42,7 @@ const Sports = () => {
             <div className="app__main">
                 {isLoading ? (
                     <div className="app__main-content">
-                        <DivLoading />
+                        <LoadApi />
                     </div>
                 ) : sportsEmbedUrl ? (
                     <div className="game-iframe-view_gameIframeWrapper game-iframe-view_sportbook">
