@@ -1,39 +1,16 @@
-import { useContext, useRef, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import CategoryButton from "../components/CategoryButton";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import IconPrev from "/src/assets/svg/swiper-prev.svg";
-import IconNext from "/src/assets/svg/swiper-next.svg";
 
 const CategorySlideshow = (props) => {
   const { contextData } = useContext(AppContext);
   const navigate = useNavigate();
-  const swiperRef = useRef(null);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
 
   if (!props.categories || props.categories.length === 0) {
     return null;
   }
 
-  const handlePrev = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slidePrev();
-    }
-  };
-
-  const handleNext = () => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.slideNext();
-    }
-  };
-
-  const onSlideChange = (swiper) => {
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
 
   const handleCategoryClick = (category, index) => {
     if (props.pageType === 'home') {
@@ -51,50 +28,10 @@ const CategorySlideshow = (props) => {
   };
 
   return (
-    <div className="providers-carousel_providersCarouselContainer" style={{ position: 'relative' }}>
-      <button
-        onClick={handlePrev}
-        className="providers-carousel_providerSlideIcon"
-        disabled={isBeginning ? true : false}
-      >
-        <img src={IconPrev} />
-      </button>
-
-      <Swiper
-        ref={swiperRef}
-        onSlideChange={onSlideChange}
-        className="providers-carousel_swiper"
-        spaceBetween={10}
-        slidesPerView={20}
-        watchOverflow={true}
-        observer={true}
-        observeParents={true}
-        breakpoints={{
-          320: {
-            slidesPerView: 4
-          },
-          576: {
-            slidesPerView: 6
-          },
-          640: {
-            slidesPerView: 8
-          },
-          768: {
-            slidesPerView: 12
-          },
-          1024: {
-            slidesPerView: 15
-          },
-          1600: {
-            slidesPerView: 18
-          },
-          1601: {
-            slidesPerView: 20
-          },
-        }}
-      >
-        {props.categories.map((category, index) => (
-          <SwiperSlide key={`category-${category.id || index}`}>
+    <div className="container">
+      <div className="container categories-container">
+        <ul className="navbar-nav flex-row casino-lobby-categories row">
+          {props.categories.map((category, index) => (
             <CategoryButton
               key={index}
               name={category.name}
@@ -102,17 +39,9 @@ const CategorySlideshow = (props) => {
               active={props.selectedCategoryIndex === index}
               onClick={() => handleCategoryClick(category, index)}
             />
-          </SwiperSlide>
-        ))}
-      </Swiper>
-
-      <button
-        onClick={handleNext}
-        className="providers-carousel_providerSlideIcon slider-next-button"
-        disabled={isEnd ? true : false}
-      >
-        <img src={IconNext} />
-      </button>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

@@ -1,33 +1,32 @@
-const GamesLoading = (props) => {
-    return (
-        <div className="games-load-more_gameCardsContentWithInfiniteScroll">
-            <div className="games-cards-suspensed_gameCardWrapper">
-                <div className="grid_grid grid_sm">
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
-                    <span className="skeleton-loader-parent game-card_gameCard game-card_gameCardSkeleton game-card_sm">
-                        <span className="game-card_gameCardInner"><span className="game-card_gameCardSkeletonInner"></span><span className="skeleton-loader-overlay"></span></span>
-                    </span>
+const GamesLoading = () => {
+    const GameSkeleton = () => (
+        <div className="casino-game">
+            <div className="game-box">
+                <div className="content">
+                    <div className="content-overlay"></div>
+                    <div className="thumbnail thumb-bg">
+                        <div className="play-now">
+                            <div className="game-description">
+                                <div className="game-text-container">
+                                    <div className="content game-name"></div>
+                                    <div className="meta">
+                                        <div className=""></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    );
+
+    return (
+        <div className="casino-games-container">
+            <div className="row games-list limited-games-list popular">
+                {Array.from({ length: 5 }, (_, index) => (
+                    <GameSkeleton key={index} />
+                ))}
             </div>
         </div>
     );

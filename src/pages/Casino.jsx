@@ -8,6 +8,8 @@ import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/Casino/Slideshow";
 import CategorySlideshow from "../components/CategorySlideshow";
 import GameModal from "../components/GameModal";
+import About from "../components/Home/About";
+import Footer from "../components/Footer";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
 import SearchInput from "../components/SearchInput";
@@ -125,45 +127,6 @@ const Casino = () => {
       pageCurrent = 0;
     }
     setIsLoadingGames(false);
-  };
-
-  const getSubPage = (page) => {
-    setIsLoadingGames(true);
-    setGames([]);
-    setSelectedPage(page);
-    callApi(contextData, "GET", "/get-page?page=" + page, callbackGetSubPage, null);
-  };
-
-  const callbackGetSubPage = (result) => {
-    if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
-    } else {
-      setPageData(result.data);
-      setSelectedProvider(null);
-      setActiveCategory({});
-
-      if (result.data.page_group_type === "categories") {
-        setCategories(result.data.categories)
-      }
-
-      if (result.data.page_group_type === "games") {
-        if (mainCategories && mainCategories.length > 0) {
-          setCategories(mainCategories);
-        } else {
-          callApi(contextData, "GET", "/get-page?page=home", (homeResult) => {
-            if (homeResult.data && homeResult.data.categories) {
-              setMainCategories(homeResult.data.categories);
-              setCategories(homeResult.data.categories);
-            }
-          }, null);
-        }
-      }
-
-      if (result.data.categories && result.data.categories.length > 0) {
-        let item = result.data.categories[0];
-        fetchContent(item, item.id, item.table_name, 0, true, result.data.page_group_code);
-      }
-    }
   };
 
   const loadMoreContent = () => {
@@ -362,6 +325,17 @@ const Casino = () => {
     setIsLoadingGames(false);
   };
 
+  const clearSearch = () => {
+    setTxtSearch("");
+    setSelectedProvider(null);
+    if (categories.length > 0) {
+      const firstCategory = categories[0];
+      setActiveCategory(firstCategory);
+      setSelectedCategoryIndex(0);
+      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
+    }
+  }
+
   return (
     <>
       <CustomAlert message={messageCustomAlert} onClose={handleAlertClose} />
@@ -389,99 +363,140 @@ const Casino = () => {
               <div className="page">
                 <div className="casino-container">
                   <Slideshow />
+                  <div className="container-fluid search-and-filter-wrapper" id="casinoFilterWrapper">
+                    <div className="container search-and-filter-container">
+                      <div className="row">
+                        <div className="col-md-9 filter-column">
+                          <div className="container">
+                            <div className="casino-filters-container" id="casinoFiltersContainer">
+                              <div className="casino-filter filter-games-label"></div>
+                              <div
+                                className="casino-filter"
+                                onClick={() => setIsProviderDropdownOpen(!isProviderDropdownOpen)}
+                              >
+                                Proveedores <i className="material-icons">arrow_drop_down</i>
+                              </div>
+                              <div className="casino-filter">Funciones <i className="material-icons">arrow_drop_down</i></div>
+                            </div>
+                          </div>
+                          {isProviderDropdownOpen && (
+                            <SearchSelect
+                              categories={categories}
+                              selectedProvider={selectedProvider}
+                              setSelectedProvider={setSelectedProvider}
+                              isProviderDropdownOpen={isProviderDropdownOpen}
+                              setIsProviderDropdownOpen={setIsProviderDropdownOpen}
+                              onProviderSelect={handleProviderSelect}
+                            />
+                          )}
+                        </div>
+                        <div className="col-md-3 search-column">
+                          <SearchInput
+                            txtSearch={txtSearch}
+                            setTxtSearch={setTxtSearch}
+                            searchRef={searchRef}
+                            search={search}
+                            clearSearch={clearSearch}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {
+                    categories.length > 0 && txtSearch === "" && selectedProvider === null && <CategorySlideshow
+                      categories={categories}
+                      selectedCategoryIndex={selectedCategoryIndex}
+                      onCategoryClick={fetchContent}
+                      onCategorySelect={handleCategorySelect}
+                      pageType="casino"
+                    />
+                  }
+                  {
+                    (txtSearch !== "" || selectedProvider) && <>
+                      <div className="container">
+                        <div className="container categories-container">
+                          <ul className="navbar-nav flex-row casino-lobby-categories row">
+                            <li className="nav-item" onClick={clearSearch}>
+                              <a className="nav-link">
+                                <i className="material-icons">chevron_left</i>
+                                <span className="title">Volver a todos los juegos</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-12">
+                            <div className="filter-description">
+                              Mostrando juegos
+                              {selectedProvider && (
+                                <span>
+                                  de
+                                  <h1>{selectedProvider.name}</h1>
+                                </span>
+                              )}
+                              {txtSearch !== "" && (
+                                <span>
+                                  búsqueda que coincide con “
+                                  <h1>{txtSearch}</h1>
+                                  ”
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  }
+                  <div className="casino-tab-view">
+                    <div className="main-container">
+                      <div className="container container-fluid">
+                        <div className="casino-games-container">
+                          {
+                            txtSearch === "" && selectedProvider === null ? <div className="row games-list popular" onClick={loadMoreContent}>
+                              <h2>{activeCategory.name}
+                                <a className="show-all">Mostrar todo</a>
+                              </h2>
+                            </div> : <div className="row games-list popular"><h2></h2></div>
+                          }
+                          <div className="row games-list limited-games-list popular">
+                            {games &&
+                              games.map((item, index) => {
+                                let imageDataSrc = item.image_url;
+                                if (item.image_local != null) {
+                                  imageDataSrc = contextData.cdnUrl + item.image_local;
+                                }
+                                return (
+                                  <GameCard
+                                    key={index}
+                                    id={item.id}
+                                    provider={activeCategory.name}
+                                    title={item.name}
+                                    imageSrc={imageDataSrc}
+                                    onClick={() =>
+                                      isLogin
+                                        ? launchGame(item, "slot", "tab")
+                                        : handleLoginClick()
+                                    }
+                                  />
+                                );
+                              })
+                            }
+                          </div>
+                        </div>
+                        {isLoadingGames && <GamesLoading />}
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
+                <About />
               </div>
             </div>
+
+            <Footer isSlotsOnly={isSlotsOnly} />
           </div>
-          
-          {
-            categories.length > 0 ? <CategorySlideshow
-              categories={categories}
-              selectedCategoryIndex={selectedCategoryIndex}
-              onCategoryClick={fetchContent}
-              onCategorySelect={handleCategorySelect}
-              pageType="casino"
-            /> : <DivLoading />
-          }
-
-          <div className="slots-filters_gamesFilters">
-            <div className="slots-filters_searchSection">
-              <SearchInput
-                txtSearch={txtSearch}
-                setTxtSearch={setTxtSearch}
-                searchRef={searchRef}
-                search={search}
-                contextData={contextData}
-                pageData={pageData}
-                setGames={setGames}
-                setIsLoadingGames={setIsLoadingGames}
-                callbackSearch={callbackSearch}
-                searchDelayTimer={searchDelayTimer}
-                setSearchDelayTimer={setSearchDelayTimer}
-              />
-              <SearchSelect
-                categories={categories}
-                selectedProvider={selectedProvider}
-                setSelectedProvider={setSelectedProvider}
-                isProviderDropdownOpen={isProviderDropdownOpen}
-                setIsProviderDropdownOpen={setIsProviderDropdownOpen}
-                onProviderSelect={handleProviderSelect}
-              />
-            </div>
-          </div>
-
-          <div className="active-games">
-            {
-              txtSearch === "" && <div className="games-block-title_gamesBlockTitle">
-                <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleLeft"></div>
-                <p className="games-block-title_gamesBlockTitleText">Tragamonedas Destacadas</p>
-                <div className="games-block-title_gamesBlockTitleSeparator games-block-title_gamesBlockTitleRight"></div>
-              </div>
-            }
-
-            <div className="games-cards-suspensed_gameCardWrapper">
-              <div className="grid_grid grid_sm grid_rowMax3 games-cards-suspensed_gameCardListClassName">
-                {games &&
-                  games.map((item, index) => {
-                    let imageDataSrc = item.image_url;
-                    if (item.image_local != null) {
-                      imageDataSrc = contextData.cdnUrl + item.image_local;
-                    }
-                    return (
-                      <GameCard
-                        key={index}
-                        id={item.id}
-                        title={item.name}
-                        imageSrc={imageDataSrc}
-                        onClick={() =>
-                          isLogin
-                            ? launchGame(item, "slot", "tab")
-                            : handleLoginClick()
-                        }
-                      />
-                    );
-                  })
-                }
-              </div>
-            </div>
-          </div>
-
-
-          {isLoadingGames && <GamesLoading />}
-          {!isLoadingGames && games.length >= 20 && (
-            <div className="games-cards-suspensed_seeMoreWrapper">
-              <a onClick={loadMoreContent}>
-                <button className="button_button button_zeusPrimary button_md">Ver más</button>
-              </a>
-            </div>
-          )}
-          {!isLoadingGames && games.length === 0 && (
-            <div className="not-found-view_notFoundView">
-              <div className="not-found-view_notFoundViewContent">
-                Buscamos por todas partes, <br /> pero no encontramos nada.
-              </div>
-            </div>
-          )}
         </>
       )}
     </>
