@@ -12,6 +12,7 @@ import GameSlideshow from "../components/Home/GameSlideshow";
 import Welcome from "../components/Home/Welcome";
 import GameProviders from "../components/Home/GameProviders";
 import Discover from "../components/Home/Discover";
+import Promotions from "../components/Home/Promotions";
 import GameModal from "../components/GameModal";
 import DivLoading from "../components/DivLoading";
 import GamesLoading from "../components/GamesLoading";
@@ -286,6 +287,7 @@ const Home = () => {
                   <Welcome />
                   { mainCategories.length > 0 && <GameProviders categories={mainCategories} /> }
                   <Discover />
+                  <Promotions />
                 </div>
               </div>
               <footer className="footer-container">
