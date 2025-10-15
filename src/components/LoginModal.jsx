@@ -4,7 +4,7 @@ import { callApi } from "../utils/Utils";
 import DivLoading from "./DivLoading";
 import IconClose from "/src/assets/svg/close.svg";
 
-const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
+const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {
     const { contextData, updateSession } = useContext(AppContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -62,7 +62,7 @@ const LoginModal = ({ isOpen, onClose, onLoginSuccess }) => {
     return (
         <>
             <div className="fade modal show" style={{ display: "block" }}>
-                <div className="modal-dialog user-modal login-modal desktop  modal-lg modal-dialog-centered">
+                <div className={`modal-dialog user-modal login-modal modal-lg modal-dialog-centered ${isMobile ? 'mobile' : 'desktop'}`}>
                     <div className="modal-content">
                         <div className="modal-wrapper login active">
                             <button className="modal-close-btn" onClick={onClose}>

@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
 import DivLoading from "./DivLoading";
 import ImgLogo from "/src/assets/svg/logo.svg";
+import IconClose from "/src/assets/svg/close.svg";
 
 const Header = ({
     isLogin,
+    isMobile,
     userBalance,
     handleLoginClick,
     handleLogoutClick
@@ -15,6 +17,7 @@ const Header = ({
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [showLanguageMenu, setShowLanguageMenu] = useState(false);
     const [showMenuContainer, setShowMenuContainer] = useState(false);
+    const [showMobileMenuContainer, setShowMobileMenuContainer] = useState(false);
     const [isLogoutLoading, setIsLogoutLoading] = useState(false);
 
     const closeUserMenu = () => {
@@ -25,8 +28,16 @@ const Header = ({
         setShowMenuContainer(!showMenuContainer);
     };
 
+    const toggleMobileMenuContainer = () => {
+        setShowMobileMenuContainer(!showMobileMenuContainer);
+    };
+
     const closeMenuContainer = () => {
         setShowMenuContainer(false);
+    };
+
+    const closeMobileMenuContainer = () => {
+        setShowMobileMenuContainer(false);
     };
 
     const toggleLanguageMenu = () => {
@@ -102,7 +113,7 @@ const Header = ({
 
     return (
         <div className={`menu-layout-navbar ${isSidebarExpanded ? 'expanded' : ''}`}>
-            <nav id="mainNav" className="main-menu-container header landing-page">
+            <nav id="mainNav" className={`main-menu-container header landing-page ${isMobile ? 'mobile ' : ' '} ${isLogin ? 'logged-in' : ''}`}>
                 <div className="navbar-nav">
                     <div className="desktop-top-menu-nav"></div>
                     <div className="desktop-logo-container">
@@ -215,7 +226,7 @@ const Header = ({
                                         )}
                                     </div>
                                 </div>
-                                <button className="btn btn-secondary desktop-login small fixed-menu-btn topmenu" onClick={() => handleLoginClick()}>
+                                <button className="btn btn-secondary desktop-login register-link small fixed-menu-btn topmenu" onClick={() => handleLoginClick()}>
                                     Acceso
                                 </button>
                                 {/* <button className="btn btn-cta register-link small fixed-menu-btn topmenu">
@@ -223,6 +234,84 @@ const Header = ({
                             </button> */}
                             </div>
                         }
+                    </div>
+                </div>
+                <div className="headerWrapper">
+                    <div className="header-container">
+                        <div className={`headerLeft ${isLogin ? " head" : ""}`}>
+                            {
+                                isLogin ? <a aria-current="page" className="linkCss active" onClick={() => navigate("/")}>
+                                    <img alt="logo" className="logo light-logo" src={ImgLogo} />
+                                </a> :
+                                <button className="hamburger-bars" aria-label="Open menu"><span className="material-icons">menu</span></button>
+                            }
+                        </div>
+                        <div className="headerMiddle">
+                            {
+                                !isLogin && <a aria-current="page" className="linkCss active" onClick={() => navigate("/")}>
+                                    <img alt="logo" className="logo light-logo" src={ImgLogo} />
+                                </a>
+                            }
+                        </div>
+                        <div className="headerRight">
+                            {
+                                isLogin ? <div className="loggedin">
+                                    <div className="loggedinContainer">
+                                        <div className="currency-selector-container">
+                                            <div className="currency-selector true " id="currency-selector-button">
+                                                <span className="balance">
+                                                    <span>{userBalance ? "$ " + parseFloat(userBalance).toFixed(2) : "$0.00"}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div
+                                            className="mobile-account-button"
+                                            onClick={toggleMobileMenuContainer}
+                                            style={{ cursor: 'pointer' }}
+                                        >
+                                            <i className="material-icons">account_circle</i>
+                                        </div>
+                                        {
+                                            showMobileMenuContainer && <div className="menuContainer">
+                                                <div className="menu">
+                                                    <div className="menu-title"></div>
+                                                    <div className="menu-close" onClick={toggleMobileMenuContainer}>
+                                                        <img src={IconClose} style={{ filter: 'invert(1)', width: '20px' }} />
+                                                    </div>
+                                                    <nav className="menuButtonWrapper">
+                                                        {menuItems.map((item, index) => (
+                                                            <a 
+                                                                key={index}
+                                                                className={item.className}
+                                                                onClick={() => {
+                                                                    if (item.link === "") {
+                                                                        setIsLogoutLoading(true);
+                                                                        handleLogoutClick();
+                                                                    } else {
+                                                                        navigate(item.link);
+                                                                        closeMenuContainer();
+                                                                    }
+                                                                }}
+                                                                style={{ position: 'relative' }}
+                                                            >
+                                                                <span className="icon">
+                                                                    {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i> }
+                                                                </span>
+                                                                <span className="title">
+                                                                    {item.link === "" && isLogoutLoading ? <DivLoading /> : item.title}
+                                                                </span>
+                                                            </a>
+                                                        ))}
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div> : <div className="lngAndButtonWrap">
+                                    <button className="btn btn-secondary small login-button fixed-menu-btn" onClick={() => handleLoginClick()}>Acceso</button>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </nav>

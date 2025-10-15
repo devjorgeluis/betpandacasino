@@ -53,7 +53,7 @@ const Promotions = () => {
                                     </div>
                                     <div className="tagline title"><span>{promotion.title}</span></div>
                                     <div className="tagline text"><span>{promotion.description}</span></div>
-                                    <div className="tagline read-more-promotions"><a href={promotion.link}>Leer más</a></div>
+                                    <div className="tagline read-more-promotions d-none"><a href={promotion.link}>Leer más</a></div>
                                 </div>
                             ))}
                         </div>

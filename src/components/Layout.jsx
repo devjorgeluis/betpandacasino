@@ -104,6 +104,11 @@ const Layout = () => {
         } else {
             setIsSlotsOnly("true");
         }
+
+        if (result && result.user === null) {
+            localStorage.removeItem("session");
+            window.location.href = "/";
+        }
     };
 
     const handleLoginClick = () => {
@@ -144,6 +149,7 @@ const Layout = () => {
                     <FullDivLoading show={showFullDivLoading} />
                     {showLoginModal && (
                         <LoginModal
+                            isMobile={isMobile}
                             isOpen={showLoginModal}
                             onClose={() => setShowLoginModal(false)}
                             onLoginSuccess={handleLoginSuccess}
@@ -152,6 +158,7 @@ const Layout = () => {
                     <div className={`menu-layout ${isSmallScreen ? 'absolute' : 'fixed'}`}>
                         <Header
                             isLogin={isLogin}
+                            isMobile={isMobile}
                             userBalance={userBalance}
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}

@@ -3485,7 +3485,6 @@ svg polygon.icon-fill {
 .modal-content,
 .modal-dialog .modal-content,
 .promoteModalDialog .modal-dialog .modal-content {
-    background-color: #172638;
     color: #fff;
 }
 
@@ -7842,7 +7841,7 @@ a.menu-button:not([href]) .title {
     }
 
     .mobile .currency-selector {
-        padding-right: 4px;
+        padding-right: 14px;
         padding-left: 14px;
     }
 
@@ -9710,7 +9709,7 @@ body.pn-bonus .modal-body .account-card:nth-child(n + 3) {
 
     .panel-section.fixed-width .container-fixed-width .panel-card.provider-slider-slide .panel-inner {
         min-height: 56px;
-        min-width: 152px;
+        min-width: 120px;
         padding: 8px 30px;
     }
 
@@ -11069,4 +11068,35 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
 
 .menu-layout-content.game-inview {
     height: 100dvh;
+}
+
+.js-loader {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: transparent;
+    z-index: 99997;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+}
+
+.js-loader.hidden {
+    opacity: 0;
+}
+
+.js-loader img {
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .navbar-nav {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .headerWrapper {
+        display: none;
+    }
 }
