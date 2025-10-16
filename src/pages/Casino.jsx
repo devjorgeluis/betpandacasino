@@ -238,6 +238,9 @@ const Casino = () => {
     if (categories.length > 0 && provider) {
       setActiveCategory(provider);
       fetchContent(provider, provider.id, provider.table_name, index, true);
+      if (isMobile) {
+        setMobileShowMore(true);
+      }
     } else if (!provider && categories.length > 0) {
       const firstCategory = categories[0];
       setActiveCategory(firstCategory);
@@ -312,6 +315,9 @@ const Casino = () => {
       setActiveCategory(firstCategory);
       setSelectedCategoryIndex(0);
       fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
+      if (isMobile) {
+        setMobileShowMore(false);
+      }
     }
   }
 

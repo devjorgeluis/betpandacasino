@@ -1,18 +1,24 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
+import { AppContext } from "../AppContext";
+import { callApi } from "../utils/Utils";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
 import ImgLogo from "/src/assets/svg/logo.svg";
 
 const Sidebar = ({ isSlotsOnly, isMobile }) => {
     const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
+    const { contextData } = useContext(AppContext);
     const navigate = useNavigate();
     const location = useLocation();
     const isSportsPage = location.pathname === "/sports" || location.pathname === "/live-sports";
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState({ code: "es", name: "Spanish" });
+    const [liveCasinoMenus, setLiveCasinoMenus] = useState([]);
+    const [hasFetchedLiveCasino, setHasFetchedLiveCasino] = useState(false);
+    const [activeSubmenuItem, setActiveSubmenuItem] = useState("");
     const [countdown, setCountdown] = useState({
         days: 1,
         hours: 5,
@@ -38,8 +44,8 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
     ];
 
     const toggleMenu = (menuName) => {
-        setExpandedMenus(prev => 
-            prev.includes(menuName) 
+        setExpandedMenus(prev =>
+            prev.includes(menuName)
                 ? prev.filter(item => item !== menuName)
                 : [...prev, menuName]
         );
@@ -67,7 +73,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
         const timer = setInterval(() => {
             setCountdown(prevCountdown => {
                 let { days, hours, minutes, seconds } = prevCountdown;
-                
+
                 if (seconds > 0) {
                     seconds--;
                 } else {
@@ -91,7 +97,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                         }
                     }
                 }
-                
+
                 return { days, hours, minutes, seconds };
             });
         }, 1000);
@@ -99,8 +105,49 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
         return () => clearInterval(timer);
     }, []);
 
+    useEffect(() => {
+        if (!hasFetchedLiveCasino) {
+            getPage("livecasino");
+        }
+
+        const hash = location.hash;
+        if (hash && hash.startsWith('#')) {
+            const categoryCode = hash.substring(1);
+            setActiveSubmenuItem(categoryCode);
+            
+            if (location.pathname === '/live-casino' && !expandedMenus.includes('live-casino')) {
+                setExpandedMenus(prev => [...prev, 'live-casino']);
+            }
+        } else {
+            setActiveSubmenuItem("");
+        }
+
+        window.scrollTo(0, 0);
+    }, [location.pathname, location.hash, hasFetchedLiveCasino]);
+
+    const getPage = (page) => {
+        callApi(contextData, "GET", "/get-page?page=" + page, callbackGetPage, null);
+    };
+
+    const callbackGetPage = (result) => {
+        if (result.status === 500 || result.status === 422) {
+
+        } else {
+            let menus = [];
+            result.data.categories.forEach(element => {
+                menus.push({
+                    name: element.name,
+                    icon: element.image_local != null && element.image_local !== ""  && contextData.cdnUrl + element.image_local,
+                    href: "/live-casino#" + element.code
+                })
+            });
+            setLiveCasinoMenus(menus);
+            setHasFetchedLiveCasino(true);
+        }
+    };
+
     const isSlotsOnlyMode = isSlotsOnly === "true" || isSlotsOnly === true;
-    
+
     const menuItems = !isSlotsOnlyMode ? [
         {
             id: 'casino',
@@ -108,7 +155,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino' },
+                { name: 'Home', icon: 'custom-icon-bp-home', href: '/casino' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
                 { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
                 { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },
@@ -121,17 +168,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             name: 'Casino en Vivo',
             icon: 'custom-icon-bp-live-casino',
             href: '/live-casino',
-            subItems: [
-                { name: 'Vestíbulo', icon: 'custom-icon-trof2', href: '/casino/page/2/live-casino' },
-                { name: 'Jugado recientemente', icon: 'custom-icon-bp-recently-played', href: '/casino/page/2/live-casino/2/live-casino-lobby' },
-                { name: 'Tus favoritos', icon: 'custom-icon-bp-your-favourites', href: '/casino/page/2/live-casino/2/live-casino-lobby#yourfavorites' },
-                { name: 'Ruleta en vivo', icon: 'custom-icon-bingo', href: '/casino/page/2/live-casino/7/live-roulette' },
-                { name: 'Blackjack en vivo', icon: 'custom-icon-spades', href: '/casino/page/2/live-casino/8/live-blackjack' },
-                { name: 'Bacará en vivo', icon: 'custom-icon-sixdices', href: '/casino/page/2/live-casino/9/live-baccarat' },
-                { name: 'Programas de juegos', icon: 'custom-icon-dealer2', href: '/casino/page/2/live-casino/11/game-shows' },
-                { name: 'Dados Sic Bo', icon: 'custom-icon-diamon', href: '/casino/page/2/live-casino/14/sic-bo' },
-                { name: 'Veintiuno VIP', icon: 'custom-icon-kings', href: '/casino/page/2/live-casino/26/vip-blackjack' }
-            ]
+            subItems: liveCasinoMenus
         },
         {
             id: 'sports',
@@ -150,7 +187,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino' },
+                { name: 'Home', icon: 'custom-icon-bp-home', href: '/casino' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
                 { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
                 { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },
@@ -174,7 +211,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                 <div className={`sidemenu-container sidemenu-container-collapsed ${!isSidebarExpanded ? 'active' : ''}`}>
                     <div className="sidemenu-header collapsed">
                         <div className="close-button collapsed fixed">
-                            <span 
+                            <span
                                 className="hamburger-bars sidemenu-toggle"
                                 onClick={toggleSidebar}
                                 style={{ cursor: 'pointer' }}
@@ -186,7 +223,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                     <div className="content collapsed"></div>
                     <div className="menu-items menu-items-collapsed">
                         {collapsedMenuItems.map((item, index) => (
-                            <button 
+                            <button
                                 key={index}
                                 className={`nav-link fixed-nav-link ${item.name} ${item.name === 'sports' ? 'active-collapsed' : ''}`}
                                 onClick={() => navigate(item.href)}
@@ -203,7 +240,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                 <div className={`sidemenu-container sidemenu-container-expanded ${isSidebarExpanded ? 'active' : ''}`}>
                     <div className="sidemenu-header expanded">
                         <div className="close-button expanded logo fixed">
-                            <span 
+                            <span
                                 className="hamburger-bars sidemenu-toggle"
                                 onClick={toggleSidebar}
                                 style={{ cursor: 'pointer' }}
@@ -213,7 +250,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                         </div>
                         <div className="brand-logo">
                             <a className="linkCss" onClick={() => navigate("/")}>
-                                <img alt="logo" className="logo light-logo" src={ImgLogo} /> 
+                                <img alt="logo" className="logo light-logo" src={ImgLogo} />
                             </a>
                         </div>
                     </div>
@@ -272,10 +309,9 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                             {menuItems.map((menu) => (
                                 <div key={menu.id} className="side-submenu-container">
                                     <div className={`submenu-container ${isMenuExpanded(menu.id) ? 'expanded-submenu-container' : ''}`}>
-                                        <button 
+                                        <button
                                             className={`nav-link submenu-link expandable CUSTOM ${menu.id}`}
                                             onClick={() => {
-                                                navigate(menu.href);
                                                 toggleMenu(menu.id);
                                             }}
                                             style={{ cursor: 'pointer' }}
@@ -293,16 +329,30 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                             </div>
                                         </button>
                                         <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'expanded-sub-menu show' : ''}`}>
-                                            {menu.subItems.map((subItem, subIndex) => (
-                                                <button 
-                                                    key={subIndex}
-                                                    className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                                    onClick={() => navigate(subItem.href)}
-                                                >
-                                                    <i className={subItem.icon}></i>
-                                                    {subItem.name}
-                                                </button>
-                                            ))}
+                                            {menu.subItems.map((subItem, subIndex) => {
+                                                let categoryCode = "";
+                                                if (menu.id === "live-casino" && subItem.href.includes("#")) {
+                                                    categoryCode = subItem.href.split("#")[1];
+                                                }
+                                                
+                                                const isActive = menu.id === "live-casino" 
+                                                    ? categoryCode === activeSubmenuItem
+                                                    : subItem.href === location.pathname + location.hash;
+                                                
+                                                return (
+                                                    <button
+                                                        key={subIndex}
+                                                        className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'active' : ''}`}
+                                                        onClick={() => navigate(subItem.href)}
+                                                    >
+                                                        <i className={subItem.icon}></i>
+                                                        {/* {
+                                                            menu.id !== "live-casino" ? <i className={subItem.icon}></i> : <img src={subItem.icon} width={25} />
+                                                        } */}
+                                                        {subItem.name}
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 </div>
@@ -313,11 +363,11 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                     <div className="footer-items footer-items-fixed"></div>
                     <div className="language-wrapper-container d-none">
                         <div className="dropdown-btn small dropdown">
-                            <button 
-                                aria-haspopup="true" 
+                            <button
+                                aria-haspopup="true"
                                 aria-expanded={showLanguageDropdown}
-                                id="dropdown-btn" 
-                                type="button" 
+                                id="dropdown-btn"
+                                type="button"
                                 className="dropdown-toggle btn btn-secondary"
                                 onClick={toggleLanguageDropdown}
                                 style={{ cursor: 'pointer' }}
@@ -331,9 +381,9 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                     className="dropdown-menu show"
                                 >
                                     {languages.map((language) => (
-                                        <a 
+                                        <a
                                             key={language.code}
-                                            href="#" 
+                                            href="#"
                                             className={`dropdown-item ${language.code === currentLanguage.code ? 'active' : ''}`}
                                             role="button"
                                             onClick={(e) => {
@@ -367,7 +417,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                     </div>
                 </div>
             </div>
-            
+
             {
                 !isSportsPage && <nav className="bottom-menu">
                     <button className="mobile-menu-item" onClick={() => navigate("/casino")}>

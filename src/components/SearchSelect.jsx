@@ -1,27 +1,23 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../AppContext";
-import IconArrowDown from "/src/assets/svg/arrow-down.svg";
-import IconClose from "/src/assets/svg/close.svg";
+import { useNavigate } from "react-router-dom";
 
 const SearchSelect = ({
     categories,
-    selectedProvider,
     setSelectedProvider,
     isProviderDropdownOpen,
     setIsProviderDropdownOpen,
     onProviderSelect
 }) => {
     const { contextData } = useContext(AppContext);
+    const navigate = useNavigate();
     const [searchStudio, setSearchStudio] = useState("");
-
-    const toggleProviderDropdown = () => {
-        setIsProviderDropdownOpen(!isProviderDropdownOpen);
-    };
 
     const handleProviderSelect = (provider, index = 0) => {
         setSelectedProvider(provider);
         setIsProviderDropdownOpen(false);
         onProviderSelect(provider, index);
+        navigate("#" + provider.code);
     };
 
     const filteredCategories = categories.filter(provider => 

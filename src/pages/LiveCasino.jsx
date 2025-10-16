@@ -32,6 +32,7 @@ const LiveCasino = () => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
+  const originalCategoriesRef = useRef([]);
   const [activeCategory, setActiveCategory] = useState({});
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [isProviderDropdownOpen, setIsProviderDropdownOpen] = useState(false);
@@ -47,6 +48,8 @@ const LiveCasino = () => {
   const location = useLocation();
   const searchRef = useRef(null);
   const { isSlotsOnly, isMobile } = useOutletContext();
+  const hasFetchedContentRef = useRef(false);
+  const prevHashRef = useRef("");
 
   useEffect(() => {
     selectedGameId = null;
@@ -57,17 +60,12 @@ const LiveCasino = () => {
     setGameUrl("");
     setShouldShowGameModal(false);
     setActiveCategory({});
+    hasFetchedContentRef.current = false;
 
-    const hash = location.hash;
-    if (hash && hash.startsWith('#')) {
-      const pageName = hash.substring(1);
-      getPage(pageName);
-    } else {
-      getPage("livecasino");
-    }
+    getPage("livecasino");
 
     window.scrollTo(0, 0);
-  }, [location.pathname, location.hash]);
+  }, [location.pathname]);
 
   const getPage = (page) => {
     setIsLoadingGames(true);
@@ -78,24 +76,40 @@ const LiveCasino = () => {
 
   const callbackGetPage = (result) => {
     if (result.status === 500 || result.status === 422) {
-    
+
     } else {
       setCategories(result.data.categories);
+
+      if (!originalCategoriesRef.current || originalCategoriesRef.current.length === 0) {
+        originalCategoriesRef.current = result.data.categories || [];
+      }
       setSelectedProvider(null);
       setPageData(result.data);
-
-      if (result.data.page_group_type == "categories") {
-        setSelectedCategoryIndex(0);
-      }
-      if (result.data.page_group_type == "games") {
-        loadMoreContent();
-      }
       pageCurrent = 0;
     }
   };
 
   useEffect(() => {
-    if (categories.length > 0) {
+    if (categories.length === 0) return;
+    const hash = location.hash;
+    if (hash && hash.startsWith('#')) {
+      if (prevHashRef.current !== hash) {
+        const categoryCode = hash.substring(1);
+        const category = categories.find(cat => cat.code === categoryCode);
+        if (category) {
+          const categoryIndex = categories.indexOf(category);
+          setSelectedProvider(null);
+          setActiveCategory(category);
+          setSelectedCategoryIndex(categoryIndex);
+          fetchContent(category, category.id, category.table_name, categoryIndex, true);
+          prevHashRef.current = hash;
+          hasFetchedContentRef.current = true;
+          return;
+        }
+      }
+    }
+
+    if (!hasFetchedContentRef.current) {
       const urlParams = new URLSearchParams(location.search);
       const providerName = urlParams.get('provider');
       const providerId = urlParams.get('providerId');
@@ -108,15 +122,21 @@ const LiveCasino = () => {
           setActiveCategory(provider);
           setSelectedCategoryIndex(providerIndex);
           fetchContent(provider, provider.id, provider.table_name, providerIndex, true);
+          prevHashRef.current = location.hash;
+          hasFetchedContentRef.current = true;
           return;
         }
       }
 
-      let item = categories[0];
-      fetchContent(item, item.id, item.table_name, 0, false);
-      setActiveCategory(item);
+      const item = categories[0];
+      if (item) {
+        fetchContent(item, item.id, item.table_name, 0, false);
+        setActiveCategory(item);
+      }
+      prevHashRef.current = location.hash;
+      hasFetchedContentRef.current = true;
     }
-  }, [categories, location.search]);
+  }, [categories, location.search, location.hash]);
 
   const loadMoreContent = () => {
     let item = categories[selectedCategoryIndex];
@@ -167,7 +187,7 @@ const LiveCasino = () => {
 
   const callbackFetchContent = (result) => {
     if (result.status === 500 || result.status === 422) {
-      
+
     } else {
       if (pageCurrent == 0) {
         configureImageSrc(result);
@@ -242,6 +262,9 @@ const LiveCasino = () => {
     setSelectedProvider(provider);
     setIsProviderDropdownOpen(false);
     setTxtSearch("");
+    if (isMobile) {
+      setMobileShowMore(true);
+    }
     if (categories.length > 0 && provider) {
       setActiveCategory(provider);
       fetchContent(provider, provider.id, provider.table_name, index, true);
@@ -302,7 +325,7 @@ const LiveCasino = () => {
 
   const callbackSearch = (result) => {
     if (result.status === 500 || result.status === 422) {
-      
+
     } else {
       configureImageSrc(result, true);
       setGames(result.content);
@@ -314,6 +337,9 @@ const LiveCasino = () => {
   const clearSearch = () => {
     setTxtSearch("");
     setSelectedProvider(null);
+    if (isMobile) {
+      setMobileShowMore(true);
+    }
     if (categories.length > 0) {
       const firstCategory = categories[0];
       setActiveCategory(firstCategory);
@@ -391,12 +417,11 @@ const LiveCasino = () => {
                   </div>
                   {
                     categories.length > 0 && txtSearch === "" && selectedProvider === null && <CategoryContainer
-                      categories={categories}
+                      categories={originalCategoriesRef.current.length > 0 ? originalCategoriesRef.current : categories}
                       selectedCategoryIndex={selectedCategoryIndex}
                       onCategoryClick={fetchContent}
                       onCategorySelect={handleCategorySelect}
                       isMobile={isMobile}
-                      pageType="casino"
                     />
                   }
                   {

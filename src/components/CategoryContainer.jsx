@@ -24,8 +24,9 @@ const CategoryContainer = (props) => {
         <ul className={`navbar-nav flex-row casino-lobby-categories row ${props.isMobile ? 'mobile' : ''}` }>
           {props.categories.map((category, index) => (
             <CategoryButton
-              key={index}
+              key={category.id ?? category.code ?? index}
               name={category.name}
+              code={category.code}
               icon={category.image_local != null && category.image_local !== "" ? contextData.cdnUrl + category.image_local : category.image_url}
               active={props.selectedCategoryIndex === index}
               onClick={() => handleCategoryClick(category, index)}

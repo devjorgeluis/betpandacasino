@@ -6,7 +6,7 @@ const CategoryButton = (props) => {
 
   return (
     <li className="nav-item" onClick={props.onClick}>
-      <a className={customClass}>
+      <a className={customClass} href={"#" + props.code}>
         <h1 className="title seo-title">{props.name}</h1>
       </a>
     </li>
