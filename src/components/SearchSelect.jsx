@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { AppContext } from "../AppContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SearchSelect = ({
     categories,
@@ -10,14 +10,19 @@ const SearchSelect = ({
     onProviderSelect
 }) => {
     const { contextData } = useContext(AppContext);
-    const navigate = useNavigate();
     const [searchStudio, setSearchStudio] = useState("");
+    const navigate = useNavigate();
+
+    const location = useLocation();
+    const isLiveCasino = location.pathname === "/live-casino";
 
     const handleProviderSelect = (provider, index = 0) => {
         setSelectedProvider(provider);
         setIsProviderDropdownOpen(false);
         onProviderSelect(provider, index);
-        navigate("#" + provider.code);
+        if (isLiveCasino) {
+            navigate("#" + provider.code);
+        }
     };
 
     const filteredCategories = categories.filter(provider => 

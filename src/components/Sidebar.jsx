@@ -155,7 +155,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/casino' },
+                { name: 'Lobby', icon: 'custom-icon-bp-home', href: '/casino#home' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
                 { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
                 { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },
@@ -187,7 +187,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Home', icon: 'custom-icon-bp-home', href: '/casino' },
+                { name: 'Lobby', icon: 'custom-icon-bp-home', href: '/casino#home' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
                 { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
                 { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },

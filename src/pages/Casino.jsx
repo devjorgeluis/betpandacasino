@@ -30,8 +30,10 @@ const Casino = () => {
   const { isLogin } = useContext(LayoutContext);
   const { setShowFullDivLoading } = useContext(NavigationContext);
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const [tags, setTags] = useState([]);
   const [games, setGames] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [mainCategories, setMainCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState({});
   const [selectedProvider, setSelectedProvider] = useState(null);
   const [isProviderDropdownOpen, setIsProviderDropdownOpen] = useState(false);
@@ -48,6 +50,21 @@ const Casino = () => {
   const searchRef = useRef(null);
   const { isSlotsOnly, isMobile } = useOutletContext();
 
+  const lastLoadedTagRef = useRef("");
+  useEffect(() => {
+    if (!location.hash || tags.length === 0) return;
+    const hashCode = location.hash.replace('#', '');
+    const tagIndex = tags.findIndex(t => t.code === hashCode);
+
+    if (tagIndex !== -1 && selectedCategoryIndex !== tagIndex) {
+      setSelectedCategoryIndex(tagIndex);
+    }
+    if (hashCode && lastLoadedTagRef.current !== hashCode) {
+      lastLoadedTagRef.current = hashCode;
+      getPage(hashCode);
+    }
+  }, [location.hash, tags]);
+
   useEffect(() => {
     selectedGameId = null;
     selectedGameType = null;
@@ -58,50 +75,60 @@ const Casino = () => {
     setShouldShowGameModal(false);
     setActiveCategory({});
 
-    const hash = location.hash;
-    if (hash && hash.startsWith('#')) {
-      const pageName = hash.substring(1);
-      getPage(pageName);
-    } else {
-      getPage("casino");
-    }
-
+    getPage("casino");
     window.scrollTo(0, 0);
-  }, [location.pathname, location.hash]);
+  }, [location.pathname]);
 
 
   useEffect(() => {
-    updateNavLinks();
-  }, [isSlotsOnly]);
+    const isSlotsOnlyFalse = isSlotsOnly === false || isSlotsOnly === "false";
+    let tmpTags = isSlotsOnlyFalse ? [
+      { name: "Lobby", code: "home" },
+      { name: "Hot", code: "hot" },
+      { name: "Jokers", code: "joker" },
+      { name: "Juegos de crash", code: "arcade" },
+      { name: "Megaways", code: "megaways" },
+      { name: "Ruletas", code: "roulette" },
+    ] : [
+      { name: "Lobby", code: "home" },
+      { name: "Hot", code: "hot" },
+      { name: "Jokers", code: "joker" },
+      { name: "Megaways", code: "megaways" },
+    ];
 
-  const updateNavLinks = () => {
-    if (isSlotsOnly === "false") {
-    } else {
-    }
-  };
+    setTags(tmpTags);
+  }, [isSlotsOnly]);
 
   const getPage = (page) => {
     setIsLoadingGames(true);
-    setCategories([]);
     setGames([]);
-    callApi(contextData, "GET", "/get-page?page=" + page, callbackGetPage, null);
+    callApi(contextData, "GET", "/get-page?page=" + page, (result) => callbackGetPage(result, page), null);
   };
 
-  const callbackGetPage = (result) => {
+  const callbackGetPage = (result, page) => {
     if (result.status === 500 || result.status === 422) {
-    
+
     } else {
-      setCategories(result.data.categories);
       setSelectedProvider(null);
       setPageData(result.data);
 
-      if (result.data.page_group_type === "categories" && result.data.categories.length > 0) {
+      const hashCode = location.hash.replace('#', '');
+      const tagIndex = tags.findIndex(t => t.code === hashCode);
+      setSelectedCategoryIndex(tagIndex);
+
+      if (result.data && result.data.page_group_type === "categories" && result.data.categories.length > 0) {
+        setCategories(result.data.categories);
+        if (page === "casino") {
+          setMainCategories(result.data.categories);
+        }
         const firstCategory = result.data.categories[0];
-        setSelectedCategoryIndex(0);
         setActiveCategory(firstCategory);
-        fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true, result.data.page_group_code);
-      } else if (result.data.page_group_type === "games") {
-        loadMoreContent();
+        fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, tagIndex, true, result.data.page_group_code);
+      } else if (result.data && result.data.page_group_type === "games") {
+        if (mainCategories && mainCategories.length > 0) {
+          setCategories(mainCategories);
+        }
+        setGames(result.data.categories);
       }
 
       pageCurrent = 0;
@@ -160,7 +187,7 @@ const Casino = () => {
 
   const callbackFetchContent = (result) => {
     if (result.status === 500 || result.status === 422) {
-      
+
     } else {
       if (pageCurrent == 0) {
         configureImageSrc(result);
@@ -298,7 +325,7 @@ const Casino = () => {
 
   const callbackSearch = (result) => {
     if (result.status === 500 || result.status === 422) {
-      
+
     } else {
       configureImageSrc(result, true);
       setGames(result.content);
@@ -314,7 +341,7 @@ const Casino = () => {
       const firstCategory = categories[0];
       setActiveCategory(firstCategory);
       setSelectedCategoryIndex(0);
-      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true);
+      fetchContent(firstCategory, firstCategory.id, firstCategory.table_name, 0, true, "default_pages_home");
       if (isMobile) {
         setMobileShowMore(false);
       }
@@ -389,10 +416,17 @@ const Casino = () => {
                     </div>
                   </div>
                   {
-                    categories.length > 0 && txtSearch === "" && selectedProvider === null && <CategoryContainer
-                      categories={categories}
+                    tags.length > 0 && txtSearch === "" && selectedProvider === null && <CategoryContainer
+                      categories={tags}
                       selectedCategoryIndex={selectedCategoryIndex}
-                      onCategoryClick={fetchContent}
+                      onCategoryClick={(tag, _id, _table, index) => {
+                        if (window.location.hash !== `#${tag.code}`) {
+                          window.location.hash = `#${tag.code}`;
+                        } else {
+                          setSelectedCategoryIndex(index);
+                          getPage(tag.code);
+                        }
+                      }}
                       onCategorySelect={handleCategorySelect}
                       isMobile={isMobile}
                       pageType="casino"

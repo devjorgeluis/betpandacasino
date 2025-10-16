@@ -18,7 +18,6 @@ import GameModal from "../components/GameModal";
 import LoadApi from "../components/LoadApi";
 import LoadGames from "../components/LoadGames";
 import LoginModal from "../components/LoginModal";
-import CustomAlert from "../components/CustomAlert";
 import "animate.css";
 
 import IconLive from "/src/assets/svg/live.svg";
@@ -74,7 +73,7 @@ const Home = () => {
 
   const callbackGetStatus = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+      
     } else {
       setIsLoadingGames(false);
       setTopGames(result.top_hot);
@@ -92,7 +91,7 @@ const Home = () => {
 
   const callbackGetPage = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+      
     } else {
       setCategories(result.data.categories);
       setPageData(result.data);
@@ -158,7 +157,7 @@ const Home = () => {
 
   const callbackFetchContent = (result) => {
     if (result.status === 500 || result.status === 422) {
-      setMessageCustomAlert(["error", result.message]);
+      
     } else {
       if (pageCurrent === 0) {
         configureImageSrc(result);
@@ -202,8 +201,6 @@ const Home = () => {
           setGameUrl(result.url);
           break;
       }
-    } else if (result.status === "500" || result.status === "422") {
-      setMessageCustomAlert(["error", result.message]);
     }
   };
 
@@ -221,13 +218,8 @@ const Home = () => {
     setShowLoginModal(false);
   };
 
-  const handleAlertClose = () => {
-    setMessageCustomAlert(["", ""]);
-  };
-
   return (
     <>
-      <CustomAlert message={messageCustomAlert} onClose={handleAlertClose} />
       {showLoginModal && (
         <LoginModal
           isOpen={showLoginModal}

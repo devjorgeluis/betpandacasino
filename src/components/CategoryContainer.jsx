@@ -1,10 +1,6 @@
-import { useContext } from "react";
-import { AppContext } from "../AppContext";
 import CategoryButton from "./CategoryButton";
 
 const CategoryContainer = (props) => {
-  const { contextData } = useContext(AppContext);
-
   if (!props.categories || props.categories.length === 0) {
     return null;
   }
@@ -27,7 +23,6 @@ const CategoryContainer = (props) => {
               key={category.id ?? category.code ?? index}
               name={category.name}
               code={category.code}
-              icon={category.image_local != null && category.image_local !== "" ? contextData.cdnUrl + category.image_local : category.image_url}
               active={props.selectedCategoryIndex === index}
               onClick={() => handleCategoryClick(category, index)}
             />
