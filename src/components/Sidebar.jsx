@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
@@ -8,6 +8,8 @@ import ImgLogo from "/src/assets/svg/logo.svg";
 const Sidebar = ({ isSlotsOnly, isMobile }) => {
     const { isSidebarExpanded, toggleSidebar } = useContext(LayoutContext);
     const navigate = useNavigate();
+    const location = useLocation();
+    const isSportsPage = location.pathname === "/sports" || location.pathname === "/live-sports";
     const [expandedMenus, setExpandedMenus] = useState([""]);
     const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState({ code: "es", name: "Spanish" });
@@ -365,29 +367,31 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                     </div>
                 </div>
             </div>
-
-            <nav className="bottom-menu">
-                <button className="mobile-menu-item" onClick={() => navigate("/casino")}>
-                    <div className="icon"><i className="custom-icon-bp-casino"></i></div>
-                    <div className="menu-text">Casino</div>
-                </button>
-                {
-                    !isSlotsOnlyMode && <>
-                        <button className="mobile-menu-item" onClick={() => navigate("/live-casino")}>
-                            <div className="icon"><i className="custom-icon-bp-live-casino"></i></div>
-                            <div className="menu-text">Casino en Vivo</div>
-                        </button>
-                        <button className="mobile-menu-item" onClick={() => navigate("/sports")}>
-                            <div className="icon"><i className="custom-icon-bp-sports"></i></div>
-                            <div className="menu-text">Deportes</div>
-                        </button>
-                    </>
-                }
-                <button className="mobile-menu-item" onClick={toggleSidebar}>
-                    <div className="icon"><span className="material-icons">menu</span></div>
-                    <div className="menu-text">Menú</div>
-                </button>
-            </nav>
+            
+            {
+                !isSportsPage && <nav className="bottom-menu">
+                    <button className="mobile-menu-item" onClick={() => navigate("/casino")}>
+                        <div className="icon"><i className="custom-icon-bp-casino"></i></div>
+                        <div className="menu-text">Casino</div>
+                    </button>
+                    {
+                        !isSlotsOnlyMode && <>
+                            <button className="mobile-menu-item" onClick={() => navigate("/live-casino")}>
+                                <div className="icon"><i className="custom-icon-bp-live-casino"></i></div>
+                                <div className="menu-text">Casino en Vivo</div>
+                            </button>
+                            <button className="mobile-menu-item" onClick={() => navigate("/sports")}>
+                                <div className="icon"><i className="custom-icon-bp-sports"></i></div>
+                                <div className="menu-text">Deportes</div>
+                            </button>
+                        </>
+                    }
+                    <button className="mobile-menu-item" onClick={toggleSidebar}>
+                        <div className="icon"><span className="material-icons">menu</span></div>
+                        <div className="menu-text">Menú</div>
+                    </button>
+                </nav>
+            }
         </>
     );
 };

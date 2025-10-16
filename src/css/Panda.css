@@ -9571,6 +9571,11 @@ body.pn-bonus .modal-body .account-card:nth-child(n + 3) {
     padding-top: 104px;
 }
 
+.menu-layout.fixed .menu-layout-content.sports {
+    padding-top: 67px;
+    overflow: unset;
+}
+
 .menu-layout .side-submenu-container .submenu-container .nav-link.submenu-link .nav-link-logo i,
 .sidemenu-container .menu-items.menu-items-collapsed .fixed-nav-link i {
     color: #96abc1;
@@ -11202,6 +11207,143 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     0% { transform: translateY(-50%) translateX(0); }
     50% { transform: translateY(-50%) translateX(0) translateY(6px); }
     100% { transform: translateY(-50%) translateX(0); }
+}
+
+.loading-page {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.game-iframe-view_gameIframeWrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    max-width: 1500px;
+    margin: 0 auto
+}
+
+@media(max-width: 992px) {
+    .game-iframe-view_gameIframeWrapper {
+        background-color: #000217;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100000
+    }
+}
+
+.game-iframe-view_gameIframeWrapper.game-iframe-view_default {
+    aspect-ratio: 1125/635;
+    max-width: 1125px
+}
+
+@media(max-width: 992px) {
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_default {
+        aspect-ratio: inherit;
+        max-width: inherit
+    }
+}
+
+.game-iframe-view_gameIframeWrapper.game-iframe-view_tvbet {
+    max-width: 1500px;
+    aspect-ratio: 1500/847
+}
+
+@media(max-width: 992px) {
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_tvbet {
+        max-width: inherit;
+        aspect-ratio: inherit;
+        height: 100% !important;
+        min-height: 100% !important
+    }
+}
+
+.game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook {
+    height: calc(100vh - 73px) !important;
+    min-height: 100%;
+    max-width: 100%;
+    height: 100%
+}
+
+@media(max-width: 992px) {
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook {
+        top: 67px;
+        z-index: 999;
+        height: 100% !important
+    }
+
+    .game-iframe-view_gameIframeWrapper.game-iframe-view_sportbook>.game-iframe-view_gameIframe {
+        height: calc(100% - 67px)
+    }
+}
+
+.game-iframe-view_gameIframe {
+    width: 100%;
+    height: 100%;
+    z-index: 0
+}
+
+@media(max-width: 992px) {
+    .game-iframe-view_gameIframe {
+        min-height: auto !important
+    }
+
+    .game-iframe-view_gameIframe.game-iframe-view_sportbook {
+        height: calc(100% - 50px)
+    }
+}
+
+.game-iframe-view_gameIframeLoader {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1
+}
+
+.no-game {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.leftWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+    background: #0f0f0f;
+}
+
+.forbiddenNumber {
+    font-weight: 700;
+    font-size: 240px;
+    line-height: 288px;
+    letter-spacing: 9.6px;
+}
+
+.forbiddenText {
+    font-size: 42px;
+    line-height: 51px;
+    letter-spacing: 0.53px;
+    text-transform: uppercase;
+}
+
+@media (orientation: landscape) {
+    .forbiddenNumber {
+        font-size: 10rem;
+        line-height: 10rem;
+    }
 }
 
 @media (max-width: 768px) {

@@ -21,10 +21,10 @@ const Layout = () => {
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
-  const [showMobileSearch, setShowMobileSearch] = useState(false);
-  const navigate = useNavigate();
+    const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+    const [isSmallScreen, setIsSmallScreen] = useState(false);
+    const [showMobileSearch, setShowMobileSearch] = useState(false);
+    const navigate = useNavigate();
 
     const location = useLocation();
     const isSportsPage = location.pathname === "/sports" || location.pathname === "/live-sports";
@@ -134,17 +134,17 @@ const Layout = () => {
         }, null);
     };
 
-  const layoutContextValue = {
-    isLogin,
-    userBalance,
-    handleLoginClick,
-    handleLogoutClick,
-    refreshBalance,
-    isSidebarExpanded,
-    toggleSidebar,
-    showMobileSearch,
-    setShowMobileSearch
-  };
+    const layoutContextValue = {
+        isLogin,
+        userBalance,
+        handleLoginClick,
+        handleLogoutClick,
+        refreshBalance,
+        isSidebarExpanded,
+        toggleSidebar,
+        showMobileSearch,
+        setShowMobileSearch
+    };
 
     return (
         <LayoutContext.Provider value={layoutContextValue}>
@@ -171,7 +171,7 @@ const Layout = () => {
                             handleLogoutClick={handleLogoutClick}
                         />
                         <Sidebar isSlotsOnly={isSlotsOnly} isMobile={isMobile} />
-                        <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'}`}>
+                        <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'} ${isSportsPage ? 'sports' : ''}`}>
                             <Outlet context={{ isSlotsOnly, isMobile }} />
                         </main>
                         {showMobileSearch && isMobile && (

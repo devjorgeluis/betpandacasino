@@ -5,8 +5,8 @@ import { callApi } from "../utils/Utils";
 import LoadApi from "../components/LoadApi";
 import "animate.css";
 
-const Sports = () => {
-    const pageTitle = "Sports";
+const LiveSports = () => {
+    const pageTitle = "Live Sports";
     const { contextData } = useContext(AppContext);
     const [sportsEmbedUrl, setSportsEmbedUrl] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ const Sports = () => {
 
     const loadSportsPage = () => {
         setIsLoading(true);
-        callApi(contextData, "GET", "/get-page?page=sports", callbackGetPage, null);
+        callApi(contextData, "GET", "/get-page?page=sportslive", callbackGetPage, null);
     };
 
     const callbackGetPage = (result) => {        
@@ -65,4 +65,4 @@ const Sports = () => {
     );
 };
 
-export default Sports;
+export default LiveSports;
