@@ -83,19 +83,19 @@ const Header = ({
     const menuItems = [
         {
             className: "menu-button profile-button",
-            link: "/account/profile",
+            link: "/profile",
             icon: "account_circle",
             title: "Perfil"
         },
         {
             className: "menu-button balances-button",
-            link: "/account/balances",
+            link: "/profile/balance",
             icon: "account_balance_wallet",
             title: "Saldos de la cuenta"
         },
         {
             className: "menu-button transactions-button",
-            link: "/account/transactions/wallet",
+            link: "/profile/history",
             icon: "format_list_bulleted",
             title: "Transacciones"
         },
@@ -285,7 +285,7 @@ const Header = ({
                                                                         handleLogoutClick();
                                                                     } else {
                                                                         navigate(item.link);
-                                                                        closeMenuContainer();
+                                                                        toggleMobileMenuContainer();
                                                                     }
                                                                 }}
                                                                 style={{ position: 'relative' }}

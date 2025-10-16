@@ -5,6 +5,7 @@ import LiveCasino from "./pages/LiveCasino";
 import Sports from "./pages/Sports";
 import LiveSports from "./pages/LiveSports";
 import Profile from "./pages/Profile/Profile";
+import ProfileBalance from "./pages/Profile/ProfileBalance";
 import ProfileHistory from "./pages/Profile/ProfileHistory";
 import ProfileNotification from "./pages/Profile/ProfileNotification";
 import NoPage from "./pages/NoPage";
@@ -21,6 +22,7 @@ export default function AppRoutes() {
                 <Route path="/sports" element={<Sports />} />
                 <Route path="/live-sports" element={<LiveSports />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/profile/balance" element={<ProfileBalance />} />
                 <Route path="/profile/history" element={<ProfileHistory />} />
                 <Route path="/profile/notification" element={<ProfileNotification />} />
                 <Route path="*" element={<NoPage />} />

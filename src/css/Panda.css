@@ -8160,12 +8160,12 @@ a.menu-button:not([href]) .title {
     opacity: 1;
 }
 
-body.pn-account,
-body.pn-account .tp-tableContainer {
+.account-page-container.pn-account,
+.account-page-container.pn-account .tp-tableContainer {
     background-color: #081521;
 }
 
-body.pn-account .tp-tableContainer .table-row-left .type {
+.account-page-container.pn-account .tp-tableContainer .table-row-left .type {
     color: #f5f7f8;
     font-family: "Aeonik-Bold", sans-serif;
     font-size: 18px;
@@ -8194,11 +8194,11 @@ body.pn-account .tp-tableContainer .table-row-left .type {
     line-height: 16px;
 }
 
-body.pn-account .tp-tableContainer .table-row-left .table-row-divider {
+.account-page-container.pn-account .tp-tableContainer .table-row-left .table-row-divider {
     margin-top: 8px;
 }
 
-body.pn-account .tp-tableContainer .table-row-left .table-row-divider .dateAndId {
+.account-page-container.pn-account .tp-tableContainer .table-row-left .table-row-divider .dateAndId {
     color: #96abc1;
     font-family: "Inter", sans-serif;
     font-size: 12px;
@@ -8217,7 +8217,7 @@ body.pn-account .tp-tableContainer .table-row-left .table-row-divider .dateAndId
     margin-top: 8px;
 }
 
-body.pn-account .tp-tableContainer .table-row-right .money {
+.account-page-container.pn-account .tp-tableContainer .table-row-right .money {
     color: #1fe883;
     text-align: right;
     font-family: "Inter", sans-serif;
@@ -8748,7 +8748,7 @@ body.pn-rewards .account-card .row .col-md-3.actions .btn.btn-cta.small {
 }
 
 @media (max-width: 576px) {
-    body.pn-account .tabbar-container {
+    .account-page-container.pn-account .tabbar-container {
         overflow: auto;
     }
 }
@@ -9061,16 +9061,16 @@ body.pn-rewards .account-card .row .col-md-3.actions .btn.btn-cta.small {
         max-width: 50%;
     }
 
-    body.pn-account .tp-tableContainer .table-row-right .money {
+    .account-page-container.pn-account .tp-tableContainer .table-row-right .money {
         word-break: break-word;
     }
 
-    body.pn-account .tp-tableContainer .table-row-left .table-row-divider {
+    .account-page-container.pn-account .tp-tableContainer .table-row-left .table-row-divider {
         display: flex;
         flex-direction: column;
     }
 
-    body.pn-account .tp-tableContainer .table-row-left .table-row-divider .dateAndId {
+    .account-page-container.pn-account .tp-tableContainer .table-row-left .table-row-divider .dateAndId {
         font-size: 11px;
     }
 
@@ -9124,14 +9124,14 @@ a.btn:not([href]):not([tabindex]).btn-primary {
     font-weight: 700;
 }
 
-body.pn-account.pn-bonus .modal-content {
+.account-page-container.pn-account.pn-bonus .modal-content {
     background-color: #081521;
     border: 1px solid #213344;
     border-radius: 4px;
 }
 
 @media (max-width: 576px) {
-    body.pn-account.pn-bonus .modal-dialog {
+    .account-page-container.pn-account.pn-bonus .modal-dialog {
         padding: 0;
         margin: 0;
     }
@@ -10476,11 +10476,6 @@ body.pn-bonus .modal-body .account-card:nth-child(n + 3) {
     min-height: -webkit-fill-available;
 }
 
-.tp-tableContainer {
-    padding-right: 20px;
-    padding-left: 30px;
-}
-
 .account-content-container .tabbar-container {
     margin-bottom: 0 !important;
 }
@@ -10842,11 +10837,6 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     .user-modal.mobile.recover-modal .modal-close-btn {
         right: 0;
     }
-}
-
-.tp-tableContainer {
-    padding-right: 20px;
-    padding-left: 30px;
 }
 
 .account-content-container .tabbar-container {

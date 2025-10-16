@@ -22613,6 +22613,12 @@ figure {
     padding: 32px
 }
 
+@media (max-width: 768px) {
+    .transaction-table .transaction-table__status-pagination {
+        padding: 16px;
+    }
+}
+
 .transaction-table .transaction-table__status-pagination .transaction-table__status {
     display: flex;
     justify-content: center;
@@ -22638,12 +22644,26 @@ figure {
     height: 24px
 }
 
-.transaction-table .transaction-table__status-pagination .transaction-table__paginate .transaction-table-paginate--btn {
-    margin: 0 auto;
+.transaction-table .transaction-table__status-pagination .transaction-table__paginate {
+    display: flex;
+    align-items: center;
     width: fit-content;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important
+    margin: auto;
+}
+
+.transaction-table .transaction-table__status-pagination .transaction-table__paginate .transaction-table-paginate--btn {
+    margin: 0 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid hsla(0, 0%, 100%, .1);
+    border-radius: 5px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 .transaction-table .transaction-table__status-pagination .transaction-table__spinner--spinner {
@@ -22724,7 +22744,7 @@ figure {
 }
 
 .currency-icon-usdc {
-    background-image: url(/assets/usdc-CXDPsCPs.png)
+    background-image: url("../assets/img/usdc-CXDPsCPs.png")
 }
 
 .currency-icon-busd {
@@ -22796,7 +22816,7 @@ figure {
 
 .transaction-table--wallet-transaction-table .transaction-table__header-container {
     display: grid;
-    grid-template-columns: 21% 22% 15% 1fr 16%;
+    grid-template-columns: 21% 22% 15% 1fr;
     border-bottom: 1px var(--light-border) solid;
     padding: 12px 20px
 }
@@ -22837,7 +22857,7 @@ figure {
     border-bottom: 1px var(--light-border) solid;
     display: grid;
     gap: 0px;
-    grid-template-columns: 21% 22% 15% 1fr 16%;
+    grid-template-columns: 21% 22% 15% 1fr;
     grid-template-areas: "type type type cancel cancel" "timestamp status reference transactionId amount"
 }
 
@@ -23154,6 +23174,12 @@ figure {
 
 .transaction-table--generic-table .transaction-table__body-container {
     padding: 5px 20px
+}
+
+@media (max-width: 768px) {
+    .transaction-table--generic-table .transaction-table__body-container {
+        padding: 5px 0
+    }
 }
 
 .transaction-table--generic-table .transaction-table__body-container .transaction-table__row {
@@ -23700,12 +23726,16 @@ figure {
     width: 100%;
     flex-direction: column;
     background-color: var(--popup-background);
-    border-radius: 10px
+    border-radius: 10px;
+    padding-right: 20px;
+    padding-left: 30px;
 }
 
 @media (max-width: 576px) {
     .tp-tableContainer {
-        margin-top: 64px
+        margin-top: 0;
+        padding-right: 0;
+        padding-left: 0;        
     }
 }
 
@@ -25325,10 +25355,6 @@ figure {
 
 .currency-icon-trx {
     background-image: url(/assets/trx-CgsaaGcA.png)
-}
-
-.currency-icon-usdc {
-    background-image: url(/assets/usdc-CXDPsCPs.png)
 }
 
 .currency-icon-busd {
@@ -29019,10 +29045,6 @@ h5.loading {
 
 .currency-icon-trx {
     background-image: url(/assets/trx-CgsaaGcA.png)
-}
-
-.currency-icon-usdc {
-    background-image: url(/assets/usdc-CXDPsCPs.png)
 }
 
 .currency-icon-busd {

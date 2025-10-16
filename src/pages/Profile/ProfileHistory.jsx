@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Calendar from 'react-calendar';
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
 import LoadApi from "../../components/LoadApi";
@@ -8,7 +7,6 @@ import IconChevronLeft from "/src/assets/svg/chevron-left.svg";
 import IconChevronRight from "/src/assets/svg/chevron-right.svg";
 import IconDoubleLeft from "/src/assets/svg/double-arrow-left.svg";
 import IconDoubleRight from "/src/assets/svg/double-arrow-right.svg";
-import IconFilter from "/src/assets/svg/filter.svg";
 
 const ProfileHistory = () => {
     const navigate = useNavigate();
@@ -45,7 +43,7 @@ const ProfileHistory = () => {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [showHistory, setShowHistory] = useState(true);
-    const [activeTab, setActiveTab] = useState('operations');
+    const [activeTab, setActiveTab] = useState('wallet');
     const [pagination, setPagination] = useState({
         start: 0,
         length: 5,
@@ -180,7 +178,6 @@ const ProfileHistory = () => {
     }, [pagination.start, pagination.length, activeTab]);
 
     const handleTabChange = (tab) => {
-        fetchHistory(tab);
         setActiveTab(tab);
         setPagination((prev) => ({ ...prev, start: 0, currentPage: 1 }));
     };
@@ -241,231 +238,143 @@ const ProfileHistory = () => {
     const handleLastPage = () => handlePageChange(totalPages);
 
     return (
-        <>
-            <div className="history-content_historyLayout">
-                <h2 className="history-content_pageTitle">Historial</h2>
-                <div className="history-content_historyLayoutContent">
-                    <div className="history-content_tabsWrapper">
-                        <div>
-                            <div className="tabs_tabsHeader">
-                                <button
-                                    className={`tabs_tabsItem ${activeTab === 'operations' ? 'tabs_active' : 'tabs_inActive'}`}
-                                    onClick={() => handleTabChange('operations')}
-                                >
-                                    Operaciones
-                                </button>
-                                <button
-                                    className={`tabs_tabsItem ${activeTab === 'casino' ? 'tabs_active' : 'tabs_inActive'}`}
-                                    onClick={() => handleTabChange('casino')}
-                                >
-                                    Casino
-                                </button>
-                            </div>
-                        </div>
-
-                        {totalPages > 1 && (
-                            <div className="pagination_pagination">
-                                {pagination.currentPage > 1 && (
-                                    <>
-                                        {
-                                            !isMobile && <button className="pagination_paginationButton" onClick={handleFirstPage}>
-                                                <img src={IconDoubleLeft} alt="first" width={12} />
-                                            </button>
-                                        }
-                                        <button className="pagination_paginationButton" onClick={handlePrevPage}>
-                                            <img src={IconChevronLeft} alt="next" width={20} />
-                                        </button>
-                                    </>
-                                )}
-
-                                {visiblePages.map((page) => (
-                                    <span
-                                        key={page}
-                                        className="pagination_paginationCurrentValue"
-                                        onClick={() => handlePageChange(page)}
-                                    >
-                                        {page}
-                                    </span>
-                                ))}
-
-                                {pagination.currentPage < totalPages && (
-                                    <>
-                                        <button className="pagination_paginationButton" onClick={handleNextPage}>
-                                            <img src={IconChevronRight} alt="first" width={12} />
-                                        </button>
-                                        {
-                                            !isMobile && <button className="pagination_paginationButton" onClick={handleLastPage}>
-                                                <img src={IconDoubleRight} alt="next" width={12} />
-                                            </button>
-                                        }
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </div>
-                    <div className="history-content_content">
-                        <div className="history-content_historyLayoutFilters">
-                            <div className="history-content_historyLayoutFiltersHeader">
-                                <button className="button_button button_ghost button_md history-content_filtersVisibilityBtn" onClick={() => setShowHistory(!showHistory)}>
-                                    {showHistory ? "Ocultar" : "Mostrar"} filtros
-                                    <img src={IconFilter} />
-                                </button>
-                            </div>
-                            {
-                                showHistory && <div onSubmit={handleSubmit}>
-                                    <div className="history-operations-filters_filters">
-                                        {
-                                            activeTab === "casino" && <>
-                                                <ul className="select-multi-desktop">
-                                                    <li className="select-multi-desktop__item">
-                                                        <div className="select-multi-desktop__checkbox">
-                                                            <label className="check-box-desktop">
-                                                                <input
-                                                                    id="all-checkbox"
-                                                                    className="check-box-desktop__input"
-                                                                    type="checkbox"
-                                                                    name="all"
-                                                                    onChange={handleFilterChange}
-                                                                />
-                                                                <span className="check-box-desktop__checkmark"></span>
-                                                            </label>
-                                                        </div>
-                                                        <label className="select-multi-desktop__item-value" htmlFor="all-checkbox">Todos</label>
-                                                    </li>
-                                                    <li className="select-multi-desktop__item">
-                                                        <div className="select-multi-desktop__checkbox">
-                                                            <label className="check-box-desktop">
-                                                                <input
-                                                                    id="win-checkbox"
-                                                                    className="check-box-desktop__input"
-                                                                    type="checkbox"
-                                                                    name="win"
-                                                                    onChange={handleFilterChange}
-                                                                />
-                                                                <span className="check-box-desktop__checkmark"></span>
-                                                            </label>
-                                                        </div>
-                                                        <label className="select-multi-desktop__item-value" htmlFor="win-checkbox">Ganado</label>
-                                                    </li>
-                                                    <li className="select-multi-desktop__item">
-                                                        <div className="select-multi-desktop__checkbox">
-                                                            <label className="check-box-desktop">
-                                                                <input
-                                                                    id="lost-checkbox"
-                                                                    className="check-box-desktop__input"
-                                                                    type="checkbox"
-                                                                    name="lost"
-                                                                    onChange={handleFilterChange}
-                                                                />
-                                                                <span className="check-box-desktop__checkmark"></span>
-                                                            </label>
-                                                        </div>
-                                                        <label className="select-multi-desktop__item-value" htmlFor="lost-checkbox">Perdido</label>
-                                                    </li>
-                                                </ul>
-                                            </>
-                                        }
-                                        <div className="history-operations-filters_filterItem">
-                                            <CustomFromInput />
-                                            {showFromCalendar && (
-                                                <div className="calendar-popup">
-                                                    <Calendar
-                                                        value={filters.dateFrom}
-                                                        onChange={(date) => {
-                                                            handleDateChange(date, "dateFrom");
-                                                            setShowFromCalendar(false);
-                                                        }}
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="history-operations-filters_filterItem">
-                                            <CustomToInput />
-                                            {showToCalendar && (
-                                                <div className="calendar-popup">
-                                                    <Calendar
-                                                        value={filters.dateTo}
-                                                        onChange={(date) => {
-                                                            handleDateChange(date, "dateTo");
-                                                            setShowToCalendar(false);
-                                                        }}
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-                                        <button
-                                            className="button_button button_zeusPrimary button_md history-operations-filters_filtersSubmitBtn"
-                                            onClick={() => handleSubmit()}
-                                        >
-                                            Mostrar resultado
-                                        </button>
+        <div className="container account-page-container pn-account pn-transactions pn-wallet">
+            <div className="row">
+                <div className="account-page-menu-col">
+                    <nav aria-label="account page navigation" className="account-page-menu-container">
+                        <ul className="nav-menu">
+                            <li className="nav-item">
+                                <a className="nav-link" href="/profile"><i className="material-icons">account_circle</i>Perfil</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="/profile/balance"><i className="material-icons">account_balance_wallet</i>Saldos de la cuenta</a>
+                            </li>
+                            <li className="nav-item">
+                                <a className="nav-link active" href="/profile/history"><i className="material-icons">format_list_bulleted</i>Transacciones</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div className="account-page-content-col">
+                    <div className="account-content-container">
+                        <div className="transaction-page__container">
+                            <div className="transaction-content-wrapper">
+                                <div className="tp-tableContainer transactions">
+                                    <div className="tabbar-container">
+                                        <ul className="nav nav-tabs cashier-popup">
+                                            <li
+                                                className={`nav-item ${activeTab === "wallet" ? "active" : ""}`}
+                                                onClick={() => handleTabChange('wallet')}
+                                            >
+                                                <a className="nav-link">Billetera</a>
+                                            </li>
+                                            <li
+                                                className={`nav-item ${activeTab === "casino" ? "active" : ""}`}
+                                                onClick={() => handleTabChange('casino')}
+                                            >
+                                                <a className="nav-link">Casino</a>
+                                            </li>
+                                            <li className="nav-item fill-out"></li>
+                                        </ul>
                                     </div>
-                                </div>
-                            }
-                        </div>
-                        {loading ? (
-                            <LoadApi />
-                        ) : transactions.length > 0 ? (
-                            activeTab === "operations" ?
-                                <div className="table_tableWrapper">
-                                    <table className="table_table">
-                                        <thead>
-                                            <tr>
-                                                <td className="table_tableHeadCell" align="left">Fecha</td>
-                                                <td className="table_tableHeadCell" align="left">Type</td>
-                                                <td className="table_tableHeadCell" align="left">Saldo antes</td>
-                                                <td className="table_tableHeadCell" align="left">Saldo después</td>
-                                                <td className="table_tableHeadCell" align="left">Cantidad</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {transactions.map((txn, index) => (
-                                                <tr className="table_tableRow" key={"txn" + index}>
-                                                    <td className="table_tableCell" align="left">{formatDateDisplay(txn.created_at)}</td>
-                                                    <td className="table_tableCell text-capitalize" align="left">{formatOperation(txn.type)}</td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.to_current_balance)}</td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.to_new_balance)}</td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.amount)}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div> : <div className="table_tableWrapper">
-                                    <table className="table_table">
-                                        <thead>
-                                            <tr>
-                                                <td className="table_tableHeadCell" align="left">Fecha</td>
-                                                <td className="table_tableHeadCell" align="left">Proveedor</td>
-                                                <td className="table_tableHeadCell" align="left">Saldo antes</td>
-                                                <td className="table_tableHeadCell" align="left">Saldo después</td>
-                                                <td className="table_tableHeadCell" align="left">Monto</td>
-                                                <td className="table_tableHeadCell" align="left">Resultado</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {transactions.map((txn, index) => (
-                                                <tr className="table_tableRow" key={"txn" + index}>
-                                                    <td className="table_tableCell" align="left">{formatDateDisplay(txn.created_at)}</td>
-                                                    <td className="table_tableCell" align="left"></td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value_before)}</td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value_after)}</td>
-                                                    <td className="table_tableCell" align="left"></td>
-                                                    <td className="table_tableCell" align="left">{formatBalance(txn.value)}</td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                        ) : (
-                            <div className="pay-history-mobile">
-                                The transaction history is empty
-                            </div>
-                        )}
 
+                                    {loading ? (
+                                        <div className="pt-3">
+                                            <LoadApi />
+                                        </div>
+                                    ) : transactions.length > 0 ? (
+                                        activeTab === "wallet" ? <div className="transaction-table transaction-table--wallet-transaction-table">
+                                            <div className="transaction-table__header-container">
+                                                <span className="transaction-table__header-label transaction-table__header-label--type">Fecha </span>
+                                                <span className="transaction-table__header-label transaction-table__header-label--type">Tipo </span>
+                                                <span className="transaction-table__header-label transaction-table__header-label--transactionId">ID de la transacción</span>
+                                                <span className="transaction-table__header-label transaction-table__header-label--amount">Monto</span>
+                                            </div>
+                                            <div className="transaction-table__body-container">
+                                                {transactions.map((txn, index) => (
+                                                    <div className="transaction-table__row" key={index}>
+                                                        <span className="transaction-table__cell">{formatDateDisplay(txn.created_at)}</span>
+                                                        <span className="transaction-table__cell text-capitalize">{formatOperation(txn.type)}</span>
+                                                        <span className="transaction-table__cell">{txn.id}</span>
+                                                        <span className="transaction-table__cell justify-content-md-end">{formatBalance(txn.amount)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div> : <div className="transaction-table transaction-table--generic-table casino-transaction-table">
+                                            <div className="transaction-table__header-container">
+                                                <span className="transaction-table__header-label transaction-table__header-label--type">Fecha</span>
+                                                <span className="transaction-table__header-label transaction-table__header-label--type">Tipo</span>
+                                                <span className="transaction-table__header-label transaction-table__header-label--amount">Monto</span>
+                                            </div>
+                                            <div className="transaction-table__body-container">
+                                                {transactions.map((txn, index) => (
+                                                    <div className="transaction-table__row" key={index}>
+                                                        <span className="transaction-table__cell">{formatDateDisplay(txn.created_at)}</span>
+                                                        <span className="transaction-table__cell text-capitalize">{formatOperation(txn.operation)}</span>
+                                                        <span className="transaction-table__cell justify-content-md-end">{formatBalance(txn.value)}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    ) : <div className="transaction-table__body-container">
+                                        <div className="transaction-table__status-pagination">
+                                            <div className="transaction-table__status">
+                                                <span className="transaction-table__no-data--span">No hay transacciones</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    }
+
+                                    {totalPages > 1 && (
+                                        <div className="transaction-table">
+                                            <div className="transaction-table__status-pagination">
+                                                <div className="transaction-table__paginate">
+                                                    {pagination.currentPage > 1 && (
+                                                        <>
+                                                            {
+                                                                !isMobile && <button className="transaction-table-paginate--btn" onClick={handleFirstPage}>
+                                                                    <img src={IconDoubleLeft} alt="first" width={16} />
+                                                                </button>
+                                                            }
+                                                            <button className="transaction-table-paginate--btn" onClick={handlePrevPage}>
+                                                                <img src={IconChevronLeft} alt="next" width={20} style={{filter: "invert(1)"}} />
+                                                            </button>
+                                                        </>
+                                                    )}
+
+                                                    {visiblePages.map((page) => (
+                                                        <span
+                                                            key={page}
+                                                            className="transaction-table-paginate--btn"
+                                                            onClick={() => handlePageChange(page)}
+                                                        >
+                                                            {page}
+                                                        </span>
+                                                    ))}
+
+                                                    {pagination.currentPage < totalPages && (
+                                                        <>
+                                                            <button className="transaction-table-paginate--btn" onClick={handleNextPage}>
+                                                                <img src={IconChevronRight} alt="first" width={20} style={{filter: "invert(1)"}} />
+                                                            </button>
+                                                            {
+                                                                !isMobile && <button className="transaction-table-paginate--btn" onClick={handleLastPage}>
+                                                                    <img src={IconDoubleRight} alt="next" width={16} />
+                                                                </button>
+                                                            }
+                                                        </>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
