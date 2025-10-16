@@ -20,6 +20,7 @@ let selectedGameId = null;
 let selectedGameType = null;
 let selectedGameLauncher = null;
 let selectedGameName = null;
+let selectedGameImg = null;
 let pageCurrent = 0;
 
 
@@ -52,6 +53,7 @@ const Casino = () => {
     selectedGameType = null;
     selectedGameLauncher = null;
     selectedGameName = null;
+    selectedGameImg = null;
     setGameUrl("");
     setShouldShowGameModal(false);
 
@@ -182,6 +184,7 @@ const Casino = () => {
     selectedGameType = type != null ? type : selectedGameType;
     selectedGameLauncher = launcher != null ? launcher : selectedGameLauncher;
     selectedGameName = game?.name;
+    selectedGameImg = game?.image_local != null ? contextData.cdnUrl + game?.image_local : null;
     callApi(contextData, "GET", "/get-game-url?game_id=" + selectedGameId, callbackLaunchGame, null);
   };
 
@@ -202,6 +205,7 @@ const Casino = () => {
     selectedGameType = null;
     selectedGameLauncher = null;
     selectedGameName = null;
+    selectedGameImg = null;
     setGameUrl("");
     setShouldShowGameModal(false);
   };
@@ -318,6 +322,7 @@ const Casino = () => {
         <GameModal
           gameUrl={gameUrl}
           gameName={selectedGameName}
+          gameImg={selectedGameImg}
           reload={launchGame}
           launchInNewTab={() => launchGame(null, null, "tab")}
           ref={refGameModal}

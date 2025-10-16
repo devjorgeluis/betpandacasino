@@ -24156,6 +24156,8 @@ figure {
 
 .game-view-container .game-search-result {
     position: absolute;
+    top: 35px;
+    left: 0;
     z-index: 2
 }
 
@@ -24213,7 +24215,8 @@ figure {
     font-size: 100%;
     cursor: pointer;
     -webkit-user-select: none;
-    user-select: none
+    user-select: none;
+    opacity: 0.5;
 }
 
 .game-view-container .game-close:hover,
@@ -24235,8 +24238,9 @@ figure {
     text-decoration: none
 }
 
-.game-view-container .game-fullscreen svg {
-    margin-top: -3px
+.game-view-container .game-fullscreen img {
+    margin-top: -3px;
+    opacity: 0.5;
 }
 
 .game-view-container iframe.game {
@@ -24270,7 +24274,7 @@ figure {
 }
 
 .iframe-loader img {
-    width: 50%;
+    width: 100px;
     margin-top: -10%
 }
 
@@ -27407,6 +27411,12 @@ body.noscroll {
 .casino-tab-view {
     width: 100%;
     min-height: 400px
+}
+
+@media (max-width: 768px) {
+    .casino-tab-view {
+        min-height: auto;
+    }
 }
 
 .casino-tab-view h2 {

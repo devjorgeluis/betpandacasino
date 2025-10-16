@@ -35,10 +35,6 @@
     cursor: pointer
 }
 
-.search-results-container .game-result-row:hover .game-title .game-name,.search-results-container .game-result-row:hover .game-title .game-studio,.search-results-container .game-result-row.selected .game-title .game-name,.search-results-container .game-result-row.selected .game-title .game-studio {
-    color: var(--popup-search)
-}
-
 .search-results-container .game-result-row:first-child {
     padding: 10px 10px 5px
 }
@@ -59,16 +55,10 @@
     order: 2
 }
 
-.search-results-container .game-result-row .game-title .game-name {
-    width: 100%;
-    display: block;
-    color: var(--popup-dark-text)
-}
 
 .search-results-container .game-result-row .game-title .game-studio {
     width: 100%;
     display: block;
-    color: var(--popup-dark-text);
     opacity: .4;
     text-transform: uppercase;
     font-size: 80%

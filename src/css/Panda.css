@@ -296,6 +296,10 @@ a.btn:not([href]):not([tabindex]).btn-secondary:hover:not([disabled]) {
     background-color: #172638;
 }
 
+.game-window-iframe-wrapper {
+    height: 75vh;
+}
+
 .currency-list-container.active {
     background: linear-gradient(90deg, #0b1927 0%, #0f2030 100%);
     color: #1fe883;

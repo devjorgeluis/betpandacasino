@@ -10,6 +10,7 @@ let selectedGameId = null;
 let selectedGameType = null;
 let selectedGameLauncher = null;
 let selectedGameName = null;
+let selectedGameImg = null;
 
 const MobileSearch = ({
     isLogin, isMobile, onClose
@@ -50,6 +51,7 @@ const MobileSearch = ({
         selectedGameType = type != null ? type : selectedGameType;
         selectedGameLauncher = launcher != null ? launcher : selectedGameLauncher;
         selectedGameName = game?.name;
+        selectedGameImg = game?.image_local != null ? contextData.cdnUrl + game?.image_local : null;
         callApi(contextData, "GET", "/get-game-url?game_id=" + game.id, callbackLaunchGame, null);
     };
 
@@ -70,6 +72,7 @@ const MobileSearch = ({
         selectedGameType = null;
         selectedGameLauncher = null;
         selectedGameName = null;
+        selectedGameImg = null;
         setGameUrl("");
         setShouldShowGameModal(false);
     };
@@ -207,6 +210,7 @@ const MobileSearch = ({
                 <GameModal
                     gameUrl={gameUrl}
                     gameName={selectedGameName}
+                    gameImg={selectedGameImg}
                     reload={launchGame}
                     launchInNewTab={() => launchGame(null, null, "tab")}
                     ref={refGameModal}
