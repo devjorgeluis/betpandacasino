@@ -106,12 +106,12 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino#home' },
+                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
-                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#jokers' },
-                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#crash' },
+                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
+                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },
                 { name: 'Megaways', icon: 'custom-icon-bp-megaways', href: '/casino#megaways' },
-                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#ruletas' },
+                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#roulette' },
             ]
         },
         {
@@ -148,12 +148,12 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             icon: 'custom-icon-bp-casino',
             href: '/casino',
             subItems: [
-                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino#home' },
+                { name: 'Hogar', icon: 'custom-icon-bp-home', href: '/casino' },
                 { name: 'Hot', icon: 'custom-icon-bp-fire', href: '/casino#hot' },
-                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#jokers' },
-                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#crash' },
+                { name: 'Jokers', icon: 'custom-icon-spades', href: '/casino#joker' },
+                { name: 'Juegos de crash', icon: 'custom-icon-scale', href: '/casino#arcade' },
                 { name: 'Megaways', icon: 'custom-icon-bp-megaways', href: '/casino#megaways' },
-                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#ruletas' },
+                { name: 'Ruletas', icon: 'custom-icon-bingo', href: '/casino#roulette' },
             ]
         }
     ];
@@ -184,14 +184,14 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                     <div className="content collapsed"></div>
                     <div className="menu-items menu-items-collapsed">
                         {collapsedMenuItems.map((item, index) => (
-                            <a 
+                            <button 
                                 key={index}
                                 className={`nav-link fixed-nav-link ${item.name} ${item.name === 'sports' ? 'active-collapsed' : ''}`}
-                                href={item.href}
+                                onClick={() => navigate(item.href)}
                                 aria-current={item.name === 'sports' ? 'page' : undefined}
                             >
                                 <i className={item.icon}></i>
-                            </a>
+                            </button>
                         ))}
                     </div>
                     <div className="menu-divider"></div>
@@ -270,11 +270,10 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                             {menuItems.map((menu) => (
                                 <div key={menu.id} className="side-submenu-container">
                                     <div className={`submenu-container ${isMenuExpanded(menu.id) ? 'expanded-submenu-container' : ''}`}>
-                                        <a 
+                                        <button 
                                             className={`nav-link submenu-link expandable CUSTOM ${menu.id}`}
-                                            href={menu.href}
-                                            onClick={(e) => {
-                                                e.preventDefault();
+                                            onClick={() => {
+                                                navigate(menu.href);
                                                 toggleMenu(menu.id);
                                             }}
                                             style={{ cursor: 'pointer' }}
@@ -290,17 +289,17 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                                     </i>
                                                 </div>
                                             </div>
-                                        </a>
+                                        </button>
                                         <div className={`expandeble-sub-menu collapse ${isMenuExpanded(menu.id) ? 'expanded-sub-menu show' : ''}`}>
                                             {menu.subItems.map((subItem, subIndex) => (
-                                                <a 
+                                                <button 
                                                     key={subIndex}
                                                     className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                                    href={subItem.href}
+                                                    onClick={() => navigate(subItem.href)}
                                                 >
                                                     <i className={subItem.icon}></i>
                                                     {subItem.name}
-                                                </a>
+                                                </button>
                                             ))}
                                         </div>
                                     </div>
@@ -368,20 +367,20 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
             </div>
 
             <nav className="bottom-menu">
-                <a className="mobile-menu-item" href="/casino">
+                <button className="mobile-menu-item" onClick={() => navigate("/casino")}>
                     <div className="icon"><i className="custom-icon-bp-casino"></i></div>
                     <div className="menu-text">Casino</div>
-                </a>
+                </button>
                 {
                     !isSlotsOnlyMode && <>
-                        <a className="mobile-menu-item" href="/live-casino">
+                        <button className="mobile-menu-item" onClick={() => navigate("/live-casino")}>
                             <div className="icon"><i className="custom-icon-bp-live-casino"></i></div>
                             <div className="menu-text">Casino en Vivo</div>
-                        </a>
-                        <a className="mobile-menu-item" href="/sports">
+                        </button>
+                        <button className="mobile-menu-item" onClick={() => navigate("/sports")}>
                             <div className="icon"><i className="custom-icon-bp-sports"></i></div>
                             <div className="menu-text">Deportes</div>
-                        </a>
+                        </button>
                     </>
                 }
                 <button className="mobile-menu-item" onClick={toggleSidebar}>

@@ -26246,7 +26246,8 @@ figure {
 
 .menu-layout .side-submenu-container .submenu-container .nav-link.submenu-link {
     display: flex;
-    align-items: center
+    align-items: center;
+    width: 100%;
 }
 
 .menu-layout .side-submenu-container .submenu-container .nav-link.submenu-link i {
@@ -26292,7 +26293,8 @@ figure {
     align-items: center;
     text-transform: none !important;
     gap: 15px;
-    padding-left: 18px
+    padding-left: 18px;
+    width: 100%;
 }
 
 .menu-layout .side-submenu-container .submenu-container .expandeble-sub-menu .nav-link.submenu-tab-link i {

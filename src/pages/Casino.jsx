@@ -56,11 +56,18 @@ const Casino = () => {
     selectedGameImg = null;
     setGameUrl("");
     setShouldShowGameModal(false);
+    setActiveCategory({});
 
-    getPage("casino");
+    const hash = location.hash;
+    if (hash && hash.startsWith('#')) {
+      const pageName = hash.substring(1);
+      getPage(pageName);
+    } else {
+      getPage("casino");
+    }
 
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
 
   useEffect(() => {
@@ -429,7 +436,7 @@ const Casino = () => {
                         <div className="casino-games-container">
                           {
                             txtSearch === "" && selectedProvider === null ? <div className="row games-list popular" onClick={loadMoreContent}>
-                              <h2>{activeCategory.name}
+                              <h2>{activeCategory?.name || ''}
                                 <a className="show-all">Mostrar todo</a>
                               </h2>
                             </div> : <div className="row games-list popular"><h2></h2></div>
@@ -445,7 +452,7 @@ const Casino = () => {
                                   <GameCard
                                     key={index}
                                     id={item.id}
-                                    provider={activeCategory.name}
+                                    provider={activeCategory?.name || 'Casino'}
                                     title={item.name}
                                     imageSrc={imageDataSrc}
                                     mobileShowMore={mobileShowMore}
