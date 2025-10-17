@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useLocation, useOutletContext, useNavigate } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/Layout/LayoutContext";
 import { NavigationContext } from "../components/Layout/NavigationContext";
@@ -44,11 +44,11 @@ const Casino = () => {
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+  const [isGameLoadingError, setIsGameLoadingError] = useState(false);
   const [mobileShowMore, setMobileShowMore] = useState(false);
   const refGameModal = useRef();
   const location = useLocation();
   const searchRef = useRef(null);
-  const navigate = useNavigate();
   const { isSlotsOnly, isMobile } = useOutletContext();
 
   const lastLoadedTagRef = useRef("");
@@ -232,6 +232,8 @@ const Casino = () => {
           setGameUrl(result.url);
           break;
       }
+    } else {
+      setIsGameLoadingError(true);
     }
   };
 
@@ -522,6 +524,17 @@ const Casino = () => {
           </div>
         </>
       )}
+
+      {
+        isGameLoadingError && <div className="container">
+          <div className="row">
+            <div className="col-md-6 error-loading-game">
+              <div className="alert alert-warning">Error al cargar el juego. Inténtalo de nuevo o ponte en contacto con el equipo de soporte.</div>
+              <a className="btn btn-primary" onClick={() => window.location.reload()}>Volver a la página principal</a>
+            </div>
+          </div>
+        </div>
+      }
     </>
   );
 };

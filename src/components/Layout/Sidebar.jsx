@@ -343,7 +343,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                                     <button
                                                         key={subIndex}
                                                         className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'active' : ''}`}
-                                                        onClick={() => {navigate(subItem.href), toggleSidebar()}}
+                                                        onClick={() => {navigate(subItem.href), isMobile && toggleSidebar()}}
                                                     >
                                                         <i className={subItem.icon}></i>
                                                         {/* {

@@ -41,6 +41,7 @@ const Home = () => {
   const [gameUrl, setGameUrl] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+  const [isGameLoadingError, setIsGameLoadingError] = useState(false);
   const refGameModal = useRef();
   const { isSlotsOnly } = useOutletContext();
 
@@ -188,6 +189,8 @@ const Home = () => {
           setGameUrl(result.url);
           break;
       }
+    } else {
+      setIsGameLoadingError(true);
     }
   };
 
@@ -237,8 +240,20 @@ const Home = () => {
                       <GameLogos /> 
                     </>
                   }
-                  { topLiveCasino.length > 0 && <GameSlideshow games={topLiveCasino} name="liveCasino" title="Juegos en vivo principales" icon={IconLive} link="/live-casino" /> }
-                  { topGames.length > 0 && <GameSlideshow games={topGames} name="casino" title="Juegos más populares" icon={IconHot} link="/casino" /> }
+                  { topLiveCasino.length > 0 && <GameSlideshow games={topLiveCasino} name="liveCasino" title="Juegos en vivo principales" icon={IconLive} link="/live-casino" onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "tab");
+                    } else {
+                      setShowLoginModal(true);
+                    }
+                  }} /> }
+                  { topGames.length > 0 && <GameSlideshow games={topGames} name="casino" title="Juegos más populares" icon={IconHot} link="/casino" onGameClick={(game) => {
+                    if (isLogin) {
+                      launchGame(game, "slot", "tab");
+                    } else {
+                      setShowLoginModal(true);
+                    }
+                  }} /> }
                   {
                     !isLogin && <>
                       <Welcome />
@@ -255,6 +270,17 @@ const Home = () => {
           </div>
         </>
       )}
+
+      {
+        isGameLoadingError && <div className="container">
+          <div className="row">
+            <div className="col-md-6 error-loading-game">
+              <div className="alert alert-warning">Error al cargar el juego. Inténtalo de nuevo o ponte en contacto con el equipo de soporte.</div>
+              <a className="btn btn-primary" onClick={() => window.location.reload()}>Volver a la página principal</a>
+            </div>
+          </div>
+        </div>
+      }
     </>
   );
 };

@@ -11,6 +11,7 @@ const GameModal = (props) => {
   const [url, setUrl] = useState(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isGameLoadingError, setIsGameLoadingError] = useState(false);
   const [games, setGames] = useState([]);
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [txtSearch, setTxtSearch] = useState("");
@@ -123,7 +124,7 @@ const GameModal = (props) => {
     setIframeLoaded(false);
     setTxtSearch("");
     document.getElementById("game-window-iframe").classList.add("d-none");
-    
+
     setTimeout(() => {
       callApi(contextData, "GET", "/get-game-url?game_id=" + game.id, callbackLaunchGame, null);
     }, 50);
@@ -132,6 +133,8 @@ const GameModal = (props) => {
   const callbackLaunchGame = (result) => {
     if (result.status == "0") {
       setUrl(result.url);
+    } else {
+      setIsGameLoadingError(true);
     }
   };
 
@@ -304,6 +307,16 @@ const GameModal = (props) => {
           </div>
         </div>
       </div>
+      {
+        isGameLoadingError && <div className="container">
+          <div className="row">
+            <div className="col-md-6 error-loading-game">
+              <div className="alert alert-warning">Error al cargar el juego. Inténtalo de nuevo o ponte en contacto con el equipo de soporte.</div>
+              <a className="btn btn-primary" onClick={() => window.location.reload()}>Volver a la página principal</a>
+            </div>
+          </div>
+        </div>
+      }
     </>
   );
 };

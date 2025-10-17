@@ -43,6 +43,7 @@ const LiveCasino = () => {
   const [txtSearch, setTxtSearch] = useState("");
   const [searchDelayTimer, setSearchDelayTimer] = useState();
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+  const [isGameLoadingError, setIsGameLoadingError] = useState(false);
   const [mobileShowMore, setMobileShowMore] = useState(false);
   const refGameModal = useRef();
   const location = useLocation();
@@ -231,6 +232,8 @@ const LiveCasino = () => {
           setGameUrl(result.url);
           break;
       }
+    } else {
+      setIsGameLoadingError(true);
     }
   };
 
@@ -513,6 +516,17 @@ const LiveCasino = () => {
           </div>
         </>
       )}
+
+      {
+        isGameLoadingError && <div className="container">
+          <div className="row">
+            <div className="col-md-6 error-loading-game">
+              <div className="alert alert-warning">Error al cargar el juego. Inténtalo de nuevo o ponte en contacto con el equipo de soporte.</div>
+              <a className="btn btn-primary" onClick={() => window.location.reload()}>Volver a la página principal</a>
+            </div>
+          </div>
+        </div>
+      }
     </>
   );
 };

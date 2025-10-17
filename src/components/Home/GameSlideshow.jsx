@@ -6,7 +6,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-const GameSlideshow = ({ games, name, title, icon, link }) => {
+const GameSlideshow = ({ games, name, title, icon, link, onGameClick }) => {
     const { contextData } = useContext(AppContext);
     const swiperRef = useRef(null);
 
@@ -69,7 +69,10 @@ const GameSlideshow = ({ games, name, title, icon, link }) => {
                         >
                             {games.map((game) => (
                                 <SwiperSlide key={game.id}>
-                                    <a className="card-wrapper play-button" href={game.link}>
+                                    <a
+                                        className="card-wrapper play-button"
+                                        onClick={() => onGameClick && onGameClick(game)}
+                                    >
                                         <div className="card-game-list">
                                             <img
                                                 src={game.image_local != null && game.image_local !== "" ? contextData.cdnUrl + game.image_local : game.image_url}

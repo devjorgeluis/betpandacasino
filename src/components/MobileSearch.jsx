@@ -3,6 +3,7 @@ import { LayoutContext } from "./Layout/LayoutContext";
 import { AppContext } from "../AppContext";
 import { NavigationContext } from "./Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
+import LoadApi from "./Loading/LoadApi";
 import LoginModal from "./Modal/LoginModal";
 import GameModal from "./Modal/GameModal";
 
@@ -22,10 +23,12 @@ const MobileSearch = ({
     const [gameUrl, setGameUrl] = useState("");
     const refGameModal = useRef();
     const [txtSearch, setTxtSearch] = useState("");
+    const [isSearch, setIsSearch] = useState(false);
     const searchRef = useRef(null);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [searchDelayTimer, setSearchDelayTimer] = useState();
     const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
+    const [isGameLoadingError, setIsGameLoadingError] = useState(false);
 
     const handleClearClick = () => {
         if (onClose) {
@@ -64,6 +67,8 @@ const MobileSearch = ({
                     setGameUrl(result.url);
                     break;
             }
+        } else {
+            setIsGameLoadingError(true);
         }
     };
 
@@ -111,6 +116,7 @@ const MobileSearch = ({
     };
 
     const do_search = (keyword) => {
+        setIsSearch(true);
         clearTimeout(searchDelayTimer);
 
         if (keyword == "") {
@@ -134,6 +140,7 @@ const MobileSearch = ({
     };
 
     const callbackSearch = (result) => {
+        setIsSearch(false);
         if (result.status === 500 || result.status === 422) {
 
         } else {
@@ -177,7 +184,12 @@ const MobileSearch = ({
                 <div className="search-results-container">
                     <div className="search-results-inner-container">
                         {
-                            games.map((item, index) => {
+                            isSearch ? <>
+                                <div className="pt-1">
+                                    <LoadApi />
+                                </div>
+                            </> :
+                            games.length > 0 && games.map((item, index) => {
                                 let imageDataSrc = item.image_url;
                                 if (item.image_local != null) {
                                     imageDataSrc = contextData.cdnUrl + item.image_local;
@@ -187,11 +199,7 @@ const MobileSearch = ({
                                     <div
                                         className="game-result-row"
                                         key={index}
-                                        onClick={() =>
-                                            isLogin
-                                                ? launchGame(item, "slot", "tab")
-                                                : handleLoginClick()
-                                        }
+                                        onClick={() => launchGame(item, "slot", "tab")}
                                     >
                                         <div className="game-image" style={{ backgroundImage: `url(${imageDataSrc})` }}></div>
                                         <div className="game-title">
@@ -218,6 +226,17 @@ const MobileSearch = ({
                     isMobile={isMobile}
                 />
             )}
+
+            {
+                isGameLoadingError && <div className="container">
+                    <div className="row">
+                        <div className="col-md-6 error-loading-game">
+                            <div className="alert alert-warning">Error al cargar el juego. Inténtalo de nuevo o ponte en contacto con el equipo de soporte.</div>
+                            <a className="btn btn-primary" onClick={() => window.location.reload()}>Volver a la página principal</a>
+                        </div>
+                    </div>
+                </div>
+            }
         </>
     );
 };
