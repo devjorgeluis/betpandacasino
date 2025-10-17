@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { AppContext } from "../AppContext";
-import { callApi } from "../utils/Utils";
-import LoadCasino from "./LoadCasino";
-import LoadApi from "./LoadApi";
+import { AppContext } from "../../AppContext";
+import { callApi } from "../../utils/Utils";
+import LoadCasino from "../Loading/LoadCasino";
+import LoadApi from "../Loading/LoadApi";
 import IconEnlarge from "/src/assets/svg/enlarge.svg";
 import IconClose from "/src/assets/svg/large-close.svg";
 
@@ -212,8 +212,9 @@ const GameModal = (props) => {
               <div className="search-results-inner-container">
                 {
                   isSearch ? <>
-                    <div className="mt-4" style={{ opacity: 0 }}>loading</div>
-                    <LoadApi />
+                    <div className="pt-1">
+                      <LoadApi />
+                    </div>
                   </> :
                     games.length > 0 ? games.map((item, index) => {
                       let imageDataSrc = item.image_url;

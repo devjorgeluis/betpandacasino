@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../../AppContext";
-import { LayoutContext } from "../../components/LayoutContext";
+import { LayoutContext } from "../../components/Layout/LayoutContext";
 
 const ProfileBalance = () => {
     const navigate = useNavigate();

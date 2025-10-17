@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
-import { AppContext } from "../AppContext";
-import { callApi } from "../utils/Utils";
+import { AppContext } from "../../AppContext";
+import { callApi } from "../../utils/Utils";
 import IconDots from "/src/assets/svg/dots.svg";
 import IconDownload from "/src/assets/svg/download.svg";
 import ImgLogo from "/src/assets/svg/logo.svg";

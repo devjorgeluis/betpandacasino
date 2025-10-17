@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
-import { AppContext } from "../AppContext";
-import { callApi } from "../utils/Utils";
-import LoadApi from "./LoadApi";
+import { AppContext } from "../../AppContext";
+import { callApi } from "../../utils/Utils";
+import LoadApi from "../Loading/LoadApi";
 import IconClose from "/src/assets/svg/close.svg";
 
 const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {

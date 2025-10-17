@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 import { callApi } from "../../utils/Utils";
-import LoadApi from "../../components/LoadApi";
+import LoadApi from "../../components/Loading/LoadApi";
 import IconChevronLeft from "/src/assets/svg/chevron-left.svg";
 import IconChevronRight from "/src/assets/svg/chevron-right.svg";
 import IconDoubleLeft from "/src/assets/svg/double-arrow-left.svg";

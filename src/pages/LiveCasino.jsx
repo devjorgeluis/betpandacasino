@@ -1,19 +1,19 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import { useLocation, useOutletContext } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import { LayoutContext } from "../components/LayoutContext";
-import { NavigationContext } from "../components/NavigationContext";
+import { LayoutContext } from "../components/Layout/LayoutContext";
+import { NavigationContext } from "../components/Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
 import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/LiveCasino/Slideshow";
 import CategoryContainer from "../components/CategoryContainer";
-import GameModal from "../components/GameModal";
+import GameModal from "../components/Modal/GameModal";
 import About from "../components/Home/About";
-import Footer from "../components/Footer";
-import LoadGames from "../components/LoadGames";
+import Footer from "../components/Layout/Footer";
+import LoadGames from "../components/Loading/LoadGames";
 import SearchInput from "../components/SearchInput";
 import SearchSelect from "../components/SearchSelect";
-import LoginModal from "../components/LoginModal";
+import LoginModal from "../components/Modal/LoginModal";
 import "animate.css";
 
 let selectedGameId = null;

@@ -1,10 +1,9 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { AppContext } from "../AppContext";
-import { LayoutContext } from "../components/LayoutContext";
-import { NavigationContext } from "../components/NavigationContext";
+import { LayoutContext } from "../components/Layout/LayoutContext";
+import { NavigationContext } from "../components/Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
-import GameCard from "/src/components/GameCard";
 import Slideshow from "../components/Home/Slideshow";
 import GameLogos from "../components/Home/GameLogos";
 import GameSlideshow from "../components/Home/GameSlideshow";
@@ -13,11 +12,9 @@ import GameProviders from "../components/Home/GameProviders";
 import Discover from "../components/Home/Discover";
 import Promotions from "../components/Home/Promotions";
 import About from "../components/Home/About";
-import Footer from "../components/Footer";
-import GameModal from "../components/GameModal";
-import LoadApi from "../components/LoadApi";
-import LoadGames from "../components/LoadGames";
-import LoginModal from "../components/LoginModal";
+import Footer from "../components/Layout/Footer";
+import GameModal from "../components/Modal/GameModal";
+import LoginModal from "../components/Modal/LoginModal";
 import "animate.css";
 
 import IconLive from "/src/assets/svg/live.svg";
@@ -40,16 +37,11 @@ const Home = () => {
   const [topLiveCasino, setTopLiveCasino] = useState([]);
   const [categories, setCategories] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
-  const [activeCategory, setActiveCategory] = useState({});
   const [pageData, setPageData] = useState({});
   const [gameUrl, setGameUrl] = useState("");
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [messageCustomAlert, setMessageCustomAlert] = useState(["", ""]);
   const [shouldShowGameModal, setShouldShowGameModal] = useState(false);
-  const [isLoadingGames, setIsLoadingGames] = useState(false);
   const refGameModal = useRef();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { isSlotsOnly } = useOutletContext();
 
   useEffect(() => {
@@ -75,7 +67,6 @@ const Home = () => {
     if (result.status === 500 || result.status === 422) {
       
     } else {
-      setIsLoadingGames(false);
       setTopGames(result.top_hot);
       setTopLiveCasino(result.top_livecasino);
       contextData.slots_only = result && result.slots_only;
@@ -83,7 +74,6 @@ const Home = () => {
   };
 
   const getPage = (page) => {
-    setIsLoadingGames(true);
     setCategories([]);
     setGames([]);
     callApi(contextData, "GET", "/get-page?page=" + page, callbackGetPage, null);
@@ -114,7 +104,6 @@ const Home = () => {
       }
       pageCurrent = 0;
     }
-    setIsLoadingGames(false);
   };
 
   const loadMoreContent = () => {
@@ -132,7 +121,6 @@ const Home = () => {
       setGames([]);
     }
 
-    setActiveCategory(category);
     setSelectedCategoryIndex(categoryIndex);
 
     const groupCode = pageGroupCode || pageData.page_group_code;
@@ -168,7 +156,6 @@ const Home = () => {
       }
       pageCurrent += 1;
     }
-    setIsLoadingGames(false);
   };
 
   const configureImageSrc = (result) => {

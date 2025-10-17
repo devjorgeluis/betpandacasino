@@ -1,16 +1,16 @@
 import { useContext, useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../AppContext";
+import { AppContext } from "../../AppContext";
 import { LayoutContext } from "./LayoutContext";
-import { callApi } from "../utils/Utils";
+import { callApi } from "../../utils/Utils";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import LoginModal from "./LoginModal";
+import LoginModal from "../Modal/LoginModal";
 import { NavigationContext } from "./NavigationContext";
-import FullDivLoading from "./FullDivLoading";
-import ChatButton from "./ChatButton";
-import MobileSearch from "./MobileSearch";
+import FullDivLoading from "../Loading/FullDivLoading";
+import ChatButton from "../ChatButton";
+import MobileSearch from "../MobileSearch";
 
 const Layout = () => {
     const { contextData } = useContext(AppContext);

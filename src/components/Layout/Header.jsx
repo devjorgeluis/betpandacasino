@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LayoutContext } from "./LayoutContext";
-import LoadApi from "./LoadApi";
+import LoadApi from "../Loading/LoadApi";
 import ImgLogo from "/src/assets/svg/logo.svg";
 import IconClose from "/src/assets/svg/close.svg";
 

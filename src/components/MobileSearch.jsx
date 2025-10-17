@@ -1,10 +1,10 @@
 import { useContext, useState, useRef } from "react";
-import { LayoutContext } from "./LayoutContext";
+import { LayoutContext } from "./Layout/LayoutContext";
 import { AppContext } from "../AppContext";
-import { NavigationContext } from "./NavigationContext";
+import { NavigationContext } from "./Layout/NavigationContext";
 import { callApi } from "../utils/Utils";
-import LoginModal from "./LoginModal";
-import GameModal from "./GameModal";
+import LoginModal from "./Modal/LoginModal";
+import GameModal from "./Modal/GameModal";
 
 let selectedGameId = null;
 let selectedGameType = null;
