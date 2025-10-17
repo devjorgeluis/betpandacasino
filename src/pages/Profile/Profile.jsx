@@ -43,6 +43,12 @@ const Profile = () => {
                             </div>
                             <h3 className="section"><i className="material-icons">account_circle</i> Cuenta</h3>
                             <div className="row account-page-row">
+                                <div className="col-md-6"><label className="itemTitle">Nombre de usuario:</label></div>
+                                <div className="col-md-6 right">
+                                    <span className="form-value">{contextData?.session?.user?.username || '-'}</span>
+                                </div>
+                            </div>
+                            <div className="row account-page-row">
                                 <div className="col-md-6"><label className="itemTitle">Correo electrónico:</label></div>
                                 <div className="col-md-6 right">
                                     <span className="form-value">{contextData?.session?.user?.email || '-'}</span>
