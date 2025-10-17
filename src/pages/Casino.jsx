@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
-import { useLocation, useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext, useNavigate } from "react-router-dom";
 import { AppContext } from "../AppContext";
 import { LayoutContext } from "../components/Layout/LayoutContext";
 import { NavigationContext } from "../components/Layout/NavigationContext";
@@ -48,6 +48,7 @@ const Casino = () => {
   const refGameModal = useRef();
   const location = useLocation();
   const searchRef = useRef(null);
+  const navigate = useNavigate();
   const { isSlotsOnly, isMobile } = useOutletContext();
 
   const lastLoadedTagRef = useRef("");
@@ -357,7 +358,6 @@ const Casino = () => {
           onConfirm={handleLoginConfirm}
         />
       )}
-
       {shouldShowGameModal && selectedGameId !== null ? (
         <GameModal
           gameUrl={gameUrl}
@@ -500,6 +500,7 @@ const Casino = () => {
                                       isLogin
                                         ? launchGame(item, "slot", "tab")
                                         : handleLoginClick()
+                                        // : navigate(`/game-login?gameName=${encodeURIComponent(item.name)}&gameImg=${encodeURIComponent(item.imageDataSrc)}`)
                                     }
                                   />
                                 );

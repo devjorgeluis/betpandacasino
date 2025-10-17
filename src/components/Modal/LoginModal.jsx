@@ -4,7 +4,7 @@ import { callApi } from "../../utils/Utils";
 import LoadApi from "../Loading/LoadApi";
 import IconClose from "/src/assets/svg/close.svg";
 
-const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {
+const LoginModal = ({ isMobile, isOpen, onClose, onConfirm, onLoginSuccess }) => {
     const { contextData, updateSession } = useContext(AppContext);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -44,6 +44,7 @@ const LoginModal = ({ isMobile, isOpen, onClose, onLoginSuccess }) => {
             }
             setTimeout(() => {
                 onClose();
+                onConfirm();
             }, 1000);
         } else {
             setErrorMsg("Correo electrónico o contraseña no válidos");
