@@ -11231,7 +11231,7 @@ a.text-dark:focus {
     --content-steps: #fff;
     --content-steps-text: #fff;
     --user-modal-height: auto;
-    --button-font: Asap, sans-serif;
+    --button-font: Inter, sans-serif;
     --header-font: Asap, sans-serif;
     --text-font: Asap, sans-serif;
     --banner-text: #ffffff;
@@ -11280,9 +11280,8 @@ a.btn:not([href]):not([tabindex]) {
     border: none;
     font-size: 16px;
     text-transform: uppercase;
-    height: 54px;
-    padding: 15px;
-    min-width: 192px;
+    padding: 12px 15px;
+    min-width: 100px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap
@@ -31020,4 +31019,15 @@ svg.icon.animateIcon polyline {
 
 .backdropClassName {
     color: red
+}
+
+.load-more {
+    background: linear-gradient(180deg, #1fe88a 0%, #1ac173 100%);
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    margin-top: 30px;
+}
+
+.load-more:hover, .load-more:focus {
+    color: var(--main-background);
 }

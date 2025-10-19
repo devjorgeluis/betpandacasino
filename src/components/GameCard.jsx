@@ -1,6 +1,6 @@
 const GameCard = (props) => {
   return (
-    <div className={`casino-game ${props.mobileShowMore ? 'mobile' : ''}`} onClick={props.onClick}>
+    <div className={`casino-game ${props.mobileShowMore ? 'mobile' : ''}`} onClick={props.onClick} data-game-id={props.id || props.gameId}>
       <div className="game-box">
         <div className="content">
           <div className="content-overlay"></div>

@@ -131,7 +131,7 @@
     --input-focus-border: 1px solid #1fe88a;
     --input-border: 1px solid white;
     --input-focus: white;
-    --button-border-radius: 10px;
+    --button-border-radius: 4px;
     --input-error-border: 1px solid #36e6e5;
     --input-error-feeback: #fdaa91;
     --search-input: #07182b;
@@ -5796,11 +5796,11 @@ body.playing-casino-game.modal-open .modal-content .modal-body p {
     padding: 12px 24px;
     border: 1px solid #2a3d51;
     border-radius: 4px;
-    max-width: 141px;
     height: 48px;
     /* display: inline-flex; */
     align-items: center;
     margin-top: 24px;
+    width: fit-content;
 }
 
 .read-more-cta .read-more-text-block .btn.btn-border#shrink-more-btn {
