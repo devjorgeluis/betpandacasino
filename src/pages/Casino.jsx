@@ -139,11 +139,11 @@ const Casino = () => {
 
   const loadMoreContent = () => {
     let item = categories[selectedCategoryIndex];
+    if (isMobile) {
+      setMobileShowMore(true);
+    }
     if (item) {
       fetchContent(item, item.id, item.table_name, selectedCategoryIndex, false);
-      if (isMobile) {
-        setMobileShowMore(true);
-      }
     }
   };
 

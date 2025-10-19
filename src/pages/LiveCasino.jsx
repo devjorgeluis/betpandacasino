@@ -140,12 +140,12 @@ const LiveCasino = () => {
   }, [categories, location.search, location.hash]);
 
   const loadMoreContent = () => {
+    if (isMobile) {
+      setMobileShowMore(true);
+    }
     let item = categories[selectedCategoryIndex];
     if (item) {
       fetchContent(item, item.id, item.table_name, selectedCategoryIndex, false);
-      if (isMobile) {
-        setMobileShowMore(true);
-      }
     }
   };
 
