@@ -13,12 +13,18 @@ const SearchInput = ({
 
     const handleClearClick = () => {
         if (txtSearch !== "") {
-            if (clearSearch) {
-                clearSearch();
-            } else {
-                setTxtSearch("");
+            clearSearch();
+            setTxtSearch("");
+            if (isMobile) {
+                setShowMobileSearch(false);
             }
         }
+    };
+
+    const handleChange = (event) => {
+        const value = event.target.value;
+        setTxtSearch(value);
+        search({ target: { value }, key: event.key, keyCode: event.keyCode }); // Trigger search with updated value
     };
 
     const handleFocus = () => {
@@ -35,12 +41,8 @@ const SearchInput = ({
                     className={`form-control ${isMobile ? 'mobile-form-control' : 'desktop-form-control'}`}
                     placeholder="Buscar"
                     value={txtSearch}
-                    onChange={(event) => {
-                        setTxtSearch(event.target.value);
-                    }}
-                    onKeyUp={(event) => {
-                        search(event);
-                    }}
+                    onChange={handleChange}
+                    onKeyUp={search}
                     onFocus={handleFocus}
                 />
                 <span className="input-group-append">
