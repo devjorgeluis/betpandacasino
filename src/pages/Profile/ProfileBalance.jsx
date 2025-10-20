@@ -45,8 +45,8 @@ const ProfileBalance = () => {
                                 <table className="table table-striped balances-table">
                                     <thead>
                                         <tr>
-                                            <th className="hide-in-context"></th>
                                             <th>Moneda</th>
+                                            <th className="hide-in-context"></th>
                                             <th className="balance">Saldo total</th>
                                         </tr>
                                     </thead>
@@ -57,7 +57,7 @@ const ProfileBalance = () => {
                                                     <i className="balance-page-currency-icon currency-icon currency-icon-usdc"></i>
                                                 </div>
                                             </td>
-                                            <td>USD</td>
+                                            <td></td>
                                             <td className="balance"><span>{userBalance ? "$ " + parseFloat(userBalance).toFixed(2) : "$0.00"}</span></td>
                                         </tr>
                                     </tbody>
