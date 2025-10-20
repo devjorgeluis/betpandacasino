@@ -133,7 +133,13 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
         if (result.status === 500 || result.status === 422) {
 
         } else {
-            let menus = [];
+            let menus = [{
+                name: "Home",
+                code: "home",
+                id: null,
+                table_name: null,
+                href: "/live-casino#home"
+            }];
             result.data.categories.forEach(element => {
                 menus.push({
                     name: element.name,

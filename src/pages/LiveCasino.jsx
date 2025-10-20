@@ -82,13 +82,20 @@ const LiveCasino = () => {
     if (result.status === 500 || result.status === 422) {
       setIsLoadingGames(false);
     } else {
-      setCategories(result.data.categories || []);
+      const homeCategory = {
+        name: "Home",
+        code: "home",
+        id: null,
+        table_name: null
+      };
+      const updatedCategories = [homeCategory, ...(result.data.categories || [])];
+      setCategories(updatedCategories);
       if (!originalCategoriesRef.current || originalCategoriesRef.current.length === 0) {
-        originalCategoriesRef.current = result.data.categories || [];
+        originalCategoriesRef.current = updatedCategories;
       }
       setSelectedProvider(null);
       setPageData(result.data);
-      const firstFiveCategories = (result.data.categories || []).slice(0, 5);
+      const firstFiveCategories = updatedCategories.slice(1, 6);
       if (firstFiveCategories.length > 0) {
         setFirstFiveCategoriesGames([]);
         pendingCategoryFetchesRef.current = firstFiveCategories.length;
@@ -99,10 +106,19 @@ const LiveCasino = () => {
       } else {
         setIsLoadingGames(false);
       }
+      setActiveCategory(homeCategory);
+      setSelectedCategoryIndex(0);
     }
   };
 
   const fetchContentForCategory = (category, categoryId, tableName, categoryIndex, resetCurrentPage, pageGroupCode = null) => {
+    if (!categoryId || !tableName) {
+      pendingCategoryFetchesRef.current = Math.max(0, pendingCategoryFetchesRef.current - 1);
+      if (pendingCategoryFetchesRef.current === 0) {
+        setIsLoadingGames(false);
+      }
+      return;
+    }
     const pageSize = 8;
     const groupCode = pageGroupCode || pageData.page_group_code;
     const apiUrl =
@@ -158,6 +174,27 @@ const LiveCasino = () => {
     if (hash && hash.startsWith('#')) {
       if (prevHashRef.current !== hash) {
         const categoryCode = hash.substring(1);
+        if (categoryCode === "home") {
+          setSelectedProvider(null);
+          setActiveCategory(categories[0]);
+          setSelectedCategoryIndex(0);
+          setIsSingleCategoryView(false);
+          setGames([]);
+          setFirstFiveCategoriesGames([]);
+          const firstFiveCategories = categories.slice(1, 6);
+          if (firstFiveCategories.length > 0) {
+            pendingCategoryFetchesRef.current = firstFiveCategories.length;
+            setIsLoadingGames(true);
+            firstFiveCategories.forEach((item, index) => {
+              fetchContentForCategory(item, item.id, item.table_name, index, true, pageData.page_group_code);
+            });
+          } else {
+            setIsLoadingGames(false);
+          }
+          prevHashRef.current = hash;
+          hasFetchedContentRef.current = true;
+          return;
+        }
         const category = categories.find(cat => cat.code === categoryCode);
         if (category) {
           const categoryIndex = categories.indexOf(category);
@@ -193,7 +230,6 @@ const LiveCasino = () => {
         }
       }
 
-      // Default to multi-category view
       setActiveCategory(categories[0] || {});
       setSelectedCategoryIndex(0);
       setIsSingleCategoryView(false);
@@ -203,6 +239,25 @@ const LiveCasino = () => {
 
   const loadMoreContent = (category, categoryIndex) => {
     if (!category) return;
+    if (category.code === "home") {
+      setIsSingleCategoryView(false);
+      setSelectedCategoryIndex(0);
+      setActiveCategory(category);
+      setGames([]);
+      setFirstFiveCategoriesGames([]);
+      const firstFiveCategories = categories.slice(1, 6);
+      if (firstFiveCategories.length > 0) {
+        pendingCategoryFetchesRef.current = firstFiveCategories.length;
+        setIsLoadingGames(true);
+        firstFiveCategories.forEach((item, index) => {
+          fetchContentForCategory(item, item.id, item.table_name, index, true, pageData.page_group_code);
+        });
+      } else {
+        setIsLoadingGames(false);
+      }
+      navigate("/live-casino");
+      return;
+    }
     if (isMobile) {
       setMobileShowMore(true);
     }
@@ -214,6 +269,10 @@ const LiveCasino = () => {
   };
 
   const fetchContent = (category, categoryId, tableName, categoryIndex, resetCurrentPage) => {
+    if (!categoryId || !tableName) {
+      setIsLoadingGames(false);
+      return;
+    }
     let pageSize = 30;
     setIsLoadingGames(true);
 
@@ -314,30 +373,84 @@ const LiveCasino = () => {
   };
 
   const handleCategorySelect = (category, index) => {
-    setActiveCategory(category);
     setSelectedProvider(null);
     setTxtSearch("");
-    setIsSingleCategoryView(true);
     setSelectedCategoryIndex(index);
-    fetchContent(category, category.id, category.table_name, index, true);
+    if (category.code === "home") {
+      setIsSingleCategoryView(false);
+      setActiveCategory(category);
+      setGames([]);
+      setFirstFiveCategoriesGames([]);
+      const firstFiveCategories = categories.slice(1, 6);
+      if (firstFiveCategories.length > 0) {
+        pendingCategoryFetchesRef.current = firstFiveCategories.length;
+        setIsLoadingGames(true);
+        firstFiveCategories.forEach((item, index) => {
+          fetchContentForCategory(item, item.id, item.table_name, index, true, pageData.page_group_code);
+        });
+      } else {
+        setIsLoadingGames(false);
+      }
+      navigate("/live-casino");
+    } else {
+      setIsSingleCategoryView(true);
+      setActiveCategory(category);
+      fetchContent(category, category.id, category.table_name, index, true);
+    }
   };
 
   const handleProviderSelect = (provider, index = 0) => {
-    setSelectedProvider(provider);
     setIsProviderDropdownOpen(false);
     setTxtSearch("");
-    setIsSingleCategoryView(true);
     if (categories.length > 0 && provider) {
-      setActiveCategory(provider);
-      fetchContent(provider, provider.id, provider.table_name, index, true);
-      if (isMobile) {
-        setMobileShowMore(true);
+      if (provider.code === "home") {
+        setSelectedProvider(null);
+        setIsSingleCategoryView(false);
+        setActiveCategory(provider);
+        setSelectedCategoryIndex(0);
+        setGames([]);
+        setFirstFiveCategoriesGames([]);
+        const firstFiveCategories = categories.slice(1, 6);
+        if (firstFiveCategories.length > 0) {
+          pendingCategoryFetchesRef.current = firstFiveCategories.length;
+          setIsLoadingGames(true);
+          firstFiveCategories.forEach((item, index) => {
+            fetchContentForCategory(item, item.id, item.table_name, index, true, pageData.page_group_code);
+          });
+        } else {
+          setIsLoadingGames(false);
+        }
+        navigate("/live-casino");
+      } else {
+        setSelectedProvider(provider);
+        setIsSingleCategoryView(true);
+        const providerIndex = categories.findIndex(cat => cat.id === provider.id);
+        setActiveCategory(provider);
+        setSelectedCategoryIndex(providerIndex !== -1 ? providerIndex : index);
+        fetchContent(provider, provider.id, provider.table_name, providerIndex !== -1 ? providerIndex : index, true);
+        if (isMobile) {
+          setMobileShowMore(true);
+        }
       }
     } else if (!provider && categories.length > 0) {
       const firstCategory = categories[0];
-      setActiveCategory(firstCategory);
+      setSelectedProvider(null);
       setIsSingleCategoryView(false);
+      setActiveCategory(firstCategory);
       setSelectedCategoryIndex(0);
+      setGames([]);
+      setFirstFiveCategoriesGames([]);
+      const firstFiveCategories = categories.slice(1, 6);
+      if (firstFiveCategories.length > 0) {
+        pendingCategoryFetchesRef.current = firstFiveCategories.length;
+        setIsLoadingGames(true);
+        firstFiveCategories.forEach((item, index) => {
+          fetchContentForCategory(item, item.id, item.table_name, index, true, pageData.page_group_code);
+        });
+      } else {
+        setIsLoadingGames(false);
+      }
+      navigate("/live-casino");
     }
   };
 
@@ -410,7 +523,7 @@ const LiveCasino = () => {
       setActiveCategory(firstCategory);
       setSelectedCategoryIndex(0);
       setIsLoadingGames(true);
-      const firstFiveCategories = categories.slice(0, 5);
+      const firstFiveCategories = categories.slice(1, 6);
       if (firstFiveCategories.length > 0) {
         setFirstFiveCategoriesGames([]);
         pendingCategoryFetchesRef.current = firstFiveCategories.length;
@@ -463,7 +576,10 @@ const LiveCasino = () => {
                             <div className="casino-filters-container" id="casinoFiltersContainer">
                               <div
                                 className="casino-filter"
-                                onClick={() => setIsProviderDropdownOpen(!isProviderDropdownOpen)}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setIsProviderDropdownOpen(!isProviderDropdownOpen);
+                                }}
                               >
                                 Proveedores <i className="material-icons">arrow_drop_down</i>
                               </div>
@@ -577,7 +693,7 @@ const LiveCasino = () => {
                                     <div className="row games-list popular">
                                       <h2>
                                         {entry?.category?.name || ''}
-                                        <a className="show-all" onClick={() => loadMoreContent(entry.category, catIndex)}>Mostrar todo</a>
+                                        <a className="show-all" onClick={() => loadMoreContent(entry.category, catIndex + 1)}>Mostrar todo</a>
                                       </h2>
                                     </div>
                                     <div className={`row games-list popular ${mobileShowMore ? '' : 'limited-games-list'}`}>

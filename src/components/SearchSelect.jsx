@@ -88,7 +88,7 @@ const SearchSelect = ({
                                                     src={provider.image_local ? contextData.cdnUrl + provider.image_local : provider.image_url}
                                                 />
                                             ) : (
-                                                <i className="studio-logo"></i>
+                                                <i className="custom-icon-bp-home"></i>
                                             )}
                                         </div>
                                         <div className="studio-name">{provider.name}</div>
