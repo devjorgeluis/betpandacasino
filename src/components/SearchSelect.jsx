@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { AppContext } from "../AppContext";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -12,9 +12,25 @@ const SearchSelect = ({
     const { contextData } = useContext(AppContext);
     const [searchStudio, setSearchStudio] = useState("");
     const navigate = useNavigate();
-
     const location = useLocation();
-    const isLiveCasino = location.pathname === "/live-casino";
+    const isLiveCasino = location.pathname === "/livecasino"; // Fixed typo: "/live-casino" to "/livecasino"
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsProviderDropdownOpen(false);
+            }
+        };
+
+        if (isProviderDropdownOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isProviderDropdownOpen, setIsProviderDropdownOpen]);
 
     const handleProviderSelect = (provider, index = 0) => {
         setSelectedProvider(provider);
@@ -30,9 +46,9 @@ const SearchSelect = ({
     );
 
     return (
-        <div className="filter-container studio-filter">
-            <div className="filter-title-row">
-                <div className="close-container" onClick={() => setIsProviderDropdownOpen(false)}>
+        <div className="filter-container studio-filter" ref={dropdownRef}>
+            <div className="filter-title-row" onClick={() => setIsProviderDropdownOpen(false)}>
+                <div className="close-container">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="-36.5 91.5 648.5 684.99">
                         <polygon
                             className="icon-fill"
