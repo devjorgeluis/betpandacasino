@@ -594,10 +594,10 @@ const Casino = () => {
 
                                   return (
                                     <div className="category-block" key={categoryKey}>
-                                      <div className="row games-list popular" onClick={() => loadMoreContent(entry.category, catIndex)}>
+                                      <div className="row games-list popular">
                                         <h2>
                                           {entry?.category?.name || ''}
-                                          <a className="show-all">Mostrar todo</a>
+                                          <a className="show-all" onClick={() => loadMoreContent(entry.category, catIndex)}>Mostrar todo</a>
                                         </h2>
                                       </div>
                                       <div className={`row games-list popular ${mobileShowMore ? '' : 'limited-games-list'}`}>
