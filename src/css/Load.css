@@ -23089,7 +23089,11 @@ figure {
     .transaction-table--wallet-transaction-table .transaction-table__body-container .transaction-table__row {
         grid-template-columns: 50% 50%;
         grid-template-areas: "type cancel" "timestamp status" "transactionId transactionId" "reference amount";
-        margin: 0 15px
+        margin: 0
+    }
+
+    .transaction-table--wallet-transaction-table .transaction-table__body-container {
+        padding: 5px 0;
     }
 
     .transaction-table--wallet-transaction-table .transaction-table__body-container .transaction-table__row .transaction-table__cell--type {
