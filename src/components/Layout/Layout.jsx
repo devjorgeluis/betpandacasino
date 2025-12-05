@@ -39,6 +39,8 @@ const Layout = () => {
             if (contextData.session.user && contextData.session.user.balance) {
                 setUserBalance(contextData.session.user.balance);
             }
+
+            refreshBalance();
         }
         getStatus();
     }, [contextData.session]);
