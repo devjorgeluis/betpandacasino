@@ -4,13 +4,16 @@ import { LayoutContext } from "./LayoutContext";
 import LoadApi from "../Loading/LoadApi";
 import ImgLogo from "/src/assets/svg/logo.svg";
 import IconClose from "/src/assets/svg/close.svg";
+import ImgSupport from "/src/assets/svg/support-black.svg";
 
 const Header = ({
     isLogin,
     isMobile,
     userBalance,
+    supportParent,
     handleLoginClick,
-    handleLogoutClick
+    handleLogoutClick,
+    openSupportModal
 }) => {
     const { isSidebarExpanded } = useContext(LayoutContext);
     const navigate = useNavigate();
@@ -80,7 +83,7 @@ const Header = ({
         { code: "CS", name: "Čeština" }
     ];
 
-    const menuItems = [
+    const baseMenuItems = [
         {
             className: "menu-button profile-button",
             link: "/profile",
@@ -106,6 +109,20 @@ const Header = ({
             title: "Cerrar sesión"
         }
     ];
+
+    let menuItems = [...baseMenuItems];
+    if (supportParent) {
+        const supportItem = {
+            className: "menu-button support-button",
+            link: null,
+            icon: "phone",
+            title: "Soporte",
+            isSupport: true
+        };
+        const idx = menuItems.findIndex(item => item.className && item.className.includes('transactions-button'));
+        if (idx >= 0) menuItems.splice(idx + 1, 0, supportItem);
+        else menuItems.push(supportItem);
+    }
 
     return (
         <div className={`menu-layout-navbar ${isSidebarExpanded ? 'expanded' : ''}`}>
@@ -149,11 +166,14 @@ const Header = ({
                                                 <div className="menu-title"></div>
                                                 <nav className="menuButtonWrapper">
                                                     {menuItems.map((item, index) => (
-                                                        <a 
+                                                        <a
                                                             key={index}
                                                             className={item.className}
                                                             onClick={() => {
-                                                                if (item.link === "") {
+                                                                if (item.isSupport) {
+                                                                    openSupportModal(true);
+                                                                    closeMenuContainer();
+                                                                } else if (item.link === "") {
                                                                     setIsLogoutLoading(true);
                                                                     handleLogoutClick();
                                                                 } else {
@@ -164,13 +184,14 @@ const Header = ({
                                                             style={{ position: 'relative' }}
                                                         >
                                                             <span className="icon">
-                                                                {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i> }
+                                                                {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i>}
                                                             </span>
                                                             <span className="title">
                                                                 {item.link === "" && isLogoutLoading ? <LoadApi /> : item.title}
                                                             </span>
                                                         </a>
                                                     ))}
+                                                    
                                                 </nav>
                                             </div>
                                         </div>
@@ -222,6 +243,9 @@ const Header = ({
                                         )}
                                     </div>
                                 </div>
+                                <button className="button-support" onClick={() => { openSupportModal(false); }}>
+                                    <img src={ImgSupport} />
+                                </button>
                                 <button className="btn btn-secondary desktop-login register-link small fixed-menu-btn topmenu" onClick={() => handleLoginClick()}>
                                     Acceso
                                 </button>
@@ -239,7 +263,7 @@ const Header = ({
                                 isLogin ? <a aria-current="page" className="linkCss active" onClick={() => navigate("/")}>
                                     <img alt="logo" className="logo light-logo" src={ImgLogo} />
                                 </a> :
-                                <button className="hamburger-bars" aria-label="Open menu"><span className="material-icons">menu</span></button>
+                                    <button className="hamburger-bars" aria-label="Open menu"><span className="material-icons">menu</span></button>
                             }
                         </div>
                         <div className="headerMiddle">
@@ -253,6 +277,10 @@ const Header = ({
                             {
                                 isLogin ? <div className="loggedin">
                                     <div className="loggedinContainer">
+                                        <button className="button-support" onClick={() => { openSupportModal(false); }}>
+                                            <img src={ImgSupport} />
+                                        </button>
+
                                         <div className="currency-selector-container">
                                             <div className="currency-selector true " id="currency-selector-button">
                                                 <span className="balance">
@@ -276,11 +304,14 @@ const Header = ({
                                                     </div>
                                                     <nav className="menuButtonWrapper">
                                                         {menuItems.map((item, index) => (
-                                                            <a 
+                                                            <a
                                                                 key={index}
                                                                 className={item.className}
                                                                 onClick={() => {
-                                                                    if (item.link === "") {
+                                                                    if (item.isSupport) {
+                                                                        openSupportModal(true);
+                                                                        toggleMobileMenuContainer();
+                                                                    } else if (item.link === "") {
                                                                         setIsLogoutLoading(true);
                                                                         handleLogoutClick();
                                                                     } else {
@@ -291,19 +322,23 @@ const Header = ({
                                                                 style={{ position: 'relative' }}
                                                             >
                                                                 <span className="icon">
-                                                                    {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i> }
+                                                                    {item.link === "" && isLogoutLoading ? "" : <i className="material-icons">{item.icon}</i>}
                                                                 </span>
                                                                 <span className="title">
                                                                     {item.link === "" && isLogoutLoading ? <LoadApi /> : item.title}
                                                                 </span>
                                                             </a>
                                                         ))}
+                                                       
                                                     </nav>
                                                 </div>
                                             </div>
                                         }
                                     </div>
                                 </div> : <div className="lngAndButtonWrap">
+                                    <button className="button-support" onClick={() => { openSupportModal(false); }}>
+                                        <img src={ImgSupport} />
+                                    </button>
                                     <button className="btn btn-secondary small login-button fixed-menu-btn" onClick={() => handleLoginClick()}>Acceso</button>
                                 </div>
                             }

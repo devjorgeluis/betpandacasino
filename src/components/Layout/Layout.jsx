@@ -7,6 +7,7 @@ import { callApi } from "../../utils/Utils";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import LoginModal from "../Modal/LoginModal";
+import SupportModal from "../Modal/SupportModal";
 import { NavigationContext } from "./NavigationContext";
 import FullDivLoading from "../Loading/FullDivLoading";
 import ChatButton from "../ChatButton";
@@ -18,6 +19,12 @@ const Layout = () => {
     const [isLogin, setIsLogin] = useState(contextData.session !== null);
     const [isMobile, setIsMobile] = useState(false);
     const [userBalance, setUserBalance] = useState("");
+    const [supportWhatsApp, setSupportWhatsApp] = useState("");
+    const [supportTelegram, setSupportTelegram] = useState("");
+    const [supportEmail, setSupportEmail] = useState("");
+    const [supportParent, setSupportParent] = useState("");
+    const [showSupportModal, setShowSupportModal] = useState(false);
+    const [supportParentOnly, setSupportParentOnly] = useState(false);
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [isSlotsOnly, setIsSlotsOnly] = useState("");
     const [showFullDivLoading, setShowFullDivLoading] = useState(false);
@@ -38,6 +45,11 @@ const Layout = () => {
             setIsLogin(true);
             if (contextData.session.user && contextData.session.user.balance) {
                 setUserBalance(contextData.session.user.balance);
+
+                setSupportWhatsApp(contextData.session.support_whatsapp || "");
+                setSupportTelegram(contextData.session.support_telegram || "");
+                setSupportEmail(contextData.session.support_email || "");
+                setSupportParent(contextData.session.support_parent || "");
             }
 
             refreshBalance();
@@ -112,6 +124,11 @@ const Layout = () => {
             setIsSlotsOnly("true");
         }
 
+        setSupportWhatsApp(result && result.support_whatsapp ? result.support_whatsapp : "");
+        setSupportTelegram(result && result.support_telegram ? result.support_telegram : "");
+        setSupportEmail(result && result.support_email ? result.support_email : "");
+        setSupportParent(result && result.support_parent ? result.support_parent : "");
+
         if (result && result.user === null) {
             localStorage.removeItem("session");
         }
@@ -136,16 +153,30 @@ const Layout = () => {
         }, null);
     };
 
+    const openSupportModal = (parentOnly = false) => {
+        setSupportParentOnly(Boolean(parentOnly));
+        setShowSupportModal(true);
+    };
+
+    const closeSupportModal = () => {
+        setShowSupportModal(false);
+        setSupportParentOnly(false);
+    };
+
     const layoutContextValue = {
         isLogin,
         userBalance,
+        supportWhatsApp,
+        supportTelegram,
+        supportEmail,
         handleLoginClick,
         handleLogoutClick,
         refreshBalance,
         isSidebarExpanded,
         toggleSidebar,
         showMobileSearch,
-        setShowMobileSearch
+        setShowMobileSearch,
+        openSupportModal
     };
 
     return (
@@ -171,8 +202,10 @@ const Layout = () => {
                             userBalance={userBalance}
                             handleLoginClick={handleLoginClick}
                             handleLogoutClick={handleLogoutClick}
+                            supportParent={supportParent}
+                            openSupportModal={openSupportModal}
                         />
-                        <Sidebar isSlotsOnly={isSlotsOnly} isMobile={isMobile} />
+                        <Sidebar isSlotsOnly={isSlotsOnly} isMobile={isMobile} supportParent={supportParent} openSupportModal={openSupportModal} />
                         <main className={`menu-layout-content ${isSidebarExpanded ? 'expanded' : 'collapsed'} ${isSportsPage ? 'sports' : ''}`}>
                             <Outlet context={{ isSlotsOnly, isMobile }} />
                         </main>
@@ -183,6 +216,15 @@ const Layout = () => {
                                 onClose={() => setShowMobileSearch(false)}
                             />
                         )}
+                        <SupportModal
+                            isOpen={showSupportModal}
+                            onClose={closeSupportModal}
+                            supportWhatsApp={supportWhatsApp}
+                            supportTelegram={supportTelegram}
+                            supportEmail={supportEmail}
+                            supportParentOnly={supportParentOnly}
+                            supportParent={supportParent}
+                        />
                     </div>
                 </>
             </NavigationContext.Provider>
