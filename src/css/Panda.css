@@ -11381,7 +11381,7 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
 }
 
 .apigames-popup {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0px;
