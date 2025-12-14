@@ -116,7 +116,7 @@ const Header = ({
             className: "menu-button support-button",
             link: null,
             icon: "phone",
-            title: "Soporte",
+            title: "Contactá a Tu Cajero",
             isSupport: true
         };
         const idx = menuItems.findIndex(item => item.className && item.className.includes('transactions-button'));
