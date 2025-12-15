@@ -44,7 +44,6 @@ const LoginModal = ({ isMobile, isOpen, onClose, onConfirm, onLoginSuccess }) =>
             }
             setTimeout(() => {
                 onClose();
-                onConfirm();
             }, 1000);
         } else {
             setErrorMsg("Correo electrónico o contraseña no válidos");
