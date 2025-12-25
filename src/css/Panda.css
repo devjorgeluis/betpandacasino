@@ -11595,7 +11595,7 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     right: 0;
     margin: 60px 0 0;
     border-radius: .4rem !important;
-    position: absolute;
+    position: fixed;
     top: 30px;
     left: 10vw;
 }
