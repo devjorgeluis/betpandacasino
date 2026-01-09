@@ -22,6 +22,7 @@ const LoginModal = ({ isMobile, isOpen, onClose, onConfirm, onLoginSuccess }) =>
             let body = {
                 username: username,
                 password: password,
+                site_label: "main",
             };
             callApi(
                 contextData,
@@ -45,6 +46,8 @@ const LoginModal = ({ isMobile, isOpen, onClose, onConfirm, onLoginSuccess }) =>
             setTimeout(() => {
                 onClose();
             }, 1000);
+        } else if (result.status === "country") {
+            setErrorMsg(result.message);
         } else {
             setErrorMsg("Correo electrónico o contraseña no válidos");
         }

@@ -11571,7 +11571,7 @@ body.pn-rewards.modal-open .modal-dialog:not(.user-modal) .modal-body .btn.btn-s
     margin-top: 3rem;
 }
 
-.alert {
+.alert#success-alert {
     position: relative;
     padding: 1rem 1rem;
     margin-bottom: 1rem;

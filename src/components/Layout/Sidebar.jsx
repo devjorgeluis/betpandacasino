@@ -351,7 +351,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                                         className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'active' : ''}`}
                                                         onClick={() => {navigate(subItem.href), isMobile && toggleSidebar()}}
                                                     >
-                                                        <i className={subItem.icon}></i>
+                                                        { subItem.icon && <i className={subItem.icon}></i> }
                                                         {/* {
                                                             menu.id !== "live-casino" ? <i className={subItem.icon}></i> : <img src={subItem.icon} width={25} />
                                                         } */}
