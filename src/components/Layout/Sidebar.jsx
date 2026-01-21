@@ -340,6 +340,7 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                                 if (menu.id === "live-casino" && subItem.href.includes("#")) {
                                                     categoryCode = subItem.href.split("#")[1];
                                                 }
+                                                console.log(subItem)
                                                 
                                                 const isActive = menu.id === "live-casino" 
                                                     ? categoryCode === activeSubmenuItem
@@ -351,7 +352,9 @@ const Sidebar = ({ isSlotsOnly, isMobile }) => {
                                                         className={`nav-link submenu-tab-link CUSTOM ${subItem.name.toLowerCase().replace(/\s+/g, '-')} ${isActive ? 'active' : ''}`}
                                                         onClick={() => {navigate(subItem.href), isMobile && toggleSidebar()}}
                                                     >
-                                                        { subItem.icon && <i className={subItem.icon}></i> }
+                                                        { subItem.icon && typeof subItem.icon === 'string' && subItem.icon.startsWith('http') ?
+                                                            <img src={subItem.icon} width={25} />
+                                                            : <i className={subItem.icon}></i> }
                                                         {/* {
                                                             menu.id !== "live-casino" ? <i className={subItem.icon}></i> : <img src={subItem.icon} width={25} />
                                                         } */}
